@@ -1,0 +1,312 @@
+{
+  "projectType": "cli-tool",
+  "projectName": "ccprompts",
+  "projectDescription": "A comprehensive Claude Code plugin with 70+ slash commands, 10 specialized AI agents, and Dagger-based safety system for enterprise-grade development workflows",
+  "theme": "aspen",
+  "primaryColor": "#848c8e",
+  "lightColor": "#11161e",
+  "darkColor": "#cfd0d2",
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Documentation",
+        "groups": [
+          {
+            "group": "Get Started",
+            "pages": [
+              "introduction",
+              "installation",
+              "quickstart"
+            ]
+          },
+          {
+            "group": "Core Concepts",
+            "pages": [
+              "concepts/command-structure",
+              "concepts/agents",
+              "concepts/safety-system",
+              "concepts/validation"
+            ]
+          },
+          {
+            "group": "Installation & Setup",
+            "pages": [
+              "setup/plugin-installation",
+              "setup/repository-installation",
+              "setup/prerequisites",
+              "setup/team-installation"
+            ]
+          },
+          {
+            "group": "Command Phases",
+            "pages": [
+              "commands/initial-workflow",
+              "commands/project-setup",
+              "commands/development",
+              "commands/security",
+              "commands/testing",
+              "commands/deployment",
+              "commands/collaboration",
+              "commands/utilities",
+              "commands/extras",
+              "commands/agentic-capabilities",
+              "commands/ai-native-development",
+              "commands/enterprise-scale"
+            ]
+          },
+          {
+            "group": "Specialized Agents",
+            "pages": [
+              "agents/overview",
+              "agents/rust-expert",
+              "agents/python-pro",
+              "agents/golang-pro",
+              "agents/javascript-expert",
+              "agents/bash-shell-scripting",
+              "agents/fastapi-optimizer",
+              "agents/documentation-writer",
+              "agents/performance-optimizer",
+              "agents/systems-architect",
+              "agents/agent-template-wizard"
+            ]
+          },
+          {
+            "group": "Safety & Security",
+            "pages": [
+              "safety/overview",
+              "safety/dagger-containers",
+              "safety/safe-execution",
+              "safety/validation-system"
+            ]
+          },
+          {
+            "group": "Advanced Usage",
+            "pages": [
+              "advanced/creating-commands",
+              "advanced/creating-agents",
+              "advanced/workflow-automation",
+              "advanced/mcp-integration",
+              "advanced/multi-repo-management"
+            ]
+          },
+          {
+            "group": "Development",
+            "pages": [
+              "development/contributing",
+              "development/testing",
+              "development/validation",
+              "development/plugin-development"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Command Reference",
+        "groups": [
+          {
+            "group": "Phase 00: Initial Workflow",
+            "pages": [
+              "reference/analyze-project",
+              "reference/intelligent-chain"
+            ]
+          },
+          {
+            "group": "Phase 01: Project Setup",
+            "pages": [
+              "reference/document",
+              "reference/learn",
+              "reference/mcp"
+            ]
+          },
+          {
+            "group": "Phase 02: Development",
+            "pages": [
+              "reference/backup",
+              "reference/debug-session",
+              "reference/migrate",
+              "reference/optimize",
+              "reference/refactor"
+            ]
+          },
+          {
+            "group": "Phase 03: Security",
+            "pages": [
+              "reference/audit-security",
+              "reference/compliance",
+              "reference/harden",
+              "reference/secrets-scan"
+            ]
+          },
+          {
+            "group": "Phase 04: Testing",
+            "pages": [
+              "reference/test",
+              "reference/troubleshoot"
+            ]
+          },
+          {
+            "group": "Phase 05: Deployment",
+            "pages": [
+              "reference/deploy",
+              "reference/monitor",
+              "reference/rollback",
+              "reference/setup-ci"
+            ]
+          },
+          {
+            "group": "Phase 06: Collaboration",
+            "pages": [
+              "reference/code-review",
+              "reference/onboard",
+              "reference/pr-review",
+              "reference/sync-team"
+            ]
+          },
+          {
+            "group": "Phase 07: Utilities",
+            "pages": [
+              "reference/best-practices",
+              "reference/boilerplate",
+              "reference/bootstrap-project",
+              "reference/explain",
+              "reference/fix",
+              "reference/hotfix",
+              "reference/roadmap"
+            ]
+          },
+          {
+            "group": "Phase 08: Extras",
+            "pages": [
+              "reference/health-check",
+              "reference/modernize",
+              "reference/performance-check",
+              "reference/stack-doctor"
+            ]
+          },
+          {
+            "group": "Phase 09: Agentic Capabilities",
+            "pages": [
+              "reference/agent-communicate",
+              "reference/agent-learn",
+              "reference/agent-monitor",
+              "reference/agent-orchestrate",
+              "reference/agent-specialize",
+              "reference/context-manager",
+              "reference/context-persist",
+              "reference/mcp-configure",
+              "reference/mcp-discover",
+              "reference/mcp-extend",
+              "reference/workflow-automate",
+              "reference/workflow-visual"
+            ]
+          },
+          {
+            "group": "Phase 10: AI-Native Development",
+            "pages": [
+              "reference/ai-pair-program",
+              "reference/ai-test-gen",
+              "reference/code-evolution",
+              "reference/context-optimize",
+              "reference/learning-loop",
+              "reference/pattern-extract",
+              "reference/prompt-engineer",
+              "reference/semantic-search",
+              "reference/smart-refactor",
+              "reference/test-strategy"
+            ]
+          },
+          {
+            "group": "Phase 11: Enterprise Scale",
+            "pages": [
+              "reference/architecture-review",
+              "reference/compliance-audit",
+              "reference/cost-optimize",
+              "reference/dependency-audit",
+              "reference/governance",
+              "reference/incident-response",
+              "reference/multi-repo-sync",
+              "reference/tech-debt"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "keyFeatures": [
+    "70+ production-ready slash commands organized by development phase",
+    "10 specialized AI agents for domain-specific expertise (Rust, Python, Go, JavaScript, etc.)",
+    "Dagger container isolation for safe command execution",
+    "Multi-dimensional validation (structure, security, quality, performance)",
+    "MCP integration and workflow automation capabilities",
+    "Enterprise governance and multi-repo management tools",
+    "Agent template system for creating specialized subagents",
+    "Comprehensive safety system with rollback validation"
+  ],
+  "publicApiSurface": [
+    "/analyze-project",
+    "/intelligent-chain",
+    "/document",
+    "/learn",
+    "/mcp",
+    "/backup",
+    "/debug-session",
+    "/migrate",
+    "/optimize",
+    "/refactor",
+    "/audit-security",
+    "/compliance",
+    "/harden",
+    "/secrets-scan",
+    "/test",
+    "/troubleshoot",
+    "/deploy",
+    "/monitor",
+    "/rollback",
+    "/setup-ci",
+    "/code-review",
+    "/onboard",
+    "/pr-review",
+    "/sync-team",
+    "/best-practices",
+    "/boilerplate",
+    "/bootstrap-project",
+    "/explain",
+    "/fix",
+    "/hotfix",
+    "/roadmap",
+    "/health-check",
+    "/modernize",
+    "/performance-check",
+    "/stack-doctor",
+    "/agent-communicate",
+    "/agent-learn",
+    "/agent-monitor",
+    "/agent-orchestrate",
+    "/agent-specialize",
+    "/context-manager",
+    "/context-persist",
+    "/mcp-configure",
+    "/mcp-discover",
+    "/mcp-extend",
+    "/workflow-automate",
+    "/workflow-visual",
+    "/ai-pair-program",
+    "/ai-test-gen",
+    "/code-evolution",
+    "/context-optimize",
+    "/learning-loop",
+    "/pattern-extract",
+    "/prompt-engineer",
+    "/semantic-search",
+    "/smart-refactor",
+    "/test-strategy",
+    "/architecture-review",
+    "/compliance-audit",
+    "/cost-optimize",
+    "/dependency-audit",
+    "/governance",
+    "/incident-response",
+    "/multi-repo-sync",
+    "/tech-debt"
+  ]
+}
