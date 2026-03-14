@@ -1,0 +1,435 @@
+---
+title: "FastAPI Optimizer Agent"
+description: "FastAPI expert specializing in async programming, performance tuning, and high-performance API development"
+icon: "gauge"
+---
+
+The FastAPI Optimizer agent provides deep expertise in async programming, performance tuning, and building high-performance APIs. This agent specializes in Python async patterns, Pydantic models, dependency injection, and modern API development.
+
+## When to Use This Agent
+
+The FastAPI Optimizer agent excels at:
+
+<CardGroup cols={2}>
+  <Card title="Async Programming" icon="arrows-spin">
+    Async/await patterns, concurrent request handling, and background tasks
+  </Card>
+  <Card title="Database Optimization" icon="database">
+    Async SQLAlchemy, connection pooling, and query optimization
+  </Card>
+  <Card title="API Performance" icon="gauge-high">
+    Response optimization, streaming, WebSockets, and caching
+  </Card>
+  <Card title="Production Deployment" icon="server">
+    Uvicorn optimization, Gunicorn workers, and horizontal scaling
+  </Card>
+</CardGroup>
+
+## Example Usage
+
+<CodeGroup>
+```bash Async Database
+user: "How do I properly handle database connections in FastAPI with async SQLAlchemy?"
+
+agent: "I'll implement async database patterns with proper connection pooling, session management, and dependency injection.
+
+Here's the production-ready setup..."
+```
+
+```bash Performance Issues
+user: "My FastAPI endpoints are slow when handling multiple concurrent requests"
+
+agent: "I'll optimize your async code and implement proper concurrency patterns using asyncio, background tasks, and connection pooling.
+
+Let's analyze and fix the bottlenecks..."
+```
+</CodeGroup>
+
+## Core Capabilities
+
+### 1. Master Async Programming
+
+Implement efficient async patterns:
+
+<AccordionGroup>
+  <Accordion title="Async/Await Best Practices">
+    - Proper use of async def vs def
+    - Avoiding blocking operations in async code
+    - Understanding event loop behavior
+    - Async context managers
+  </Accordion>
+  
+  <Accordion title="Concurrent Request Handling">
+    - Request parallelization
+    - Database connection pooling
+    - External API call optimization
+    - Background task management
+  </Accordion>
+  
+  <Accordion title="AsyncIO Event Loop">
+    - Loop policies and executors
+    - Task scheduling and cancellation
+    - Semaphores and locks
+    - Timeout handling
+  </Accordion>
+  
+  <Accordion title="Exception Handling">
+    - Try/except in async functions
+    - HTTPException usage
+    - Custom exception handlers
+    - Error middleware
+  </Accordion>
+</AccordionGroup>
+
+### 2. Optimize Database Operations
+
+Async database patterns:
+
+<Tabs>
+  <Tab title="Async SQLAlchemy">
+    ```python
+    from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
+    from sqlalchemy.orm import sessionmaker
+    from contextlib import asynccontextmanager
+    
+    # Engine configuration
+    engine = create_async_engine(
+        "postgresql+asyncpg://user:pass@localhost/db",
+        echo=True,
+        pool_size=20,
+        max_overflow=0,
+        pool_pre_ping=True,
+        pool_recycle=3600,
+    )
+    
+    async_session = sessionmaker(
+        engine, class_=AsyncSession, expire_on_commit=False
+    )
+    
+    # Dependency injection
+    async def get_db() -> AsyncSession:
+        async with async_session() as session:
+            try:
+                yield session
+                await session.commit()
+            except Exception:
+                await session.rollback()
+                raise
+    
+    # Usage in endpoint
+    @app.get("/users/{user_id}")
+    async def get_user(
+        user_id: int,
+        db: AsyncSession = Depends(get_db)
+    ):
+        result = await db.execute(
+            select(User).where(User.id == user_id)
+        )
+        user = result.scalar_one_or_none()
+        if not user:
+            raise HTTPException(status_code=404)
+        return user
+    ```
+  </Tab>
+  
+  <Tab title="Connection Pool Management">
+    ```python
+    from fastapi import FastAPI
+    from sqlalchemy.ext.asyncio import create_async_engine
+    
+    @asynccontextmanager
+    async def lifespan(app: FastAPI):
+        # Startup
+        app.state.db_engine = create_async_engine(
+            DATABASE_URL,
+            pool_size=20,
+            max_overflow=10,
+            pool_timeout=30,
+            pool_recycle=3600,
+        )
+        yield
+        # Shutdown
+        await app.state.db_engine.dispose()
+    
+    app = FastAPI(lifespan=lifespan)
+    
+    # Monitor pool statistics
+    @app.get("/db/stats")
+    async def db_stats():
+        pool = app.state.db_engine.pool
+        return {
+            "size": pool.size(),
+            "checked_out": pool.checkedout(),
+            "overflow": pool.overflow(),
+            "checkedin": pool.checkedin(),
+        }
+    ```
+  </Tab>
+  
+  <Tab title="Query Optimization">
+    ```python
+    from sqlalchemy import select
+    from sqlalchemy.orm import selectinload, joinedload
+    
+    # Eager loading to avoid N+1 queries
+    @app.get("/users")
+    async def get_users(db: AsyncSession = Depends(get_db)):
+        result = await db.execute(
+            select(User)
+            .options(selectinload(User.posts))
+            .limit(100)
+        )
+        return result.scalars().all()
+    
+    # Batch operations
+    @app.post("/users/bulk")
+    async def create_users(
+        users: list[UserCreate],
+        db: AsyncSession = Depends(get_db)
+    ):
+        db_users = [User(**user.dict()) for user in users]
+        db.add_all(db_users)
+        await db.flush()
+        return db_users
+    
+    # Pagination with cursor
+    @app.get("/posts")
+    async def get_posts(
+        cursor: int = 0,
+        limit: int = 50,
+        db: AsyncSession = Depends(get_db)
+    ):
+        result = await db.execute(
+            select(Post)
+            .where(Post.id > cursor)
+            .limit(limit)
+            .order_by(Post.id)
+        )
+        posts = result.scalars().all()
+        next_cursor = posts[-1].id if posts else cursor
+        return {"posts": posts, "next_cursor": next_cursor}
+    ```
+  </Tab>
+</Tabs>
+
+### 3. Design High-Performance APIs
+
+Optimization techniques:
+
+```python
+from fastapi import FastAPI, BackgroundTasks
+from fastapi.responses import StreamingResponse
+import asyncio
+
+# Streaming responses
+@app.get("/stream")
+async def stream_data():
+    async def generate():
+        for i in range(100):
+            yield f"data: {i}\n\n"
+            await asyncio.sleep(0.1)
+    
+    return StreamingResponse(
+        generate(),
+        media_type="text/event-stream"
+    )
+
+# WebSocket implementation
+from fastapi import WebSocket
+
+@app.websocket("/ws")
+async def websocket_endpoint(websocket: WebSocket):
+    await websocket.accept()
+    try:
+        while True:
+            data = await websocket.receive_text()
+            await websocket.send_text(f"Echo: {data}")
+    except WebSocketDisconnect:
+        pass
+
+# Background tasks
+@app.post("/send-email")
+async def send_email(
+    email: str,
+    background_tasks: BackgroundTasks
+):
+    background_tasks.add_task(send_email_async, email)
+    return {"message": "Email will be sent"}
+
+# Response model optimization
+from pydantic import BaseModel
+
+class UserResponse(BaseModel):
+    id: int
+    username: str
+    
+    class Config:
+        orm_mode = True
+        # Only serialize needed fields
+        fields = {"password": {"exclude": True}}
+
+@app.get("/users/{user_id}", response_model=UserResponse)
+async def get_user(user_id: int, db: AsyncSession = Depends(get_db)):
+    # Response model automatically validates and serializes
+    return await db.get(User, user_id)
+```
+
+### 4. Leverage FastAPI Features
+
+Advanced FastAPI patterns:
+
+- **Dependency injection** - Reusable dependencies with caching
+- **Middleware** - Request/response processing and timing
+- **Event handlers** - Startup and shutdown logic
+- **Sub-applications** - Modular API structure
+- **Custom response classes** - Optimized serialization
+
+### 5. Implement Caching Strategies
+
+Effective caching:
+
+```python
+from functools import lru_cache
+from fastapi_cache import FastAPICache
+from fastapi_cache.backends.redis import RedisBackend
+from fastapi_cache.decorator import cache
+import redis.asyncio as redis
+
+# Redis caching
+@app.on_event("startup")
+async def startup():
+    redis_client = redis.from_url("redis://localhost")
+    FastAPICache.init(RedisBackend(redis_client), prefix="fastapi-cache")
+
+@app.get("/items/{item_id}")
+@cache(expire=60)
+async def get_item(item_id: int):
+    # Result cached for 60 seconds
+    return await fetch_item(item_id)
+
+# In-memory caching with lru_cache
+@lru_cache(maxsize=128)
+async def get_config():
+    # Config cached in memory
+    return load_config()
+
+# HTTP caching headers
+from fastapi.responses import Response
+
+@app.get("/static-data")
+async def get_static_data(response: Response):
+    response.headers["Cache-Control"] = "public, max-age=3600"
+    response.headers["ETag"] = "\"abc123\""
+    return {"data": "static"}
+```
+
+### 6. Ensure API Quality
+
+Quality assurance practices:
+
+- **OpenAPI documentation** - Automatic schema generation
+- **Request/response validation** - Pydantic models
+- **Error handling** - Custom exception handlers
+- **Logging and monitoring** - Structured logging
+- **API versioning** - URL or header-based versioning
+- **Rate limiting** - slowapi integration
+
+### 7. Deploy for Scale
+
+Production deployment:
+
+```bash
+# Uvicorn with multiple workers
+uvicorn main:app \
+  --host 0.0.0.0 \
+  --port 8000 \
+  --workers 4 \
+  --loop uvloop \
+  --log-level info
+
+# Gunicorn with Uvicorn workers
+gunicorn main:app \
+  --workers 4 \
+  --worker-class uvicorn.workers.UvicornWorker \
+  --bind 0.0.0.0:8000 \
+  --access-logfile - \
+  --error-logfile -
+
+# Docker optimization
+FROM python:3.11-slim
+WORKDIR /app
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+COPY . .
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+```
+
+## The 7-Step Methodology
+
+<Steps>
+  <Step title="Async Pattern Analysis">
+    Analyze async/await usage and event loop behavior
+  </Step>
+  <Step title="Database Optimization">
+    Implement async SQLAlchemy with connection pooling
+  </Step>
+  <Step title="API Design">
+    Design streaming, WebSocket, and background task patterns
+  </Step>
+  <Step title="FastAPI Features">
+    Leverage dependency injection, middleware, and events
+  </Step>
+  <Step title="Caching Implementation">
+    Add Redis caching and HTTP cache headers
+  </Step>
+  <Step title="Quality Assurance">
+    Implement validation, error handling, and monitoring
+  </Step>
+  <Step title="Deployment Optimization">
+    Configure Uvicorn/Gunicorn for production scale
+  </Step>
+</Steps>
+
+## Best Practices
+
+<CardGroup cols={2}>
+  <Card title="Async Code" icon="arrows-spin">
+    - Use async def for I/O operations
+    - Avoid blocking calls in async functions
+    - Implement proper connection pooling
+    - Use background tasks for long operations
+  </Card>
+  <Card title="Database" icon="database">
+    - Always use connection pooling
+    - Implement eager loading to avoid N+1
+    - Use batch operations when possible
+    - Add database indices for queries
+  </Card>
+  <Card title="Performance" icon="bolt">
+    - Enable response compression
+    - Implement caching strategies
+    - Use streaming for large responses
+    - Optimize Pydantic models
+  </Card>
+  <Card title="Production" icon="server">
+    - Run multiple workers
+    - Use uvloop for better performance
+    - Implement health check endpoints
+    - Monitor with Prometheus/Grafana
+  </Card>
+</CardGroup>
+
+<Note>
+**Performance Tip**: Use `async def` for I/O-bound operations and regular `def` for CPU-bound operations. FastAPI will run regular functions in a threadpool.
+</Note>
+
+## Related Agents
+
+<CardGroup cols={2}>
+  <Card title="Python Pro" icon="python" href="/agents/python-pro">
+    For advanced Python patterns and metaprogramming
+  </Card>
+  <Card title="Performance Optimizer" icon="bolt" href="/agents/performance-optimizer">
+    For system-wide performance optimization
+  </Card>
+</CardGroup>

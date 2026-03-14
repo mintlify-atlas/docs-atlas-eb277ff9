@@ -1,0 +1,659 @@
+---
+title: Validation System
+description: Understand the multi-dimensional validation system that ensures quality, security, and performance across all ccprompts commands
+---
+
+# Validation System
+
+ccprompts uses a sophisticated multi-dimensional validation engine (`scripts/validate-commands.js`) that validates commands across four key dimensions: structure, security, quality, and performance.
+
+## Overview
+
+The validation system ensures that all 70+ commands meet rigorous standards before deployment. Each command receives a numeric score (0-100) reflecting its validation pass rate across all dimensions.
+
+<Note>
+**Current Performance**: Discovery in &lt;100ms, total validation in &lt;2s (currently achieving 3ms + 28ms)
+</Note>
+
+## Four Validation Dimensions
+
+The validation engine evaluates commands across four complementary dimensions:
+
+<CardGroup cols={2}>
+  <Card title="Structural Validation" icon="diagram-project">
+    **Target: 95%+**
+    
+    Markdown format, frontmatter, section completeness, heading hierarchy
+  </Card>
+  
+  <Card title="Security Validation" icon="shield-halved">
+    **Target: 100%**
+    
+    Secret detection, dangerous patterns, safety compliance, vulnerability checks
+  </Card>
+  
+  <Card title="Quality Validation" icon="star">
+    **Target: 85%+**
+    
+    Educational value, example completeness, clarity scoring, professional language
+  </Card>
+  
+  <Card title="Performance Validation" icon="gauge-high">
+    **Target: &lt;2s total**
+    
+    Discovery time, validation speed, memory usage, resource efficiency
+  </Card>
+</CardGroup>
+
+## Dimension 1: Structural Validation
+
+Structural validation ensures commands follow the correct markdown format and include all required sections.
+
+### Required Sections
+
+```javascript
+validateCommandStructure(content, filename) {
+  const metadata = this.extractCommandMetadata(content, filename);
+
+  const hasDescription = content.includes('## Description') ||
+                        content.includes('# ') ||
+                        content.match(/^description:/m);
+
+  if (!hasDescription) {
+    this.errors.push(`${filename}: Command file missing description`);
+  }
+
+  const hasUsageSection = content.includes('## Usage');
+  const hasExamplesSection = content.includes('## Examples');
+  
+  if (!hasUsageSection && !hasExamplesSection) {
+    this.warnings.push(`${filename}: Consider adding sections: ## Usage, ## Examples`);
+  }
+}
+```
+
+### XML Structure Validation
+
+The system validates XML configuration blocks for proper tag balance:
+
+```javascript
+validateXMLStructure(content, filename) {
+  const requiredSections = ['<role>', '<activation>', '<instructions>'];
+  const missingSections = [];
+
+  requiredSections.forEach(section => {
+    if (!content.includes(section)) {
+      missingSections.push(section);
+    }
+  });
+
+  if (missingSections.length > 0) {
+    this.errors.push(`${filename}: Missing XML sections: ${missingSections.join(', ')}`);
+    return false;
+  }
+
+  // Validate tag balance
+  const tagStack = [];
+  const xmlTagRegex = /<\/?([a-zA-Z][a-zA-Z0-9_-]*)(?:\s[^>]*)?>|<!--[\s\S]*?-->/g;
+  let match;
+
+  while ((match = xmlTagRegex.exec(contentWithoutCodeBlocks)) !== null) {
+    const fullTag = match[0];
+    const tagName = match[1];
+
+    if (fullTag.startsWith('<!--') || fullTag.endsWith('/>')) {
+      continue;
+    }
+
+    if (fullTag.startsWith('</')) {
+      const expectedTag = tagStack.pop();
+      if (expectedTag !== tagName) {
+        this.errors.push(
+          `${filename}: Mismatched XML tags - expected </${expectedTag}>, found </${tagName}>`
+        );
+        return false;
+      }
+    } else {
+      tagStack.push(tagName);
+    }
+  }
+
+  if (tagStack.length > 0) {
+    this.errors.push(`${filename}: Unclosed XML tags: ${tagStack.join(', ')}`);
+    return false;
+  }
+
+  return true;
+}
+```
+
+### Metadata Extraction
+
+The validator extracts and validates command metadata:
+
+```javascript
+extractCommandMetadata(content, filename) {
+  const relativePath = path.relative(process.cwd(), filename);
+  const commandName = path.basename(filename, '.md');
+
+  // Extract title from H1 heading
+  const titleMatch = content.match(/^#\s+(.+)$/m);
+  const title = titleMatch ? titleMatch[1].trim() : commandName;
+
+  // Extract description from Description section
+  let description = this.extractMarkdownSection(content, '## Description');
+  
+  // Determine category and phase from path
+  const category = this.extractCategoryFromPath(relativePath);
+  const phase = this.extractPhaseFromPath(relativePath);
+
+  // Extract usage, parameters, examples
+  const usage = this.extractUsage(content);
+  const parameters = this.extractParameters(content);
+  const examples = this.extractExamples(content);
+  const safetyLevel = this.determineSafetyLevel(content);
+
+  return {
+    id: commandName,
+    name: title,
+    category,
+    phase,
+    description,
+    usage,
+    parameters,
+    examples,
+    safety_level: safetyLevel,
+    file_path: relativePath,
+    last_modified: new Date().toISOString()
+  };
+}
+```
+
+## Dimension 2: Security Validation
+
+Security validation detects hardcoded secrets, dangerous patterns, and potential vulnerabilities.
+
+### Secret Detection
+
+```javascript
+validateSecurity(content, filename) {
+  const codeBlocks = this.extractCodeBlocks(content);
+  const combinedCode = codeBlocks.join('\n');
+
+  const securityPatterns = [
+    {
+      pattern: /password\s*=\s*["'][^"']{8,}["']/gi,
+      message: 'Hardcoded password detected',
+      skipIfIncludes: ['example', 'placeholder', 'your-', 'REPLACE_WITH']
+    },
+    {
+      pattern: /api[_-]?key\s*=\s*["'][^"']{16,}["']/gi,
+      message: 'Hardcoded API key detected',
+      skipIfIncludes: ['example', 'placeholder', 'your-', 'REPLACE_WITH']
+    },
+    {
+      pattern: /secret\s*=\s*["'][^"']{8,}["']/gi,
+      message: 'Hardcoded secret detected',
+      skipIfIncludes: ['example', 'placeholder', 'your-', 'REPLACE_WITH']
+    },
+    {
+      pattern: /token\s*=\s*["'][^"']{16,}["']/gi,
+      message: 'Hardcoded token detected',
+      skipIfIncludes: ['example', 'placeholder', 'your-', 'REPLACE_WITH']
+    }
+  ];
+
+  securityPatterns.forEach(({ pattern, message, skipIfIncludes }) => {
+    const matches = combinedCode.match(pattern) || [];
+
+    matches.forEach(match => {
+      if (skipIfIncludes && skipIfIncludes.some(skip => 
+        match.toLowerCase().includes(skip.toLowerCase())
+      )) {
+        return;
+      }
+
+      this.errors.push(`${filename}: SECURITY - ${message}`);
+      this.stats.securityIssues++;
+    });
+  });
+}
+```
+
+### Dangerous Pattern Detection
+
+Integrates with the safety pattern system:
+
+```javascript
+analyzeDangerousPatterns(content, filename) {
+  const findings = [];
+  const codeBlocks = this.extractCodeBlocks(content);
+
+  codeBlocks.forEach((block, index) => {
+    const allPatterns = safetyPatterns.getAllPatterns();
+
+    for (const { pattern, severity, message, skipIfIncludes } of allPatterns) {
+      const regex = new RegExp(pattern.source, pattern.flags);
+      const matches = blockContent.match(regex) || [];
+
+      if (matches.length > 0) {
+        findings.push({
+          filename,
+          blockIndex: index,
+          pattern: pattern.source,
+          severity,
+          message,
+          matches: matches.slice(0, 3),
+          codeSnippet: blockContent.substring(0, 100)
+        });
+      }
+    }
+  });
+
+  return findings;
+}
+```
+
+## Dimension 3: Quality Validation
+
+Quality validation assesses educational value, clarity, and completeness.
+
+### Quality Scoring
+
+```javascript
+validateCommandQuality(content, filename, commandType = null) {
+  const detectedType = commandType || this.determineCommandType(filename, content);
+  let qualityScore = 100;
+
+  const qualityChecks = {
+    command: [
+      {
+        name: 'Has usage section',
+        test: c => c.includes('## Usage'),
+        weight: 25,
+        message: 'Missing Usage section'
+      },
+      {
+        name: 'Has description section',
+        test: c => c.includes('## Description'),
+        weight: 20,
+        message: 'Missing Description section'
+      },
+      {
+        name: 'Has parameters section',
+        test: c => c.includes('## Parameters'),
+        weight: 20,
+        message: 'Missing Parameters section'
+      },
+      {
+        name: 'Has examples section',
+        test: c => c.includes('## Examples'),
+        weight: 25,
+        message: 'Missing Examples section'
+      },
+      {
+        name: 'Professional formatting',
+        test: c => !/(TODO|FIXME|XXX|HACK)/i.test(c),
+        weight: 10,
+        message: 'Contains TODO/FIXME markers'
+      }
+    ]
+  };
+
+  const checks = qualityChecks[detectedType] || qualityChecks['default'];
+
+  checks.forEach(check => {
+    if (!check.test(content)) {
+      qualityScore -= check.weight;
+      this.warnings.push(
+        `${filename} [${detectedType}]: ${check.message} (-${check.weight} points)`
+      );
+    }
+  });
+
+  this.stats.qualityScores.push(qualityScore);
+  return qualityScore;
+}
+```
+
+### Quality Metrics
+
+<Accordion title="Content Length">
+Commands should have comprehensive content (>500 characters) to be educational.
+
+**Weight**: 15 points
+</Accordion>
+
+<Accordion title="Examples Present">
+Every command should include practical usage examples.
+
+**Weight**: 20 points
+</Accordion>
+
+<Accordion title="Clear Instructions">
+XML `<instructions>` block must be present and well-formed.
+
+**Weight**: 25 points
+</Accordion>
+
+<Accordion title="Security Considerations">
+Commands should address security and safety concerns.
+
+**Weight**: 15 points
+</Accordion>
+
+<Accordion title="Output Requirements">
+Clear deliverables or expected outcomes should be defined.
+
+**Weight**: 10 points
+</Accordion>
+
+<Accordion title="Professional Language">
+No TODO/FIXME markers in production commands.
+
+**Weight**: 10 points
+</Accordion>
+
+## Dimension 4: Performance Validation
+
+Performance validation ensures the validation system itself is fast and efficient.
+
+### Performance Metrics
+
+```javascript
+const performanceMetrics = {
+  discovery_time: 0,           // File discovery time
+  validation_time: 0,          // Total validation time
+  registry_generation_time: 0, // Command registry generation
+  file_processing_times: [],   // Per-file timing
+  memory_usage: process.memoryUsage()
+};
+
+// Discovery phase
+const discoveryStart = Date.now();
+const markdownFiles = this.findMarkdownFiles(projectRoot);
+performanceMetrics.discovery_time = Date.now() - discoveryStart;
+
+// Validation phase
+const validationStart = Date.now();
+for (const file of markdownFiles) {
+  const fileStart = Date.now();
+  await this.validateFile(file);
+  performanceMetrics.file_processing_times.push({
+    file: file,
+    duration: Date.now() - fileStart
+  });
+}
+performanceMetrics.validation_time = Date.now() - validationStart;
+```
+
+### Performance Targets
+
+<CardGroup cols={2}>
+  <Card title="Discovery" icon="magnifying-glass">
+    **Target**: &lt;100ms
+    
+    **Current**: ~3ms
+    
+    File discovery across entire project
+  </Card>
+  
+  <Card title="Validation" icon="check">
+    **Target**: &lt;2000ms
+    
+    **Current**: ~28ms
+    
+    Complete validation of all 70 commands
+  </Card>
+  
+  <Card title="Memory Usage" icon="memory">
+    **Target**: &lt;100MB delta
+    
+    **Current**: ~45MB
+    
+    Memory footprint during validation
+  </Card>
+  
+  <Card title="Per-File" icon="file">
+    **Target**: &lt;30ms average
+    
+    **Current**: ~0.4ms
+    
+    Individual file processing time
+  </Card>
+</CardGroup>
+
+## System Integrity Validation
+
+Beyond individual commands, the system validates overall project integrity:
+
+```javascript
+validateSystemIntegrity() {
+  // Verify package.json has validate script
+  const packageJson = JSON.parse(fs.readFileSync('package.json', 'utf8'));
+  if (!packageJson.scripts || !packageJson.scripts.validate) {
+    this.warnings.push('package.json: Missing validate script');
+  }
+
+  // Check required files exist
+  const requiredFiles = ['.gitignore', 'README.md', 'CONTRIBUTING.md'];
+  requiredFiles.forEach(file => {
+    if (!fs.existsSync(file)) {
+      this.warnings.push(`Missing required file: ${file}`);
+    }
+  });
+
+  // Validate command count
+  const commandDir = path.join(process.cwd(), '.claude', 'commands');
+  const expectedCommandCount = process.env.EXPECTED_COMMAND_COUNT
+    ? parseInt(process.env.EXPECTED_COMMAND_COUNT, 10)
+    : null;
+
+  if (expectedCommandCount !== null) {
+    const commandFiles = this.countMarkdownFiles(commandDir);
+    if (commandFiles !== expectedCommandCount) {
+      this.errors.push(
+        `Expected ${expectedCommandCount} commands, found ${commandFiles}`
+      );
+    }
+  }
+}
+```
+
+## Running Validation
+
+Multiple validation modes are available:
+
+<CodeGroup>
+```bash Full Validation
+# Complete validation across all dimensions
+bun run validate
+```
+
+```bash Security Only
+# Security-focused validation only
+bun run security-scan
+```
+
+```bash With Tests
+# Jest tests + full validation
+bun run test
+```
+
+```bash CI Pipeline
+# Complete CI pipeline: validate + lint + link-check
+bun run ci
+```
+</CodeGroup>
+
+### Validation Output
+
+```bash
+[TEST] Starting comprehensive ccprompts validation...
+
+Found 125 markdown files to validate
+[STATS] Discovery: 3ms
+
+[SECURITY]  Starting Dagger safety validation...
+Found 70 command files to validate
+
+[STATS] Validation Results
+==================
+[OK] Total files processed: 125
+[OK] Command files: 70
+[OK] Valid files: 123
+Validation completed in 1847ms
+
+[SECURITY]  No security issues detected
+
+[METRICS] Quality Metrics:
+   Success rate: 98.4%
+   Error rate: 1.6%
+   Warning rate: 12.8%
+   Security score: 100%
+   Overall quality grade: A (92.3/100)
+
+[PERF] Performance Metrics:
+   File discovery: 3ms
+   Validation time: 28ms
+   Registry generation: 15ms
+   Average file processing: 0.4ms
+   Memory usage: 67.3MB (Δ12.1MB)
+   Safety validation: 1803ms
+   Commands analyzed: 70
+   Dangerous patterns: 22
+   Container tests: 15
+   Dagger available: [OK]
+   Discovery target: [OK] (&lt;100ms)
+   Validation target: [OK] (&lt;2000ms)
+
+[REGISTRY] Command Registry:
+   Commands discovered: 70
+   Categories: 12
+   Registry saved to: .claude/command-registry.json
+
+[SUCCESS] All validations passed!
+```
+
+## Command Registry Generation
+
+Successful validation generates a command registry at `.claude/command-registry.json`:
+
+```json
+{
+  "version": "1.0.0",
+  "last_updated": "2026-03-14T10:30:00.000Z",
+  "commands": {
+    "analyze-project": {
+      "id": "analyze-project",
+      "name": "Analyze-Project Command",
+      "category": "project-setup",
+      "phase": 0,
+      "description": "Auto-detects project characteristics and suggests relevant prompts...",
+      "usage": "/analyze-project",
+      "safety_level": "safe",
+      "file_path": ".claude/commands/00-initial-workflow/analyze-project.md"
+    }
+  },
+  "categories": {
+    "project-setup": {
+      "id": "project-setup",
+      "name": "Project Setup",
+      "phase": 1,
+      "command_count": 3
+    }
+  },
+  "phases": [
+    {
+      "id": 0,
+      "name": "Initial Workflow",
+      "description": "Initial project workflow and analysis commands",
+      "commands": ["analyze-project", "intelligent-chain"]
+    }
+  ],
+  "validation_results": {
+    "last_run": "2026-03-14T10:30:00.000Z",
+    "total_files": 125,
+    "valid_files": 123,
+    "errors": [],
+    "warnings": [],
+    "quality_metrics": [95, 88, 92, ...]
+  }
+}
+```
+
+## Quality Gates for Commits
+
+Before committing changes, ensure all validations pass:
+
+<Steps>
+  <Step title="Run Full Validation">
+    ```bash
+    bun run validate
+    ```
+    Should find exactly 70 commands with no structural errors.
+  </Step>
+  
+  <Step title="Check Markdown Linting">
+    ```bash
+    bun run lint
+    ```
+    Should pass with no style violations.
+  </Step>
+  
+  <Step title="Validate Links">
+    ```bash
+    bun run check-links
+    ```
+    All markdown links must be valid.
+  </Step>
+  
+  <Step title="Run Tests (if modified)">
+    ```bash
+    bun run test
+    ```
+    Jest tests + validation must pass.
+  </Step>
+  
+  <Step title="Security Scan">
+    ```bash
+    bun run security-scan
+    ```
+    Check for new security warnings.
+  </Step>
+</Steps>
+
+<Warning>
+If adding or removing commands, update phase counts in `.claude-plugin/plugin.json` to match the actual command count.
+</Warning>
+
+## Best Practices
+
+<CardGroup cols={2}>
+  <Card title="Validate Early" icon="clock">
+    Run validation during development, not just before commits
+  </Card>
+  
+  <Card title="Fix Warnings" icon="triangle-exclamation">
+    Address warnings even if they don't fail validation
+  </Card>
+  
+  <Card title="Monitor Scores" icon="chart-line">
+    Track quality scores over time to ensure continuous improvement
+  </Card>
+  
+  <Card title="Use Auto-Fix" icon="wand-magic-sparkles">
+    Run `bun run lint:fix` to automatically fix formatting issues
+  </Card>
+</CardGroup>
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Safety System" href="/concepts/safety-system">
+    Learn how safety validation integrates with Dagger containers
+  </Card>
+  <Card title="Command Structure" href="/concepts/command-structure">
+    Understand what makes commands pass validation
+  </Card>
+</CardGroup>

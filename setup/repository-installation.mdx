@@ -1,0 +1,522 @@
+---
+title: Repository Installation
+description: Clone and install ccprompts directly from source for development and customization
+---
+
+Installing from the repository gives you full access to the source code, validation scripts, and development tools. This method is ideal for contributing to ccprompts or customizing commands for your needs.
+
+<Note>
+For most users, [plugin installation](/setup/plugin-installation) is recommended. Use repository installation if you need to modify commands or contribute to development.
+</Note>
+
+## Prerequisites
+
+Before installing from the repository, ensure you have:
+
+- Node.js >= 18.0.0 (< 23.0.0)
+- Bun >= 1.1.34 (recommended)
+- Git
+- Dagger CLI (optional but recommended for safety features)
+
+See [Prerequisites](/setup/prerequisites) for detailed installation instructions.
+
+## Quick Installation
+
+<Steps>
+  <Step title="Clone the repository">
+    ```bash
+    git clone https://github.com/ursisterbtw/ccprompts.git
+    cd ccprompts
+    ```
+  </Step>
+
+  <Step title="Install dependencies">
+    ```bash
+    bun install
+    ```
+    
+    This installs all development dependencies including Jest, markdownlint, and Dagger SDK.
+  </Step>
+
+  <Step title="Validate the installation">
+    ```bash
+    bun run validate
+    ```
+    
+    This validates all 70+ commands to ensure they're properly structured.
+  </Step>
+
+  <Step title="Run tests">
+    ```bash
+    bun run test
+    ```
+    
+    Runs Jest tests and command validation.
+  </Step>
+</Steps>
+
+## One-Line Installation
+
+For a streamlined setup:
+
+```bash Fish Shell
+git clone https://github.com/ursisterbtw/ccprompts.git; and cd ccprompts; and bun i; and bun run validate
+```
+
+```bash Bash/Zsh
+git clone https://github.com/ursisterbtw/ccprompts.git && cd ccprompts && bun install && bun run validate
+```
+
+## Repository Structure
+
+After cloning, you'll have access to:
+
+```text
+ccprompts/
+├── .claude/
+│   ├── commands/          # 70+ commands across 12 phases
+│   │   ├── 00-initial-workflow/
+│   │   ├── 01-project-setup/
+│   │   ├── 02-development/
+│   │   ├── 03-security/
+│   │   ├── 04-testing/
+│   │   ├── 05-deployment/
+│   │   ├── 06-collaboration/
+│   │   ├── 07-utilities/
+│   │   ├── 08-extras/
+│   │   ├── 09-agentic-capabilities/
+│   │   ├── 10-ai-native-development/
+│   │   └── 11-enterprise-scale/
+│   ├── agents/            # 10 specialized AI agents
+│   ├── workflows/         # Workflow definitions
+│   ├── settings.json      # Plugin configuration
+│   └── command-registry.json
+├── scripts/               # Validation and safety scripts
+├── templates/             # Subagent template files
+├── tests/                 # Jest test suite
+├── docs/                  # Documentation
+├── package.json
+├── README.md
+└── PLUGIN.md
+```
+
+## Using as a Local Plugin
+
+You can install your local clone as a Claude Code plugin:
+
+<Steps>
+  <Step title="Navigate to the ccprompts directory">
+    ```bash
+    cd /path/to/ccprompts
+    ```
+  </Step>
+
+  <Step title="Add as local marketplace">
+    In Claude Code, run:
+    
+    ```bash
+    /plugin marketplace add /path/to/ccprompts
+    ```
+    
+    Replace `/path/to/ccprompts` with the absolute path to your clone.
+  </Step>
+
+  <Step title="Install the plugin">
+    ```bash
+    /plugin install ccprompts@ccprompts
+    ```
+  </Step>
+
+  <Step title="Restart Claude Code">
+    Close and reopen Claude Code to load your local plugin.
+  </Step>
+</Steps>
+
+### Automated Local Testing
+
+The repository includes a script for setting up local plugin testing:
+
+```bash
+./scripts/test-plugin-local.sh
+```
+
+This script:
+
+1. Verifies plugin structure
+2. Creates a test marketplace
+3. Provides installation instructions
+4. Shows how to test changes
+5. Offers cleanup instructions
+
+<Note>
+The test script creates a marketplace at `~/.ccprompts-test-marketplace` by default. Set `PLUGIN_TEST_DIR` to use a different location.
+</Note>
+
+## Development Workflow
+
+### Available Scripts
+
+The repository includes several npm/bun scripts for development:
+
+<CodeGroup>
+  ```bash Testing
+  # Run all tests
+  bun run test
+  
+  # Run Jest tests only
+  bun run test:jest
+  
+  # Run command validation only
+  bun run test:validate
+  
+  # Validate all 70 commands
+  bun run validate
+  ```
+
+  ```bash Linting
+  # Check markdown formatting
+  bun run lint
+  
+  # Auto-fix markdown issues
+  bun run lint:fix
+  
+  # Check links in documentation
+  bun run check-links
+  ```
+
+  ```bash Security
+  # Security-focused validation
+  bun run security-scan
+  
+  # Validate Dagger safety system
+  bun run safety-validate
+  ```
+
+  ```bash CI/CD
+  # Full CI pipeline
+  bun run ci
+  
+  # Plugin-specific CI
+  bun run ci:plugin
+  ```
+</CodeGroup>
+
+### Making Changes
+
+<Steps>
+  <Step title="Create a new branch">
+    ```bash
+    git checkout -b feature/your-feature-name
+    ```
+  </Step>
+
+  <Step title="Make your changes">
+    Edit commands in `.claude/commands/` or agents in `.claude/agents/`.
+  </Step>
+
+  <Step title="Validate changes">
+    ```bash
+    bun run validate
+    ```
+    
+    Ensures all commands meet structural requirements.
+  </Step>
+
+  <Step title="Run tests">
+    ```bash
+    bun run test
+    ```
+    
+    Verifies no regressions were introduced.
+  </Step>
+
+  <Step title="Lint your changes">
+    ```bash
+    bun run lint:fix
+    ```
+    
+    Auto-fixes markdown formatting issues.
+  </Step>
+
+  <Step title="Test locally (optional)">
+    ```bash
+    ./scripts/test-plugin-local.sh
+    ```
+    
+    Test your changes as a plugin in Claude Code.
+  </Step>
+</Steps>
+
+### Testing Changes in Claude Code
+
+After making changes:
+
+<Steps>
+  <Step title="Uninstall current version">
+    ```bash
+    /plugin uninstall ccprompts@ccprompts
+    ```
+  </Step>
+
+  <Step title="Reinstall with changes">
+    ```bash
+    /plugin install ccprompts@ccprompts
+    ```
+  </Step>
+
+  <Step title="Restart Claude Code">
+    Close and reopen to load your changes.
+  </Step>
+
+  <Step title="Test your changes">
+    Try the modified commands to verify functionality.
+  </Step>
+</Steps>
+
+## Adding New Commands
+
+To create a new command:
+
+<Steps>
+  <Step title="Choose the appropriate phase">
+    Commands are organized by development phase (00-11). Select the phase that matches your command's purpose.
+  </Step>
+
+  <Step title="Copy an existing command">
+    ```bash
+    cp .claude/commands/01-project-setup/document.md \
+       .claude/commands/01-project-setup/my-new-command.md
+    ```
+  </Step>
+
+  <Step title="Update the command structure">
+    Edit the copied file with your command's:
+    - Name and description
+    - Parameters and options
+    - Implementation details
+    - Safety validation steps
+    - Usage examples
+  </Step>
+
+  <Step title="Validate the new command">
+    ```bash
+    bun run validate
+    ```
+    
+    The validator expects exactly 70 commands, so you'll need to update `EXPECTED_COMMAND_COUNT` in `package.json` if adding new commands.
+  </Step>
+
+  <Step title="Add tests">
+    Create corresponding tests in `tests/` if applicable.
+  </Step>
+</Steps>
+
+## Creating Specialized Agents
+
+ccprompts includes an agent template system:
+
+<Steps>
+  <Step title="Use the agent-template-wizard">
+    The repository includes a wizard for creating new agents:
+    
+    ```bash
+    # In Claude Code with ccprompts installed
+    # Use the agent-template-wizard agent
+    ```
+  </Step>
+
+  <Step title="Provide domain expertise">
+    Specify the domain and capabilities your agent should have.
+  </Step>
+
+  <Step title="Save the generated agent">
+    The wizard creates a properly structured agent file in `.claude/agents/`.
+  </Step>
+
+  <Step title="Test the agent">
+    Try your new agent in Claude Code to verify functionality.
+  </Step>
+</Steps>
+
+See `templates/SUBAGENT_TEMPLATE.md` for the agent template structure.
+
+## Safety System
+
+The repository includes a Dagger-based safety system for safe command execution:
+
+### Running Commands Safely
+
+```bash
+./scripts/safe-run.sh "command-to-execute"
+```
+
+This runs commands in isolated Dagger containers with:
+
+- Container isolation
+- Read-only project mounting
+- Automatic cleanup
+- Multi-dimensional validation
+
+### Validation Dimensions
+
+The safety system validates:
+
+1. **Structural** - Command format and structure
+2. **Security** - Dangerous operations and permissions
+3. **Quality** - Code quality and best practices
+4. **Performance** - Resource usage and efficiency
+
+See `SAFETY.md` in the repository for complete documentation.
+
+## Platform-Specific Notes
+
+### Linux
+
+```bash
+# Ensure proper permissions for scripts
+chmod +x scripts/*.sh
+
+# Add ~/.local/bin to PATH for Dagger
+export PATH="$HOME/.local/bin:$PATH"
+```
+
+### macOS
+
+```bash
+# Use Homebrew for dependencies
+brew install dagger/tap/dagger
+brew install node@18
+
+# Install Bun
+curl -fsSL https://bun.sh/install | bash
+```
+
+### Windows
+
+<Warning>
+Windows users should use WSL2 for the best experience. Symlink operations may require administrator privileges on native Windows.
+</Warning>
+
+```powershell WSL2 (Recommended)
+# Use the Linux instructions within WSL
+wsl --install
+```
+
+```powershell Native Windows
+# Use directory junctions instead of symlinks
+mklink /J commands .claude\commands
+mklink /J agents .claude\agents
+```
+
+## Contributing
+
+If you're contributing to ccprompts:
+
+<Steps>
+  <Step title="Fork the repository">
+    Fork [ursisterbtw/ccprompts](https://github.com/ursisterbtw/ccprompts) on GitHub.
+  </Step>
+
+  <Step title="Clone your fork">
+    ```bash
+    git clone https://github.com/YOUR-USERNAME/ccprompts.git
+    cd ccprompts
+    ```
+  </Step>
+
+  <Step title="Install dependencies">
+    ```bash
+    bun install
+    ```
+  </Step>
+
+  <Step title="Create a feature branch">
+    ```bash
+    git checkout -b feature/your-feature
+    ```
+  </Step>
+
+  <Step title="Make changes and validate">
+    ```bash
+    # Make your changes
+    bun run validate
+    bun run test
+    bun run lint:fix
+    ```
+  </Step>
+
+  <Step title="Commit with conventional commits">
+    ```bash
+    git commit -m "feat: add new command for X"
+    # or
+    git commit -m "fix: resolve issue with Y"
+    ```
+  </Step>
+
+  <Step title="Push and create PR">
+    ```bash
+    git push origin feature/your-feature
+    ```
+    
+    Then create a pull request on GitHub.
+  </Step>
+</Steps>
+
+See `CONTRIBUTING.md` in the repository for detailed guidelines.
+
+## Troubleshooting
+
+### Validation Failures
+
+If `bun run validate` fails:
+
+1. Check the error messages for specific issues
+2. Ensure all commands follow the required structure
+3. Verify the command count matches `EXPECTED_COMMAND_COUNT` (70)
+4. Run `bun run lint:fix` to fix formatting issues
+
+### Symlink Issues
+
+If symlinks don't work on your system:
+
+```bash
+# Copy directories instead (not recommended for development)
+cp -r .claude/commands commands
+cp -r .claude/agents agents
+```
+
+### Permission Errors
+
+If you encounter permission errors:
+
+```bash
+# Make scripts executable
+chmod +x scripts/*.sh
+
+# Ensure proper ownership
+sudo chown -R $USER:$USER .
+```
+
+### Bun vs npm
+
+If Bun isn't available, use npm:
+
+```bash
+npm install
+npm run validate
+npm run test
+```
+
+Note: Scripts are optimized for Bun but should work with npm.
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Development Guidelines" icon="book" href="/contributing/guidelines">
+    Learn about code style and contribution standards
+  </Card>
+  
+  <Card title="Safety System" icon="shield" href="/advanced/safety-system">
+    Understand the Dagger-based safety system
+  </Card>
+</CardGroup>

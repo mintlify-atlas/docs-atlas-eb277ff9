@@ -1,0 +1,40 @@
+---
+icon: "shield"
+title: "Audit-Security"
+description: "Performs comprehensive security and quality analysis: OWASP Top 10 vulnerability scanning. Code quality assessment. Performance bottleneck identification."
+---
+
+# Audit-Security
+
+Performs comprehensive security and quality analysis:
+
+## Usage
+
+```bash
+/audit-security [scope] [depth]
+```
+
+## Parameters
+
+<ParamField path="scope" type="string">
+  full-codebase, specific-module, new-features
+</ParamField>
+
+<ParamField path="depth" type="string">
+  surface, thorough, paranoid
+</ParamField>
+
+## Examples
+
+<CodeGroup>
+
+```bash Basic Usage
+# Comprehensive security audit for production readiness
+/audit-security full-codebase paranoid
+# Quick security check for development
+/audit-security specific-module surface
+# Thorough security review for new features
+```
+
+</CodeGroup>
+

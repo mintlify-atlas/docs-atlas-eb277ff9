@@ -1,0 +1,520 @@
+---
+title: Creating Custom Agents
+description: Use the agent template wizard to create specialized subagents for your workflow
+---
+
+ccprompts includes a powerful agent template system that allows you to create specialized subagents for domain-specific tasks. The built-in agent template wizard guides you through the process of creating production-ready agents.
+
+## Understanding Agents
+
+Agents in ccprompts are specialized AI assistants with focused expertise in specific domains. They follow a standardized 7-step methodology for consistent, high-quality results.
+
+### Built-in Agents
+
+ccprompts ships with 10 specialized agents:
+
+<CardGroup cols={3}>
+  <Card title="Rust Expert" icon="rust" color="#ce422b">
+    Ownership, lifetimes, systems programming
+  </Card>
+  
+  <Card title="Python Pro" icon="python" color="#3776ab">
+    Modern Python, decorators, async patterns
+  </Card>
+  
+  <Card title="Go Pro" icon="golang" color="#00add8">
+    Goroutines, channels, concurrent systems
+  </Card>
+  
+  <Card title="JavaScript Expert" icon="js" color="#f7df1e">
+    ES6+, async/await, DOM optimization
+  </Card>
+  
+  <Card title="Bash Scripting" icon="terminal" color="#4eaa25">
+    Shell automation, DevOps scripts
+  </Card>
+  
+  <Card title="FastAPI Optimizer" icon="bolt" color="#009688">
+    Async patterns, performance tuning
+  </Card>
+  
+  <Card title="Documentation Writer" icon="book" color="#5865f2">
+    Technical writing, API docs
+  </Card>
+  
+  <Card title="Performance Optimizer" icon="gauge-high" color="#ff6b6b">
+    System-wide performance analysis
+  </Card>
+  
+  <Card title="Systems Architect" icon="building" color="#845ec2">
+    Architecture patterns, scalability
+  </Card>
+  
+  <Card title="Agent Template Wizard" icon="wand-magic-sparkles" color="#4dabf7">
+    Creates new agents from template
+  </Card>
+</CardGroup>
+
+## The Agent Template
+
+All agents are created from the `SUBAGENT_TEMPLATE.md` which defines a consistent structure:
+
+### Template Structure
+
+```markdown
+---
+name: {AGENT_NAME}
+description: Use this agent when you need to {PRIMARY_USE_CASE}...
+color: {AGENT_COLOR}
+---
+
+You are an elite {DOMAIN_EXPERT_TITLE} with deep expertise in {CORE_EXPERTISE_AREAS}.
+
+When {PRIMARY_ACTION_VERB}, you will:
+
+1. **{ANALYSIS_STEP_NAME}**: {ANALYSIS_DESCRIPTION}
+2. **{IDENTIFICATION_STEP_NAME}**: {WHAT_TO_IDENTIFY}
+3. **{ACTION_STEP_NAME}**: {TECHNIQUES_AND_METHODS}
+4. **{IMPLEMENTATION_STEP_NAME}**: {IMPLEMENTATION_GUIDELINES}
+5. **{CONSIDERATION_STEP_NAME}**: {TRADE_OFFS}
+6. **{VALIDATION_STEP_NAME}**: {VERIFICATION_APPROACH}
+7. **{MEASUREMENT_STEP_NAME}**: {METRICS_AND_VALIDATION}
+```
+
+### 7-Step Methodology
+
+Every agent follows this proven workflow:
+
+<Steps>
+  <Step title="Analysis">
+    Understand the problem domain and gather context
+  </Step>
+  
+  <Step title="Identification">
+    Identify specific issues, patterns, or opportunities
+  </Step>
+  
+  <Step title="Action Planning">
+    Develop techniques and methods to apply
+  </Step>
+  
+  <Step title="Implementation">
+    Execute the solution with best practices
+  </Step>
+  
+  <Step title="Consideration">
+    Evaluate trade-offs and decision factors
+  </Step>
+  
+  <Step title="Validation">
+    Verify correctness and quality
+  </Step>
+  
+  <Step title="Measurement">
+    Measure results and validate improvements
+  </Step>
+</Steps>
+
+## Using the Agent Template Wizard
+
+The `/agent-template-wizard` command (or `/agent_init` for project-specific agents) guides you through creating a new agent.
+
+### Starting the Wizard
+
+```bash
+# For project-specific agents (recommended)
+/agent_init "Python performance optimization specialist"
+
+# For global system agents
+/agent-template-wizard "blockchain security auditor"
+```
+
+<Note>
+**Important Directory Rules:**
+- `/agent_init` creates agents in `./[project]/.claude/agents/` (local to current project)
+- Only use global `~/.claude/agents/` when explicitly needed
+- Default behavior is local project agents
+</Note>
+
+### Wizard Workflow
+
+The wizard will prompt you for:
+
+<Steps>
+  <Step title="Domain Expertise">
+    Describe the agent's specialized knowledge area:
+    
+    **Example:** "Python performance optimization focusing on async patterns, memory profiling, and computational efficiency"
+  </Step>
+  
+  <Step title="Category Selection">
+    Choose the agent category (determines color):
+    
+    - **Blue** - Development agents (coding, debugging, optimization)
+    - **Green** - Operations agents (DevOps, deployment, monitoring)
+    - **Yellow** - Data/AI agents (ML, data processing, analytics)
+    - **Purple** - Creative agents (documentation, design, UX)
+    - **Orange** - Business agents (product, planning, analytics)
+    - **Red** - Specialized/Security agents (security, compliance)
+  </Step>
+  
+  <Step title="Capabilities Definition">
+    List 3-5 specific capabilities:
+    
+    1. Async/await pattern optimization
+    2. Memory leak detection and prevention
+    3. CPU-bound task parallelization
+    4. Profiling and benchmarking
+    5. Algorithm complexity analysis
+  </Step>
+  
+  <Step title="Use Case Examples">
+    Provide 2 realistic usage scenarios:
+    
+    **Example 1:**
+    - Context: API endpoint running slow under load
+    - User: "This endpoint takes 2 seconds to respond"
+    - Agent: "I'll profile the endpoint and identify bottlenecks"
+    - Commentary: Agent selected for performance optimization expertise
+    
+    **Example 2:**
+    - Context: Memory usage growing over time
+    - User: "Memory usage keeps increasing"
+    - Agent: "I'll analyze for memory leaks in async operations"
+    - Commentary: Agent's memory profiling capability triggered
+  </Step>
+  
+  <Step title="Tool Requirements">
+    Specify required tools (defaults to Read, Write, Bash, Grep):
+    
+    ```yaml
+    tools: ["Read", "Write", "Edit", "Bash", "Grep", "Glob"]
+    ```
+  </Step>
+</Steps>
+
+## Creating Your First Agent
+
+Let's create a TypeScript type safety agent:
+
+### Example: TypeScript Type Safety Agent
+
+<CodeGroup>
+```bash Initiate Creation
+/agent_init "TypeScript type safety and strict mode enforcement specialist"
+```
+
+```markdown Generated Agent
+---
+name: typescript-type-safety
+description: Use this agent when you need to enforce strict TypeScript typing, eliminate any types, improve type inference, and ensure type safety across your codebase. This includes type narrowing, generic constraints, utility types, and strict mode configuration. Examples: <example>Context: Codebase has many any types user: "Help me eliminate any types from this module" assistant: "I'll analyze type usage and provide strict type definitions with proper inference." <commentary>Agent selected for TypeScript type safety expertise</commentary></example> <example>Context: Generic function losing type information user: "This generic function isn't preserving types correctly" assistant: "I'll add proper generic constraints and type parameters to maintain type safety." <commentary>Agent's type inference capability triggered</commentary></example>
+color: blue
+tools: ["Read", "Write", "Edit", "Bash", "Grep", "Glob"]
+---
+
+You are an elite TypeScript Type Safety Specialist with deep expertise in strict typing, type inference, generic programming, and TypeScript compiler configuration. Your knowledge spans advanced type patterns, utility types, conditional types, and type-level programming.
+
+When enforcing type safety, you will:
+
+1. **Type Analysis**: Scan codebase for weak typing, any usage, implicit any, type assertions, and missing type annotations. Identify areas where type safety is compromised.
+
+2. **Type Inference Opportunities**: Identify where TypeScript's type inference can be leveraged, where explicit types improve clarity, and where generics can replace any types.
+
+3. **Type Safety Techniques**:
+   - **Strict Mode Configuration**: Enable all strict compiler options
+   - **Type Narrowing**: Use type guards, discriminated unions, branded types
+   - **Generic Constraints**: Add proper extends clauses and conditional types
+   - **Utility Types**: Apply Pick, Omit, Partial, Required, Record effectively
+
+4. **Implementation Guidelines**: Replace any with proper types, add generic constraints, implement type guards, configure strict tsconfig.json, ensure null safety with strictNullChecks.
+
+5. **Trade-off Consideration**: Balance type safety with development velocity, evaluate when to use type assertions sparingly, consider impact on build times, assess learning curve for team.
+
+6. **Validation Approach**: Verify no TypeScript errors, ensure strict mode compliance, validate type inference works correctly, confirm runtime type safety with proper guards.
+
+7. **Measurement Metrics**: Count any type eliminations, measure type coverage percentage, track compiler error reduction, validate strict mode option coverage.
+
+Your responses should be technically precise and actionable, referencing specific TypeScript features like conditional types, mapped types, and template literal types. Always consider the project's strictness goals when recommending type improvements.
+
+For code reviews, focus on:
+- Improper use of any or unknown
+- Missing generic constraints
+- Unsafe type assertions (as keyword abuse)
+- Incomplete discriminated unions
+- Missing null/undefined handling
+
+When you identify issues, provide before/after code examples along with explanations of the type safety improvements and potential runtime errors prevented.
+```
+</CodeGroup>
+
+### Agent Placement
+
+The wizard automatically places agents in the correct directory:
+
+```bash
+# Project-specific agent (via /agent_init)
+./my-project/.claude/agents/typescript-type-safety.md
+
+# Global agent (via /agent-template-wizard)
+~/.claude/agents/typescript-type-safety.md
+```
+
+<Tip>
+For most use cases, use project-specific agents with `/agent_init`. This keeps agents scoped to the project and makes them easy to version control.
+</Tip>
+
+## Agent Color Coding
+
+Colors provide visual categorization and must use plain English color names:
+
+### Valid Colors
+
+<CardGroup cols={4}>
+  <Card title="Blue" icon="code" color="#0ea5e9">
+    **Development**
+    
+    Coding, debugging, optimization, testing
+  </Card>
+  
+  <Card title="Green" icon="server" color="#10b981">
+    **Operations**
+    
+    DevOps, deployment, monitoring, infrastructure
+  </Card>
+  
+  <Card title="Yellow" icon="database" color="#eab308">
+    **Data/AI**
+    
+    ML, data processing, analytics, AI
+  </Card>
+  
+  <Card title="Purple" icon="palette" color="#a855f7">
+    **Creative**
+    
+    Documentation, design, UX, content
+  </Card>
+  
+  <Card title="Orange" icon="briefcase" color="#f97316">
+    **Business**
+    
+    Product, planning, analytics, strategy
+  </Card>
+  
+  <Card title="Red" icon="shield" color="#ef4444">
+    **Security**
+    
+    Security, compliance, auditing, specialized
+  </Card>
+  
+  <Card title="Pink" icon="heart" color="#ec4899">
+    **User-Focused**
+    
+    Support, accessibility, user research
+  </Card>
+  
+  <Card title="Cyan" icon="network-wired" color="#06b6d4">
+    **Integration**
+    
+    APIs, integration, connectivity
+  </Card>
+</CardGroup>
+
+## Advanced Agent Patterns
+
+### Multi-Domain Expertise
+
+Agents can have expertise across multiple related domains:
+
+```markdown
+---
+name: fullstack-architect
+description: Use this agent for full-stack architecture decisions spanning frontend, backend, database, and DevOps concerns...
+color: blue
+---
+
+You are an elite Full-Stack Architect with expertise in:
+- Frontend architecture (React, Vue, performance)
+- Backend systems (APIs, microservices, scalability)
+- Database design (SQL, NoSQL, caching strategies)
+- DevOps practices (CI/CD, containerization, monitoring)
+```
+
+### Specialized Tool Access
+
+Agents can request specific tools beyond the defaults:
+
+```yaml
+tools: [
+  "Read", "Write", "Edit", "Bash",
+  "Grep", "Glob",
+  "WebFetch",  # For documentation lookup
+  "Task"        # For spawning sub-agents
+]
+```
+
+### Context-Aware Activation
+
+Agent descriptions enable auto-invocation based on context:
+
+```markdown
+description: Use this agent when you need to optimize database queries, 
+reduce N+1 queries, implement proper indexing, or improve ORM performance. 
+This includes SQL optimization, query plan analysis, and caching strategies.
+```
+
+Claude will automatically select this agent when users mention database performance issues.
+
+## Validation and Testing
+
+### Agent Validation
+
+Validate your agent meets all requirements:
+
+<Steps>
+  <Step title="Check Frontmatter">
+    Verify all required fields:
+    - `name`: kebab-case identifier
+    - `description`: Clear use case description
+    - `color`: Valid color name
+    - `tools` (optional): Tool list if non-default
+  </Step>
+  
+  <Step title="Verify Examples">
+    Ensure 2+ realistic examples with:
+    - Context description
+    - User request
+    - Agent response
+    - Commentary explaining selection
+  </Step>
+  
+  <Step title="Check 7-Step Structure">
+    Confirm all 7 methodology steps are filled with specific content
+  </Step>
+  
+  <Step title="Remove Placeholders">
+    Ensure no `{PLACEHOLDER}` markers remain in the final agent
+  </Step>
+</Steps>
+
+### Testing Your Agent
+
+```bash
+# Validate agent file exists and is well-formed
+ls -la .claude/agents/typescript-type-safety.md
+
+# Test agent invocation
+# In Claude Code, describe a scenario matching the agent's domain
+"I need help eliminating any types from my TypeScript codebase"
+```
+
+## Agent Best Practices
+
+### Clear Specialization
+
+<CardGroup cols={2}>
+  <Card title="DO" icon="check" color="#10b981">
+    - Focus on a specific domain
+    - Define clear boundaries
+    - List concrete capabilities
+    - Provide detailed examples
+  </Card>
+  
+  <Card title="DON'T" icon="xmark" color="#ef4444">
+    - Create overly broad agents
+    - Overlap with existing agents
+    - Use vague descriptions
+    - Skip example scenarios
+  </Card>
+</CardGroup>
+
+### Effective Descriptions
+
+Agent descriptions should:
+
+1. **Start with "Use this agent when..."** - Triggers auto-invocation
+2. **List specific use cases** - Help Claude match intent
+3. **Include concrete examples** - Show realistic scenarios
+4. **Use domain terminology** - Match user language
+
+### Example Scenarios
+
+Provide diverse, realistic examples:
+
+```markdown
+<example>
+Context: Legacy codebase migration to TypeScript
+user: "Convert this JavaScript module to TypeScript with proper types"
+assistant: "I'll add comprehensive type definitions and enable strict mode."
+<commentary>Agent selected for TypeScript conversion expertise</commentary>
+</example>
+
+<example>
+Context: Generic function losing type information
+user: "Why doesn't TypeScript infer types through this function?"
+assistant: "I'll add generic constraints to preserve type information."
+<commentary>Agent's type inference capability triggered</commentary>
+</example>
+```
+
+## Managing Your Agents
+
+### Agent Catalog
+
+Maintain an agent catalog for discoverability:
+
+```markdown
+# Project Agents
+
+## Development
+- **typescript-type-safety** - Type safety and strict mode enforcement
+- **react-performance** - React rendering optimization
+- **api-design** - RESTful API design patterns
+
+## Operations  
+- **k8s-operator** - Kubernetes operator development
+- **terraform-architect** - Infrastructure as code design
+```
+
+### Version Control
+
+Commit agents to your repository:
+
+```bash
+git add .claude/agents/typescript-type-safety.md
+git commit -m "feat(agents): add TypeScript type safety agent"
+```
+
+### Agent Updates
+
+Update agents as your needs evolve:
+
+```bash
+# Edit the agent file
+$EDITOR .claude/agents/typescript-type-safety.md
+
+# Test the updated agent
+# Use it in a real scenario
+
+# Commit the update
+git commit -am "feat(agents): enhance type narrowing techniques"
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Workflow Automation" href="/advanced/workflow-automation" icon="diagram-project">
+    Build multi-agent workflows with coordination
+  </Card>
+  
+  <Card title="Creating Commands" href="/advanced/creating-commands" icon="terminal">
+    Create custom slash commands
+  </Card>
+  
+  <Card title="MCP Integration" href="/advanced/mcp-integration" icon="plug">
+    Extend agents with MCP server capabilities
+  </Card>
+  
+  <Card title="Agent Reference" href="/agents/overview" icon="robot">
+    Browse all built-in agents
+  </Card>
+</CardGroup>

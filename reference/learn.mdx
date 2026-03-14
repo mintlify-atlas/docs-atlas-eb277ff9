@@ -1,0 +1,54 @@
+---
+title: "Learn"
+description: "Provides personalized learning paths and skill development for developers using Claude Code, with hands-on exercises and practical application integration."
+---
+
+# Learn
+
+Provides personalized learning paths and skill development for developers using Claude Code, with hands-on exercises and practical application integration. Creates customized learning experiences that adapt to individual skill levels and integrate directly with real project work.
+
+## Usage
+
+```bash
+/learn [topic] [level] [format]
+```
+
+## Parameters
+
+<ParamField path="**topic** (required)" type="string">
+  The subject to learn
+</ParamField>
+
+<ParamField path="**level** (optional, default" type="string">
+  `beginner`):
+</ParamField>
+
+<ParamField path="**format** (optional, default" type="string">
+  `tutorial`):
+</ParamField>
+
+## Examples
+
+<CodeGroup>
+
+```bash Basic Usage
+# Learn Python basics with hands-on tutorial
+/learn python beginner tutorial
+# Advanced React patterns through a project
+/learn react advanced project
+# Docker workshop for intermediate users
+```
+
+</CodeGroup>
+
+<Warning>
+& Verification
+
+- **Auto-detection**: Prompts when topic/level/format are omitted or invalid
+- **Safety**: Generates only learning prompts and exercises; does not execute or modify project files
+- **Resource Limits**: Learning sessions bounded by time and complexity; handles timeout scenarios
+- **Verification**: Include success criteria checklist for each learning objective completion
+- **Progress Validation**: Confirm learning milestones achieved before advancing to next concepts
+- **Assessment Integrity**: Validate knowledge acquisition through practical application
+</Warning>
+

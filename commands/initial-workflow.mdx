@@ -1,0 +1,113 @@
+---
+title: "Phase 00: Initial Workflow"
+description: "Intelligent project analysis and workflow automation commands"
+---
+
+The Initial Workflow phase provides intelligent entry points for project analysis and automated command chaining, helping you quickly understand and optimize your development workflow.
+
+## Commands in This Phase
+
+<CardGroup cols={2}>
+  <Card title="/analyze-project" icon="magnifying-glass-chart" href="/commands/analyze-project">
+    Auto-detect project characteristics and suggest relevant prompts and improvements
+  </Card>
+  
+  <Card title="/intelligent-chain" icon="link" href="/commands/intelligent-chain">
+    Execute intelligent command sequences with natural language workflow automation
+  </Card>
+</CardGroup>
+
+## Overview
+
+Phase 00 commands are designed to be your starting point when working with any project. These commands intelligently analyze your codebase and automate complex workflows.
+
+### Key Capabilities
+
+**Project Analysis**
+- Auto-detect project type, technology stack, and architecture patterns
+- Identify current development maturity level and gaps
+- Suggest relevant prompts based on project characteristics
+- Recommend improvement priorities and workflows
+- Provide timeline estimates for suggested improvements
+- Create a personalized development roadmap
+
+**Intelligent Automation**
+- Natural language workflow description
+- Automatic command chaining based on intent
+- Context-aware execution with validation
+- Safe rollback capabilities
+- Progress tracking and reporting
+
+## Use Cases
+
+### Project Onboarding
+
+```bash
+/analyze-project
+```
+
+Quickly understand inherited or new codebases with comprehensive analysis and actionable recommendations.
+
+### Workflow Automation
+
+```bash
+/intelligent-chain "implement user authentication with JWT"
+```
+
+Describe what you want to accomplish in natural language, and let Claude execute the appropriate command sequence.
+
+### Health Assessment
+
+```bash
+/analyze-project
+```
+
+Regular project health checks to identify improvement opportunities and track progress over time.
+
+## Example Workflows
+
+### Legacy Project Analysis
+
+For a legacy monolith, `/analyze-project` might recommend:
+
+1. **Priority 1**: `/audit-security full-codebase paranoid`
+2. **Priority 2**: `/test unit comprehensive`
+3. **Priority 3**: `/modernize monolith`
+4. **Quick Win**: `/document api markdown`
+
+### New Startup Project
+
+For a new startup project, `/analyze-project` might recommend:
+
+1. **Priority 1**: `/setup-ci github professional`
+2. **Priority 2**: `/harden enterprise`
+3. **Priority 3**: `/document dev auto-generated`
+4. **Quick Win**: `/pre-commit setup standard`
+
+### Feature Development
+
+```bash
+/intelligent-chain "implement user authentication with JWT"
+```
+
+Automatically executes:
+- Analyze current authentication setup
+- Generate JWT authentication implementation
+- Create comprehensive tests
+- Add security audit
+- Update documentation
+
+## Related Phases
+
+- **Phase 01: Project Setup** - Follow up with comprehensive project configuration
+- **Phase 02: Development** - Implement recommendations from project analysis
+- **Phase 03: Security** - Address security gaps identified in analysis
+- **Phase 07: Utilities** - Use smart suggestions and best practices
+
+## Best Practices
+
+1. **Start with Analysis**: Run `/analyze-project` when joining a new codebase or starting a major refactor
+2. **Regular Health Checks**: Schedule periodic project analysis to track improvements
+3. **Use Intelligent Chaining**: Describe complex workflows in natural language instead of manual command sequences
+4. **Follow Recommendations**: Prioritize suggested improvements based on impact and effort estimates
+5. **Track Progress**: Document implemented recommendations and measure results

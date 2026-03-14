@@ -1,0 +1,55 @@
+---
+title: "Workflow-Builder"
+description: "Interactive workflow creation and management system: 1. Visual workflow builder with drag-and-drop interface 2. Conditional logic and branching support"
+---
+
+# Workflow-Builder
+
+Interactive workflow creation and management system: 1. Visual workflow builder with drag-and-drop interface 2. Conditional logic and branching support 3. Parameter passing between workflow steps 4. Error handling and rollback capabilities 5. Workflow templates and sharing 6. Execution monitoring and progress tracking
+
+## Usage
+
+```bash
+/workflow-builder [action] [workflow-name]
+```
+
+## Parameters
+
+<ParamField path="action" type="string">
+  create, edit, run, list, export, import, delete
+</ParamField>
+
+<ParamField path="workflow-name" type="string">
+  Name of the workflow to operate on
+</ParamField>
+
+## Examples
+
+<CodeGroup>
+
+```bash Basic Usage
+/workflow-builder create
+/workflow-builder edit production-deployment
+/workflow-builder run full-security-audit
+/workflow-builder list
+/workflow-builder export ci-cd-setup
+```
+
+</CodeGroup>
+
+## Workflow
+
+- **Prompt Execution**: Run specific prompts with parameters
+- **Conditional Logic**: If/then/else branching based on results
+- **Data Transformation**: Process outputs from previous steps
+- **External Commands**: Execute shell commands or API calls
+- **User Input**: Interactive prompts for user decisions
+- **Notification**: Send alerts, emails, or messages
+
+## Related Commands
+
+- `/list-prompts` - Discover prompts for workflow steps
+- `/search-prompts` - Find specific prompts for workflow needs
+- `/validate-environment` - Verify prerequisites before workflow execution
+- `/export-config` - Share workflow configurations and templates
+

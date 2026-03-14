@@ -1,0 +1,196 @@
+---
+title: "Specialized Agents Overview"
+description: "10 domain-expert AI agents with deep technical knowledge across languages, frameworks, and systems"
+icon: "robot"
+---
+
+ccprompts includes 10 specialized AI agents that provide expert-level knowledge in specific programming languages, frameworks, and technical domains. Each agent follows a consistent 7-step methodology and is automatically invoked when their expertise is needed.
+
+## When to Use Agents
+
+Agents are automatically invoked based on context, but you can also explicitly request them:
+
+```bash
+# Automatic invocation based on context
+"How do I handle Rust ownership issues?"
+# → Automatically uses rust-expert agent
+
+# Explicit invocation
+/agent rust-expert "Optimize this code for zero-copy patterns"
+```
+
+## Available Agents
+
+<CardGroup cols={2}>
+  <Card title="Rust Expert" icon="rust" href="/agents/rust-expert" color="#CE422B">
+    Ownership, lifetimes, unsafe code, and systems programming
+  </Card>
+  <Card title="Python Pro" icon="python" href="/agents/python-pro" color="#3776AB">
+    Advanced decorators, generators, async/await, and metaprogramming
+  </Card>
+  <Card title="Go Expert" icon="golang" href="/agents/golang-pro" color="#00ADD8">
+    Goroutines, channels, and scalable concurrent systems
+  </Card>
+  <Card title="JavaScript Expert" icon="js" href="/agents/javascript-expert" color="#F7DF1E">
+    ES6+, async patterns, DOM optimization, and runtime performance
+  </Card>
+  <Card title="Bash Shell Scripting" icon="terminal" href="/agents/bash-shell-scripting" color="#4EAA25">
+    Shell automation, deployment scripts, and text processing
+  </Card>
+  <Card title="FastAPI Optimizer" icon="gauge" href="/agents/fastapi-optimizer" color="#009688">
+    Async programming, performance tuning, and API optimization
+  </Card>
+  <Card title="Documentation Writer" icon="book" href="/agents/documentation-writer" color="#2ECC71">
+    Technical writing, API docs, and architectural documentation
+  </Card>
+  <Card title="Performance Optimizer" icon="bolt" href="/agents/performance-optimizer" color="#27AE60">
+    System-wide performance analysis and efficiency improvements
+  </Card>
+  <Card title="Systems Architect" icon="diagram-project" href="/agents/systems-architect" color="#E74C3C">
+    Real-time systems, ultra-low latency, and deterministic design
+  </Card>
+  <Card title="Agent Template Wizard" icon="wand-magic-sparkles" href="/agents/agent-template-wizard" color="#3498DB">
+    Create new agents with proper structure and conventions
+  </Card>
+</CardGroup>
+
+## The 7-Step Methodology
+
+Every specialized agent follows a consistent 7-step approach:
+
+<Steps>
+  <Step title="Analysis">
+    Analyze the problem domain, requirements, and constraints
+  </Step>
+  <Step title="Pattern Identification">
+    Identify appropriate design patterns, best practices, and approaches
+  </Step>
+  <Step title="Implementation Design">
+    Design the solution architecture with specific techniques and tools
+  </Step>
+  <Step title="Optimization">
+    Apply performance optimizations and efficiency improvements
+  </Step>
+  <Step title="Considerations">
+    Evaluate trade-offs, edge cases, and architectural decisions
+  </Step>
+  <Step title="Validation">
+    Implement testing, monitoring, and quality assurance strategies
+  </Step>
+  <Step title="Measurement">
+    Establish metrics, benchmarks, and continuous improvement processes
+  </Step>
+</Steps>
+
+## Agent Categories by Color
+
+Agents are color-coded by their primary domain:
+
+<AccordionGroup>
+  <Accordion title="Language Experts (Blue/Yellow/Cyan)">
+    - **Rust Expert** (Yellow) - Systems programming specialist
+    - **Python Pro** (Blue) - Advanced Python patterns
+    - **Go Expert** (Blue) - Concurrent systems specialist
+    - **JavaScript Expert** (Blue) - Modern JavaScript development
+    - **Bash Shell Scripting** (Blue) - Shell automation expert
+  </Accordion>
+  
+  <Accordion title="Framework Specialists (Yellow/Teal)">
+    - **FastAPI Optimizer** (Yellow) - Python web framework expert
+  </Accordion>
+  
+  <Accordion title="Cross-Domain Experts (Green)">
+    - **Documentation Writer** (Green) - Technical writing specialist
+    - **Performance Optimizer** (Green) - Holistic performance expert
+  </Accordion>
+  
+  <Accordion title="Architecture & Tooling (Red/Blue)">
+    - **Systems Architect** (Red) - Real-time and deterministic systems
+    - **Agent Template Wizard** (Blue) - Agent creation specialist
+  </Accordion>
+</AccordionGroup>
+
+## Example Usage Scenarios
+
+<CodeGroup>
+```bash Rust Development
+# Working with ownership and lifetimes
+"I'm getting lifetime errors when returning references"
+# → rust-expert agent provides lifetime annotation guidance
+
+# Concurrent programming
+"How do I share data safely between threads in Rust?"
+# → rust-expert explains Arc, Mutex, and channel patterns
+```
+
+```bash Python Optimization
+# Advanced metaprogramming
+"Create a decorator that validates arguments and caches results"
+# → python-pro implements sophisticated decorator patterns
+
+# Async performance
+"My async app has performance issues with database operations"
+# → python-pro optimizes async patterns and connection pooling
+```
+
+```bash Go Concurrency
+# Worker pool patterns
+"Build a dynamic worker pool with backpressure handling"
+# → golang-pro designs goroutine-based worker pool
+
+# Memory leak debugging
+"My Go service has goroutine leaks under high load"
+# → golang-pro analyzes lifecycle management and context usage
+```
+
+```bash API Development
+# FastAPI performance
+"My FastAPI endpoints are slow with concurrent requests"
+# → fastapi-optimizer optimizes async code and concurrency
+
+# Database optimization
+"How do I handle async SQLAlchemy connections in FastAPI?"
+# → fastapi-optimizer implements async database patterns
+```
+</CodeGroup>
+
+## Agent Selection Logic
+
+Agents are automatically selected based on:
+
+1. **Explicit language/framework mentions** - Keywords trigger relevant agents
+2. **Problem domain** - Concurrency → Go/Rust, Async → Python/FastAPI, etc.
+3. **Technical complexity** - Advanced patterns route to specialized agents
+4. **Context from codebase** - File types and project structure inform selection
+
+<Note>
+**Pro Tip**: You can explicitly request an agent using `/agent <name> "<query>"` to bypass automatic selection.
+</Note>
+
+## Creating Custom Agents
+
+Use the Agent Template Wizard to create your own specialized agents:
+
+```bash
+/agent_init
+# Follow the wizard prompts to create a new agent
+```
+
+See the [Agent Template Wizard](/agents/agent-template-wizard) documentation for detailed instructions on creating production-ready agents.
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Explore Language Agents" icon="code" href="/agents/rust-expert">
+    Browse language-specific agents for Rust, Python, Go, and JavaScript
+  </Card>
+  <Card title="Framework Specialists" icon="gauge" href="/agents/fastapi-optimizer">
+    Learn about framework-focused agents like FastAPI Optimizer
+  </Card>
+  <Card title="Cross-Domain Experts" icon="diagram-project" href="/agents/documentation-writer">
+    Discover agents for documentation, performance, and architecture
+  </Card>
+  <Card title="Create Your Own" icon="wand-magic-sparkles" href="/agents/agent-template-wizard">
+    Build custom agents using the template wizard
+  </Card>
+</CardGroup>

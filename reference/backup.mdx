@@ -1,0 +1,52 @@
+---
+icon: "database"
+title: "Backup"
+description: "Comprehensive backup solution that automatically detects and backs up critical project assets including code, databases, configurations, and dependencies."
+---
+
+# Backup
+
+Comprehensive backup solution that automatically detects and backs up critical project assets including code, databases, configurations, and dependencies.
+
+## Usage
+
+```bash
+/backup [strategy] [destination]
+```
+
+## Features
+
+#
+
+## Parameters
+
+<ParamField path="strategy" type="string">
+  full, incremental, differential, snapshot (default: full)
+</ParamField>
+
+<ParamField path="destination" type="string">
+  local, cloud, git, s3 (default: local)
+</ParamField>
+
+## Examples
+
+<CodeGroup>
+
+```bash Basic Usage
+/backup
+/backup full local
+/backup incremental s3
+/backup snapshot git
+```
+
+</CodeGroup>
+
+<Warning>
+Features
+
+- Verification of backup integrity
+- Retention policy management
+- Automated cleanup of old backups
+- Restore testing capabilities
+</Warning>
+

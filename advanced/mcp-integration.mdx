@@ -1,0 +1,790 @@
+---
+title: MCP Integration
+description: Extend Claude Code capabilities with Model Context Protocol servers
+---
+
+The Model Context Protocol (MCP) allows you to extend Claude Code with powerful integrations to external services, databases, APIs, and custom tools. ccprompts provides comprehensive MCP integration commands for discovering, configuring, and managing MCP servers.
+
+## What is MCP?
+
+MCP (Model Context Protocol) is an open protocol that enables Claude to connect to external data sources and tools through standardized server implementations.
+
+### Key Benefits
+
+<CardGroup cols={2}>
+  <Card title="Extended Context" icon="database" color="#0ea5e9">
+    Access databases, filesystems, and APIs to provide Claude with richer context
+  </Card>
+  
+  <Card title="Custom Tools" icon="wrench" color="#10b981">
+    Add project-specific tools and capabilities beyond built-in commands
+  </Card>
+  
+  <Card title="Service Integration" icon="plug" color="#a855f7">
+    Connect to GitHub, Slack, Jira, databases, and 1000+ other services
+  </Card>
+  
+  <Card title="Workflow Automation" icon="gears" color="#f97316">
+    Automate complex workflows with specialized server capabilities
+  </Card>
+</CardGroup>
+
+## MCP Commands in ccprompts
+
+ccprompts provides four main MCP commands:
+
+### Command Overview
+
+<Tabs>
+  <Tab title="/mcp">
+    **Basic MCP setup and configuration**
+    
+    ```bash
+    /mcp [action] [integration]
+    ```
+    
+    **Actions:**
+    - `setup` - Configure new MCP server
+    - `test` - Test MCP server connection
+    - `configure` - Modify server settings
+    - `troubleshoot` - Debug integration issues
+    - `develop` - Create custom MCP server
+    
+    **Examples:**
+    ```bash
+    /mcp setup github
+    /mcp test database
+    /mcp configure monitoring
+    /mcp develop custom
+    ```
+  </Tab>
+  
+  <Tab title="/mcp-discover">
+    **Discover and install MCP servers**
+    
+    ```bash
+    /mcp-discover [category] [--install] [--evaluate]
+    ```
+    
+    **Categories:**
+    - `development` - Development tools
+    - `database` - Database connections
+    - `api` - API integrations
+    - `ai` - AI/ML services
+    - `productivity` - Project management
+    
+    **Examples:**
+    ```bash
+    /mcp-discover database --install
+    /mcp-discover --interactive
+    /mcp-discover development --stack typescript
+    ```
+  </Tab>
+  
+  <Tab title="/mcp-configure">
+    **Advanced server configuration**
+    
+    ```bash
+    /mcp-configure [server] [--environment] [--security]
+    ```
+    
+    **Features:**
+    - Multi-environment setup
+    - Security and authentication
+    - Performance optimization
+    - Monitoring and logging
+    
+    **Examples:**
+    ```bash
+    /mcp-configure postgres --environment production
+    /mcp-configure github --auth oauth2
+    /mcp-configure redis --security strict
+    ```
+  </Tab>
+  
+  <Tab title="/mcp-extend">
+    **Extend and customize servers**
+    
+    ```bash
+    /mcp-extend [server] [capability]
+    ```
+    
+    **Capabilities:**
+    - Custom tools and resources
+    - Server composition
+    - Middleware integration
+    - Performance enhancement
+    
+    **Examples:**
+    ```bash
+    /mcp-extend database custom-queries
+    /mcp-extend github pr-automation
+    /mcp-extend slack notification-templates
+    ```
+  </Tab>
+</Tabs>
+
+## Discovering MCP Servers
+
+Over 1000 MCP servers are available across multiple registries.
+
+### Official Registries
+
+<AccordionGroup>
+  <Accordion title="Anthropic Official">
+    Core MCP servers from the official repository:
+    
+    - **Filesystem** - Enhanced file operations
+    - **GitHub** - Repository management and operations
+    - **GitLab** - GitLab integration
+    - **Google Drive** - Drive file access
+    - **Slack** - Slack messaging and channels
+    - **PostgreSQL** - PostgreSQL database access
+    - **SQLite** - SQLite database access
+    
+    ```bash
+    /mcp-discover --registry anthropic
+    ```
+  </Accordion>
+  
+  <Accordion title="Smithery.ai">
+    Curated registry with quality ratings and reviews:
+    
+    - Community ratings and reviews
+    - Security and compatibility scores
+    - Installation statistics
+    - Comprehensive documentation
+    
+    ```bash
+    /mcp-discover --registry smithery
+    ```
+  </Accordion>
+  
+  <Accordion title="MCPServers.com">
+    Community-driven directory:
+    
+    - Setup guides and tutorials
+    - Example configurations
+    - Troubleshooting help
+    - Community support
+    
+    ```bash
+    /mcp-discover --registry mcpservers
+    ```
+  </Accordion>
+  
+  <Accordion title="mcp.run">
+    Hosted registry with security validation:
+    
+    - Automated security scanning
+    - Dependency vulnerability checks
+    - Performance benchmarks
+    - Compliance validation
+    
+    ```bash
+    /mcp-discover --registry mcprun
+    ```
+  </Accordion>
+</AccordionGroup>
+
+### Server Categories
+
+<Tabs>
+  <Tab title="Development & Code">
+    **Language Servers**
+    - TypeScript/JavaScript LSP integration
+    - Python language server
+    - Go language server
+    - Rust analyzer integration
+    
+    **Version Control**
+    - Advanced Git operations
+    - GitHub API integration
+    - GitLab integration
+    - Bitbucket integration
+    
+    **Code Analysis**
+    - ESLint integration
+    - SonarQube integration
+    - CodeClimate integration
+    - Static analysis tools
+    
+    **Example:**
+    ```bash
+    /mcp-discover development --install --stack typescript
+    ```
+  </Tab>
+  
+  <Tab title="Data & APIs">
+    **Databases**
+    - PostgreSQL, MySQL, SQLite
+    - MongoDB, Redis, Elasticsearch
+    - Vector databases (Pinecone, Weaviate)
+    - Graph databases (Neo4j)
+    
+    **API Integration**
+    - REST API clients
+    - GraphQL integration
+    - Webhook management
+    - API testing tools
+    
+    **Cloud Services**
+    - AWS SDK integration
+    - Google Cloud integration
+    - Azure integration
+    - Cloudflare Workers
+    
+    **Example:**
+    ```bash
+    /mcp-discover database --type postgres --install
+    ```
+  </Tab>
+  
+  <Tab title="AI & ML">
+    **Model Integration**
+    - OpenAI API integration
+    - Anthropic Claude API
+    - Hugging Face models
+    - Local model runners
+    
+    **Vector Search**
+    - Semantic search capabilities
+    - RAG (Retrieval Augmented Generation)
+    - Embedding generation
+    - Vector similarity search
+    
+    **Computer Vision**
+    - Image analysis and processing
+    - OCR capabilities
+    - Object detection
+    - Image generation
+    
+    **Example:**
+    ```bash
+    /mcp-discover ai --capabilities vector-search
+    ```
+  </Tab>
+  
+  <Tab title="Productivity">
+    **Project Management**
+    - Jira integration
+    - Linear integration
+    - Notion integration
+    - Asana integration
+    
+    **Communication**
+    - Slack integration
+    - Microsoft Teams
+    - Discord integration
+    - Email automation
+    
+    **Documentation**
+    - Confluence integration
+    - ReadMe.io integration
+    - GitBook integration
+    - Markdown processors
+    
+    **Example:**
+    ```bash
+    /mcp-discover productivity --category project-management
+    ```
+  </Tab>
+</Tabs>
+
+## Installing MCP Servers
+
+### Interactive Installation
+
+<Steps>
+  <Step title="Discover Available Servers">
+    ```bash
+    /mcp-discover database
+    ```
+    
+    **Output:**
+    ```
+    Available Database Servers:
+    
+    1. PostgreSQL Server ⭐ 4.8/5 (1.2k installs)
+       - Full PostgreSQL integration
+       - Query execution and schema inspection
+       - Transaction support
+       
+    2. MongoDB Server ⭐ 4.6/5 (890 installs)
+       - MongoDB database access
+       - Aggregation pipeline support
+       - Change stream monitoring
+       
+    3. Redis Server ⭐ 4.7/5 (650 installs)
+       - Redis key-value operations
+       - Pub/sub capabilities
+       - Cache management
+    ```
+  </Step>
+  
+  <Step title="Select and Install">
+    ```bash
+    /mcp-discover database --install --server postgres
+    ```
+    
+    **Installation process:**
+    ```
+    Installing @modelcontextprotocol/server-postgres...
+    
+    ✓ Package downloaded
+    ✓ Dependencies installed
+    ✓ Security scan passed
+    ✓ Compatibility verified
+    
+    Configuration required:
+    - DATABASE_URL: postgres://localhost/mydb
+    - READ_ONLY: true/false
+    
+    Would you like to configure now? (y/n)
+    ```
+  </Step>
+  
+  <Step title="Configure Server">
+    ```bash
+    /mcp-configure postgres
+    ```
+    
+    **Configuration:**
+    ```yaml
+    mcp_servers:
+      postgres:
+        server: "@modelcontextprotocol/server-postgres"
+        config:
+          connection_string: "${DATABASE_URL}"
+          read_only: true
+          max_connections: 5
+        security:
+          sandbox: true
+          network_access: limited
+    ```
+  </Step>
+  
+  <Step title="Test Connection">
+    ```bash
+    /mcp test postgres
+    ```
+    
+    **Test results:**
+    ```
+    Testing PostgreSQL MCP Server...
+    
+    ✓ Connection successful
+    ✓ Schema access verified
+    ✓ Query execution working
+    ✓ Security restrictions applied
+    
+    Server ready for use!
+    ```
+  </Step>
+</Steps>
+
+### Automatic Installation
+
+Let ccprompts analyze your project and install relevant servers:
+
+```bash
+# Analyze project and auto-install
+/mcp-discover --auto
+```
+
+**Example output:**
+```
+Project Analysis:
+- Type: Node.js Express API
+- Database: PostgreSQL detected
+- Testing: Jest
+- CI/CD: GitHub Actions
+
+Recommended MCP Servers:
+1. PostgreSQL Server (database access)
+2. GitHub Server (repository operations)
+3. Slack Server (notifications)
+
+Installing recommended servers...
+✓ All servers installed and configured
+```
+
+## Configuring MCP Servers
+
+### Basic Configuration
+
+MCP servers are configured in `.claude/mcp-config.json`:
+
+<CodeGroup>
+```json Simple Configuration
+{
+  "mcp_servers": {
+    "postgres": {
+      "server": "@modelcontextprotocol/server-postgres",
+      "config": {
+        "connection_string": "${DATABASE_URL}",
+        "read_only": true
+      }
+    }
+  }
+}
+```
+
+```json Multi-Environment
+{
+  "mcp_servers": {
+    "postgres": {
+      "server": "@modelcontextprotocol/server-postgres",
+      "environments": {
+        "development": {
+          "connection_string": "${DEV_DATABASE_URL}",
+          "read_only": false
+        },
+        "production": {
+          "connection_string": "${PROD_DATABASE_URL}",
+          "read_only": true
+        }
+      }
+    }
+  }
+}
+```
+
+```json Advanced Security
+{
+  "mcp_servers": {
+    "postgres": {
+      "server": "@modelcontextprotocol/server-postgres",
+      "config": {
+        "connection_string": "${DATABASE_URL}",
+        "read_only": true,
+        "max_connections": 5,
+        "timeout": 30000
+      },
+      "security": {
+        "sandbox": true,
+        "network_access": "limited",
+        "allowed_operations": ["SELECT", "EXPLAIN"],
+        "denied_tables": ["users", "passwords"]
+      },
+      "monitoring": {
+        "log_queries": true,
+        "log_level": "info",
+        "alert_on_errors": true
+      }
+    }
+  }
+}
+```
+</CodeGroup>
+
+### Environment Variables
+
+Store sensitive data in environment variables:
+
+```bash
+# .env file
+DATABASE_URL=postgres://user:pass@localhost:5432/mydb
+GITHUB_TOKEN=ghp_xxxxxxxxxxxxxxxxxxxx
+SLACK_WEBHOOK=https://hooks.slack.com/services/xxx
+REDIS_URL=redis://localhost:6379
+```
+
+<Warning>
+Never commit `.env` files or hardcode credentials. Always use environment variables for sensitive configuration.
+</Warning>
+
+## Common Integration Patterns
+
+### Database Integration
+
+<Accordion title="PostgreSQL Integration">
+  **Setup:**
+  ```bash
+  /mcp setup database
+  /mcp-configure postgres --connection ${DATABASE_URL} --read-only
+  ```
+  
+  **Use cases:**
+  - Schema inspection and documentation
+  - Query analysis and optimization
+  - Data exploration and reporting
+  - Migration assistance
+  
+  **Example queries:**
+  ```
+  Claude: "Show me the schema for the users table"
+  Claude: "Find all slow queries in the application"
+  Claude: "Generate a report of user signups by month"
+  ```
+</Accordion>
+
+<Accordion title="MongoDB Integration">
+  **Setup:**
+  ```bash
+  /mcp-discover database --server mongodb --install
+  /mcp-configure mongodb --uri ${MONGODB_URI}
+  ```
+  
+  **Use cases:**
+  - Collection schema analysis
+  - Aggregation pipeline development
+  - Index optimization
+  - Data migration
+  
+  **Example queries:**
+  ```
+  Claude: "Show me documents in the orders collection"
+  Claude: "Create an aggregation pipeline for sales analysis"
+  Claude: "Suggest indexes for the products collection"
+  ```
+</Accordion>
+
+### API Integration
+
+<Accordion title="GitHub Integration">
+  **Setup:**
+  ```bash
+  /mcp setup github
+  /mcp-configure github --auth oauth2 --token ${GITHUB_TOKEN}
+  ```
+  
+  **Capabilities:**
+  - Repository operations
+  - PR creation and management
+  - Issue tracking
+  - Code search
+  - Workflow automation
+  
+  **Example usage:**
+  ```bash
+  # In Claude Code:
+  "Create a PR for this feature"
+  "Show open issues labeled 'bug'"
+  "Search for similar implementations in other repos"
+  ```
+</Accordion>
+
+<Accordion title="Slack Integration">
+  **Setup:**
+  ```bash
+  /mcp-discover productivity --server slack --install
+  /mcp-configure slack --webhook ${SLACK_WEBHOOK}
+  ```
+  
+  **Capabilities:**
+  - Send notifications
+  - Channel management
+  - Message threading
+  - User mentions
+  
+  **Example usage:**
+  ```bash
+  # Automated notifications:
+  "Notify #deploys channel of production deployment"
+  "Send PR review request to @team in #code-review"
+  ```
+</Accordion>
+
+### Custom MCP Server Development
+
+Create project-specific MCP servers:
+
+<Steps>
+  <Step title="Initialize Server">
+    ```bash
+    /mcp develop custom --name project-api-server
+    ```
+  </Step>
+  
+  <Step title="Define Tools">
+    ```typescript
+    // server.ts
+    import { MCPServer } from '@modelcontextprotocol/sdk';
+    
+    const server = new MCPServer({
+      name: 'project-api-server',
+      version: '1.0.0'
+    });
+    
+    // Custom tool: Deploy to staging
+    server.addTool({
+      name: 'deploy_staging',
+      description: 'Deploy current branch to staging environment',
+      parameters: {
+        branch: { type: 'string', required: true },
+        runTests: { type: 'boolean', default: true }
+      },
+      handler: async (params) => {
+        // Deployment logic
+        return { success: true, url: 'https://staging.example.com' };
+      }
+    });
+    ```
+  </Step>
+  
+  <Step title="Register Server">
+    ```bash
+    /mcp-configure project-api-server --local ./mcp-server
+    ```
+  </Step>
+  
+  <Step title="Use Custom Tools">
+    ```
+    Claude: "Deploy current branch to staging"
+    → Uses custom deploy_staging tool
+    ✓ Deployed to https://staging.example.com
+    ```
+  </Step>
+</Steps>
+
+## Best Practices
+
+### Security
+
+<Card title="Security Checklist" icon="shield-check">
+  **Configuration:**
+  - ✓ Use environment variables for credentials
+  - ✓ Enable read-only mode when possible
+  - ✓ Limit network access
+  - ✓ Use sandbox mode for untrusted operations
+  - ✓ Restrict allowed operations
+  
+  **Monitoring:**
+  - ✓ Enable audit logging
+  - ✓ Monitor server usage
+  - ✓ Alert on suspicious activity
+  - ✓ Regular security audits
+  
+  **Access Control:**
+  - ✓ Principle of least privilege
+  - ✓ Separate dev/prod credentials
+  - ✓ Rotate credentials regularly
+  - ✓ Review access logs
+</Card>
+
+### Performance
+
+<CardGroup cols={2}>
+  <Card title="Connection Pooling" icon="arrows-split-up-and-left">
+    Configure connection limits:
+    ```yaml
+    max_connections: 5
+    connection_timeout: 30s
+    idle_timeout: 60s
+    ```
+  </Card>
+  
+  <Card title="Caching" icon="database">
+    Enable result caching:
+    ```yaml
+    cache:
+      enabled: true
+      ttl: 300
+      max_size: 100MB
+    ```
+  </Card>
+  
+  <Card title="Rate Limiting" icon="gauge">
+    Prevent overload:
+    ```yaml
+    rate_limit:
+      requests_per_minute: 60
+      burst: 10
+    ```
+  </Card>
+  
+  <Card title="Monitoring" icon="chart-line">
+    Track performance:
+    ```yaml
+    monitoring:
+      metrics: true
+      slow_query_log: true
+      threshold: 1000ms
+    ```
+  </Card>
+</CardGroup>
+
+## Troubleshooting
+
+### Common Issues
+
+<AccordionGroup>
+  <Accordion title="Connection Failures">
+    **Symptoms:**
+    - "Failed to connect to MCP server"
+    - "Connection timeout"
+    
+    **Solutions:**
+    ```bash
+    # Verify server is running
+    /mcp test postgres
+    
+    # Check configuration
+    /mcp-configure postgres --verify
+    
+    # Review logs
+    /mcp troubleshoot postgres --logs
+    
+    # Test network connectivity
+    /mcp troubleshoot postgres --network
+    ```
+  </Accordion>
+  
+  <Accordion title="Authentication Errors">
+    **Symptoms:**
+    - "Authentication failed"
+    - "Invalid credentials"
+    
+    **Solutions:**
+    ```bash
+    # Verify environment variables
+    echo $DATABASE_URL
+    echo $GITHUB_TOKEN
+    
+    # Reconfigure authentication
+    /mcp-configure postgres --auth-reset
+    
+    # Test with explicit credentials
+    /mcp test postgres --connection-string "postgres://..."
+    ```
+  </Accordion>
+  
+  <Accordion title="Performance Issues">
+    **Symptoms:**
+    - Slow query execution
+    - Timeout errors
+    
+    **Solutions:**
+    ```bash
+    # Check server metrics
+    /mcp monitor postgres
+    
+    # Analyze slow queries
+    /mcp troubleshoot postgres --slow-queries
+    
+    # Optimize configuration
+    /mcp-configure postgres --optimize
+    ```
+  </Accordion>
+</AccordionGroup>
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Workflow Automation" href="/advanced/workflow-automation" icon="diagram-project">
+    Use MCP servers in automated workflows
+  </Card>
+  
+  <Card title="Creating Agents" href="/advanced/creating-agents" icon="robot">
+    Build agents that leverage MCP capabilities
+  </Card>
+  
+  <Card title="Multi-Repo Management" href="/advanced/multi-repo-management" icon="folder-tree">
+    Coordinate MCP across multiple repositories
+  </Card>
+  
+  <Card title="MCP Documentation" href="https://modelcontextprotocol.io" icon="book">
+    Official MCP documentation
+  </Card>
+</CardGroup>

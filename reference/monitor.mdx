@@ -1,0 +1,43 @@
+---
+icon: "chart-line"
+title: "Monitor"
+description: "Comprehensive monitoring setup that implements observability best practices including metrics, logs, traces, and alerts for production systems."
+---
+
+# Monitor
+
+Comprehensive monitoring setup that implements observability best practices including metrics, logs, traces, and alerts for production systems.
+
+## Usage
+
+```bash
+/monitor [component] [provider]
+```
+
+## Features
+
+#
+
+## Parameters
+
+<ParamField path="component" type="string">
+  app, infra, database, api, all (default: all)
+</ParamField>
+
+<ParamField path="provider" type="string">
+  datadog, prometheus, newrelic, grafana, cloudwatch (default: auto-detect)
+</ParamField>
+
+## Examples
+
+<CodeGroup>
+
+```bash Basic Usage
+/monitor
+/monitor app datadog
+/monitor database prometheus
+/monitor all grafana
+```
+
+</CodeGroup>
+

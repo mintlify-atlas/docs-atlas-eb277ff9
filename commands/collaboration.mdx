@@ -1,0 +1,436 @@
+---
+title: "Phase 06: Collaboration"
+description: "Team coordination, code review, monitoring, and technical debt management"
+---
+
+The Collaboration phase provides commands for team coordination, automated code reviews, system monitoring, and technical debt tracking.
+
+## Commands in This Phase
+
+<CardGroup cols={2}>
+  <Card title="/code-review" icon="code-pull-request" href="/commands/code-review">
+    Automated code review assistance and pull request analysis
+  </Card>
+  
+  <Card title="/daily-standup" icon="comments" href="/commands/daily-standup">
+    Automated daily standup reports and team communication
+  </Card>
+  
+  <Card title="/monitor" icon="chart-line" href="/commands/monitor">
+    Comprehensive monitoring and observability setup
+  </Card>
+  
+  <Card title="/tech-debt" icon="screwdriver-wrench" href="/commands/tech-debt">
+    Technical debt tracking and remediation planning
+  </Card>
+</CardGroup>
+
+## Overview
+
+Phase 06 commands enhance team productivity through automated reviews, monitoring, and systematic debt management.
+
+### Key Capabilities
+
+**Code Review Automation**
+- Automated PR analysis and feedback
+- Code quality assessment
+- Security vulnerability detection
+- Best practice recommendations
+- Review checklist generation
+
+**Team Communication**
+- Automated standup report generation
+- Work summary and progress tracking
+- Blocker identification
+- Team activity aggregation
+- Integration with Slack, Teams, Discord
+
+**Monitoring & Observability**
+- Application performance monitoring
+- Infrastructure health tracking
+- Error tracking and alerting
+- Custom metrics and dashboards
+- SLA monitoring
+
+**Technical Debt Management**
+- Debt identification and categorization
+- Priority-based remediation planning
+- Impact assessment and tracking
+- Progress monitoring
+- Team accountability
+
+## Use Cases
+
+### Automated Code Review
+
+```bash
+/code-review PR-123 comprehensive
+```
+
+Comprehensive automated review of pull request with security, quality, and best practice feedback.
+
+### Daily Standup Reports
+
+```bash
+/daily-standup team yesterday
+```
+
+Generate automated standup reports from Git activity, PRs, and issue tracking.
+
+### Production Monitoring Setup
+
+```bash
+/monitor production full-stack
+```
+
+Complete monitoring and alerting setup for production applications.
+
+### Technical Debt Assessment
+
+```bash
+/tech-debt assess full-codebase
+```
+
+Identify and prioritize technical debt across the entire codebase.
+
+## Example Workflows
+
+### Pull Request Review Process
+
+1. **Automated Review**: `/code-review PR-456 comprehensive`
+2. **Address Issues**: Fix identified problems
+3. **Re-Review**: Automated validation of fixes
+4. **Approval**: Merge when all checks pass
+5. **Monitor**: Track deployment impact
+
+### Daily Team Coordination
+
+1. **Standup Report**: `/daily-standup team yesterday`
+2. **Review Blockers**: Identify impediments
+3. **Plan Today**: Set daily priorities
+4. **Track Progress**: Monitor work items
+5. **End-of-Day**: Update status
+
+### Production Health Management
+
+1. **Setup Monitoring**: `/monitor production full-stack`
+2. **Configure Alerts**: Set threshold and escalation
+3. **Dashboard**: Create team visibility
+4. **Incident Response**: Automated alerts trigger response
+5. **Post-Mortem**: Learn and improve
+
+### Technical Debt Reduction
+
+1. **Assess**: `/tech-debt assess full-codebase`
+2. **Prioritize**: Rank by impact and effort
+3. **Plan**: Create sprint-sized work items
+4. **Execute**: Systematic debt reduction
+5. **Track**: Monitor debt reduction progress
+
+## Code Review Features
+
+### Automated Analysis
+
+**Code Quality**:
+- Complexity analysis
+- Duplication detection
+- Code smell identification
+- Naming convention validation
+- Documentation completeness
+
+**Security**:
+- Vulnerability scanning
+- Input validation checks
+- Authentication/authorization review
+- Secrets detection
+- Dependency security
+
+**Performance**:
+- Algorithm efficiency
+- Database query optimization
+- Resource usage analysis
+- Memory leak detection
+- Caching opportunities
+
+**Best Practices**:
+- Framework patterns
+- Design patterns application
+- Error handling review
+- Testing coverage
+- Documentation quality
+
+### Review Levels
+
+**Quick Review** (5-10 minutes):
+- Critical issues only
+- Security vulnerabilities
+- Breaking changes
+- Obvious bugs
+
+**Standard Review** (15-30 minutes):
+- Code quality analysis
+- Test coverage check
+- Documentation review
+- Best practices validation
+
+**Comprehensive Review** (30-60 minutes):
+- Deep code analysis
+- Architecture review
+- Performance assessment
+- Security audit
+- Complete documentation check
+
+## Standup Report Types
+
+### Individual Reports
+
+Personal activity summary:
+- Yesterday's accomplishments
+- Today's planned work
+- Identified blockers
+- PR activity
+- Code review contributions
+
+### Team Reports
+
+Aggregate team activity:
+- Team velocity metrics
+- Sprint progress
+- Blocker summary
+- Cross-team dependencies
+- Collaboration patterns
+
+### Manager Reports
+
+Executive summary:
+- Sprint health indicators
+- Risk assessment
+- Resource allocation
+- Team capacity
+- Milestone tracking
+
+## Monitoring Capabilities
+
+### Application Monitoring
+
+**Performance Metrics**:
+- Response time tracking
+- Throughput measurement
+- Error rate monitoring
+- Transaction tracing
+- Database query performance
+
+**User Experience**:
+- Real user monitoring (RUM)
+- Page load times
+- User journey tracking
+- Conversion funnel analysis
+- Session replay
+
+**Business Metrics**:
+- Custom business KPIs
+- Revenue tracking
+- User engagement
+- Feature adoption
+- A/B test metrics
+
+### Infrastructure Monitoring
+
+**System Health**:
+- CPU and memory usage
+- Disk I/O and space
+- Network performance
+- Container health
+- Service availability
+
+**Cloud Resources**:
+- AWS/Azure/GCP metrics
+- Auto-scaling events
+- Cost tracking
+- Resource utilization
+- Quota monitoring
+
+**Database Monitoring**:
+- Query performance
+- Connection pool health
+- Replication lag
+- Lock contention
+- Storage usage
+
+### Alerting & Incidents
+
+**Alert Configuration**:
+- Threshold-based alerts
+- Anomaly detection
+- Composite conditions
+- Escalation policies
+- Alert routing
+
+**Incident Management**:
+- Automated incident creation
+- Severity classification
+- On-call rotation
+- Status page updates
+- Post-mortem generation
+
+## Technical Debt Categories
+
+### Code Debt
+
+**Issues**:
+- Code duplication
+- Complex functions
+- Poor naming
+- Missing documentation
+- Outdated patterns
+
+**Impact**: Maintainability, developer productivity
+
+### Architecture Debt
+
+**Issues**:
+- Tight coupling
+- Missing abstractions
+- Monolithic structures
+- Scalability limitations
+- Performance bottlenecks
+
+**Impact**: Scalability, performance, extensibility
+
+### Test Debt
+
+**Issues**:
+- Low test coverage
+- Flaky tests
+- Missing integration tests
+- Outdated test data
+- Poor test organization
+
+**Impact**: Quality, confidence, velocity
+
+### Documentation Debt
+
+**Issues**:
+- Outdated documentation
+- Missing API docs
+- Incomplete runbooks
+- No architecture diagrams
+- Missing decision records
+
+**Impact**: Onboarding, knowledge sharing, maintenance
+
+### Dependency Debt
+
+**Issues**:
+- Outdated dependencies
+- Security vulnerabilities
+- License incompatibilities
+- Unused dependencies
+- Multiple versions
+
+**Impact**: Security, compatibility, maintenance
+
+## Debt Prioritization
+
+### High Priority
+
+**Characteristics**:
+- Security vulnerabilities
+- Critical performance issues
+- Blocking new features
+- High developer friction
+- Compliance requirements
+
+**Timeline**: Address within current sprint
+
+### Medium Priority
+
+**Characteristics**:
+- Moderate performance impact
+- Affecting team velocity
+- Moderate complexity
+- Growing technical burden
+- Quality degradation
+
+**Timeline**: Address within 1-2 sprints
+
+### Low Priority
+
+**Characteristics**:
+- Minor annoyances
+- Low impact on velocity
+- Easy to work around
+- Cosmetic issues
+- Future-proofing
+
+**Timeline**: Address when capacity allows
+
+## Integration Platforms
+
+### Communication Tools
+
+- **Slack**: Automated reports, alerts, and notifications
+- **Microsoft Teams**: Channel integration and bot commands
+- **Discord**: Developer community integration
+- **Email**: Formatted reports and digest emails
+
+### Project Management
+
+- **Jira**: Issue tracking and sprint management
+- **GitHub**: Issues, projects, and discussions
+- **Linear**: Modern issue tracking
+- **Asana**: Task and project management
+
+### Monitoring Tools
+
+- **Datadog**: Full-stack monitoring and APM
+- **New Relic**: Application performance monitoring
+- **Grafana**: Metrics visualization and dashboards
+- **Sentry**: Error tracking and performance
+- **PagerDuty**: Incident management and on-call
+
+## Collaboration Metrics
+
+### Team Velocity
+
+- Story points completed
+- Cycle time trends
+- Throughput metrics
+- Work in progress limits
+- Sprint predictability
+
+### Code Quality
+
+- Review turnaround time
+- Defect density
+- Code churn rate
+- Technical debt ratio
+- Test coverage trends
+
+### Team Health
+
+- Work distribution balance
+- Collaboration patterns
+- Knowledge sharing frequency
+- Blocker resolution time
+- Team satisfaction
+
+## Related Phases
+
+- **Phase 04: Testing** - Test debt identification
+- **Phase 05: Deployment** - Monitor deployments
+- **Phase 07: Utilities** - Best practices and knowledge base
+- **Phase 08: Extras** - Health checks and workflow building
+
+## Best Practices
+
+1. **Automate Reviews**: Use automated reviews to maintain consistency
+2. **Daily Standups**: Generate reports before team meetings
+3. **Proactive Monitoring**: Set up monitoring before issues arise
+4. **Regular Debt Assessment**: Review technical debt quarterly
+5. **Prioritize Ruthlessly**: Focus on high-impact debt items
+6. **Track Metrics**: Measure and improve collaboration metrics
+7. **Team Visibility**: Share monitoring dashboards with team
+8. **Celebrate Progress**: Recognize debt reduction achievements
+9. **Document Decisions**: Maintain clear communication records
+10. **Continuous Improvement**: Iterate on collaboration processes

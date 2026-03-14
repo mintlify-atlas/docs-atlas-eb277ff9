@@ -1,0 +1,258 @@
+---
+title: "Introduction"
+description: "Discover ccprompts: 70+ production-ready Claude Code commands with specialized AI agents and enterprise-grade safety"
+---
+
+## What is ccprompts?
+
+ccprompts is a comprehensive Claude Code plugin that transforms your development workflow with **70+ production-ready slash commands** across 12 development phases, **10 specialized AI agents**, and a **Dagger-based safety system**. Whether you're analyzing a new codebase, deploying to production, or implementing enterprise governance, ccprompts provides the tools and expertise you need.
+
+Install as a plugin for instant access to enterprise-grade workflows, or use the repository directly for customization.
+
+<Note>
+**Developer Notice**: This repository is under active development. Commands may contain bugs, breaking changes can occur between versions, and the structure may evolve. Use with caution in production environments.
+</Note>
+
+## Key Benefits
+
+<CardGroup cols={2}>
+  <Card title="Comprehensive Command Library" icon="terminal">
+    70+ commands organized across 12 development phases from initial workflow analysis to enterprise-scale operations. Every phase of software development is covered.
+  </Card>
+  
+  <Card title="Specialized AI Agents" icon="robot">
+    10 domain experts including Rust, Python, Go, JavaScript, FastAPI specialists, and more. Each agent follows a consistent 7-step methodology with deep technical knowledge.
+  </Card>
+  
+  <Card title="Enterprise-Grade Safety" icon="shield-check">
+    Dagger container isolation for dangerous commands with automatic rollback, read-only project mounting, and comprehensive audit logging. 65.7% safety rate across 517+ test cases.
+  </Card>
+  
+  <Card title="Multi-Dimensional Validation" icon="check-double">
+    Every command validated across structure, security, quality, and performance dimensions with numeric scoring to ensure reliability.
+  </Card>
+  
+  <Card title="MCP Integration" icon="plug">
+    Model Context Protocol support with 1000+ available MCP servers for enhanced AI workflows, database connections, API integrations, and more.
+  </Card>
+  
+  <Card title="Team-Wide Consistency" icon="users">
+    Install as a plugin for automatic team distribution. Shared plugin configuration ensures everyone has access to the same workflows.
+  </Card>
+</CardGroup>
+
+## Core Features
+
+### 70+ Production-Ready Commands
+
+Commands are organized across 12 development phases:
+
+- **Phase 00: Initial Workflow** (2 commands) - Intelligent project analysis and command chaining
+- **Phase 01: Project Setup** (3 commands) - Documentation, learning, and MCP configuration
+- **Phase 02: Development** (5 commands) - Backup, debug, migrate, optimize, refactor
+- **Phase 03: Security** (4 commands) - Security auditing, compliance, and hardening
+- **Phase 04: Testing** (2 commands) - Comprehensive testing and troubleshooting
+- **Phase 05: Deployment** (4 commands) - CI/CD setup, deployment, and monitoring
+- **Phase 06: Collaboration** (4 commands) - Code review and team workflows
+- **Phase 07: Utilities** (10 commands) - Productivity and management tools
+- **Phase 08: Extras** (4 commands) - Health checks and modernization
+- **Phase 09: Agentic Capabilities** (12 commands) - MCP and agent orchestration
+- **Phase 10: AI-Native Development** (10 commands) - AI-powered development tools
+- **Phase 11: Enterprise Scale** (8 commands) - Governance and multi-repo management
+
+### 10 Specialized AI Agents
+
+Domain-specific expertise available on-demand:
+
+<CardGroup cols={2}>
+  <Card title="rust-expert" icon="rust">
+    Ownership, lifetimes, and systems programming expertise
+  </Card>
+  <Card title="python-pro" icon="python">
+    Modern Python development with async patterns and decorators
+  </Card>
+  <Card title="golang-pro" icon="golang">
+    Goroutines, channels, and concurrent systems
+  </Card>
+  <Card title="javascript-expert" icon="js">
+    ES6+, async/await, and modern web development
+  </Card>
+  <Card title="bash-shell-scripting" icon="terminal">
+    Shell automation and scripting expertise
+  </Card>
+  <Card title="fastapi-optimizer" icon="gauge">
+    FastAPI performance and async patterns
+  </Card>
+  <Card title="documentation-writer" icon="book">
+    Technical writing and API documentation
+  </Card>
+  <Card title="performance-optimizer" icon="bolt">
+    System-wide performance optimization
+  </Card>
+  <Card title="systems-architect" icon="diagram-project">
+    Architecture design and scalability patterns
+  </Card>
+  <Card title="agent-template-wizard" icon="wand-magic-sparkles">
+    Custom agent creation with consistent structure
+  </Card>
+</CardGroup>
+
+### Dagger-Based Safety System
+
+ccprompts includes a comprehensive safety system for executing potentially dangerous commands:
+
+<Steps>
+  <Step title="Pattern Detection">
+    Automatically identifies dangerous commands using regex patterns for destructive operations
+  </Step>
+  
+  <Step title="Container Isolation">
+    Executes risky operations in isolated Ubuntu containers with resource limits and read-only project mounting
+  </Step>
+  
+  <Step title="Automatic Cleanup">
+    Container resources are automatically released after execution with comprehensive cleanup
+  </Step>
+  
+  <Step title="Rollback Validation">
+    Verifies safety before allowing changes to persist with automatic rollback capabilities
+  </Step>
+</Steps>
+
+<Warning>
+To enable the safety system, install Dagger. While not explicitly required, it's highly recommended for containerized command execution.
+</Warning>
+
+### Multi-Dimensional Validation
+
+Every command in ccprompts is validated across four dimensions:
+
+1. **Structural Integrity** - Command format, metadata, and documentation completeness
+2. **Security Compliance** - Dangerous patterns, permission requirements, input validation
+3. **Quality Metrics** - Code organization, error handling, best practices
+4. **Performance Benchmarks** - Resource usage, execution time, optimization opportunities
+
+Each dimension receives a numeric score, ensuring consistent quality across the entire command library.
+
+## Agent Template System
+
+ccprompts includes a powerful agent creation system using the [`SUBAGENT_TEMPLATE.md`](https://github.com/ursisterbtw/ccprompts/blob/main/templates/SUBAGENT_TEMPLATE.md):
+
+<Steps>
+  <Step title="Use the Agent Template Wizard">
+    Run the `agent-template-wizard` agent to create new specialized agents
+  </Step>
+  
+  <Step title="Provide Domain Expertise">
+    Specify the domain expertise and specific capabilities needed for your agent
+  </Step>
+  
+  <Step title="Automated Generation">
+    The wizard fills template placeholders with consistent structure and formatting
+  </Step>
+  
+  <Step title="7-Step Methodology">
+    Generated agents follow the standardized 7-step methodology with proper categorization
+  </Step>
+  
+  <Step title="Deploy and Use">
+    Agents include examples, color coding, and validation approaches ready for immediate use
+  </Step>
+</Steps>
+
+The template system ensures consistent agent structure while allowing domain-specific customization.
+
+## Use Cases
+
+<AccordionGroup>
+  <Accordion title="Project Onboarding">
+    Use `/analyze-project` to understand new or inherited codebases. Get personalized recommendations based on project characteristics, technology stack, and maturity level.
+  </Accordion>
+  
+  <Accordion title="Security Auditing">
+    Run comprehensive security audits with `/audit-security` to identify vulnerabilities, compliance gaps, and security best practices specific to your stack.
+  </Accordion>
+  
+  <Accordion title="CI/CD Setup">
+    Configure production-ready CI/CD pipelines with `/setup-ci` for GitHub Actions, GitLab CI, or other platforms with automated testing and deployment.
+  </Accordion>
+  
+  <Accordion title="Performance Optimization">
+    Analyze and optimize performance with `/optimize` and specialized agents. Get recommendations for database queries, API endpoints, and resource usage.
+  </Accordion>
+  
+  <Accordion title="Enterprise Governance">
+    Implement governance policies with `/governance` for multi-repo management, compliance auditing, and cost optimization at enterprise scale.
+  </Accordion>
+  
+  <Accordion title="AI Pair Programming">
+    Leverage `/ai-pair-program` for context-aware coding assistance with advanced TypeScript, debugging support, and intelligent suggestions.
+  </Accordion>
+</AccordionGroup>
+
+## Why ccprompts?
+
+### Plugin Installation Benefits
+
+- **Universal Access** - All commands available in any project without manual copying
+- **Automatic Updates** - Get new versions and features automatically when released
+- **Clean Separation** - Your code stays separate from the command ecosystem
+- **Team Distribution** - Shared plugin configuration ensures team-wide consistency
+- **Zero Setup** - No need to clone the repository for each project
+
+### Repository Installation Benefits
+
+- **Full Customization** - Modify commands and agents to fit your specific needs
+- **Private Extensions** - Add company-specific commands and workflows
+- **Development Control** - Test and validate changes before deployment
+- **Learning Resource** - Study command structure and agent design patterns
+- **Contribution** - Develop new commands and contribute back to the community
+
+## Repository Structure
+
+```text
+.claude/
+├── commands/          # 70+ commands across 12 phases (00-11)
+│   ├── 00-initial-workflow/     # Project analysis (2 commands)
+│   ├── 01-project-setup/        # Documentation, MCP (3 commands)
+│   ├── 02-development/          # Debug, optimize (5 commands)
+│   ├── 03-security/             # Security auditing (4 commands)
+│   ├── 04-testing/              # Testing workflows (2 commands)
+│   ├── 05-deployment/           # CI/CD, deployment (4 commands)
+│   ├── 06-collaboration/        # Code review (4 commands)
+│   ├── 07-utilities/            # Productivity tools (10 commands)
+│   ├── 08-extras/               # Health checks (4 commands)
+│   ├── 09-agentic-capabilities/ # MCP, agents (12 commands)
+│   ├── 10-ai-native-development/# AI tools (10 commands)
+│   └── 11-enterprise-scale/     # Governance (8 commands)
+├── agents/            # 10 specialized AI agents
+├── workflows/         # Automated workflow definitions
+├── README.md
+├── settings.json
+└── command-registry.json
+
+scripts/               # Safety system + validation utilities
+templates/             # Subagent template files
+tests/                 # Jest testing suite
+docs/                  # Multi-level documentation
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Installation" icon="download" href="/installation">
+    Install ccprompts as a plugin or clone the repository
+  </Card>
+  
+  <Card title="Quick Start" icon="rocket" href="/quickstart">
+    Get up and running with your first command in minutes
+  </Card>
+  
+  <Card title="Command Reference" icon="book-open" href="/reference/analyze-project">
+    Explore all 70+ commands with detailed documentation
+  </Card>
+  
+  <Card title="Contributing" icon="code-pull-request" href="/development/contributing">
+    Learn how to create custom commands and agents
+  </Card>
+</CardGroup>

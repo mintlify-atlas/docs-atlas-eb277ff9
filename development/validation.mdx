@@ -1,0 +1,420 @@
+---
+title: Validation Scripts
+description: Using validation scripts, lint, and security scanning
+---
+
+The ccprompts project includes a comprehensive validation system that checks command structure, quality, security, and performance across all 70+ slash commands.
+
+## Validation Commands
+
+### Core Validation
+
+<CodeGroup>
+```bash Full Validation
+# Validate all 70+ commands (expects exact count)
+bun run validate
+```
+
+```bash Security Scan
+# Security-focused validation only
+bun run security-scan
+```
+
+```bash Safety Validation
+# Dagger container safety system
+bun run safety-validate
+```
+
+```bash Plugin Validation
+# Validates plugin.json and marketplace config
+bun run validate:plugin
+```
+</CodeGroup>
+
+### Linting Commands
+
+<CodeGroup>
+```bash Check Lint
+# Run markdownlint on documentation
+bun run lint
+```
+
+```bash Auto-Fix Lint
+# Auto-fix markdown formatting issues
+bun run lint:fix
+```
+
+```bash Check Links
+# Validate all markdown links
+bun run check-links
+```
+</CodeGroup>
+
+### Full CI Pipeline
+
+```bash
+# Run complete validation pipeline
+bun run ci
+# Runs: validate:plugin + validate + lint + check-links
+```
+
+## Multi-Dimensional Validation
+
+The validation engine validates across four dimensions:
+
+### 1. Structural Validation
+
+**What it checks:**
+- Markdown format correctness
+- Frontmatter presence and validity
+- Section completeness (Usage, Description, Examples)
+- Heading hierarchy
+- Code block formatting
+- Line endings (must be LF, not CRLF)
+
+**Target:** 95%+ structural compliance
+
+<Note>
+  Each command receives a numeric `_score` field (0-100) reflecting validation pass rate.
+</Note>
+
+### 2. Security Validation
+
+**Pattern detection:**
+
+<CodeGroup>
+```javascript Hardcoded Secrets
+// Detects patterns like:
+password = "actual-password-123"
+api_key = "sk-1234567890abcdef"
+secret = "my-secret-value"
+token = "ghp_1234567890abcdef"
+```
+
+```javascript Dangerous Patterns
+// Detects risky code:
+eval(userInput)
+element.innerHTML = userInput
+`${user.input}` // template injection
+```
+</CodeGroup>
+
+**Skip patterns:** Excludes examples with keywords like "example", "placeholder", "your-", "REPLACE_WITH"
+
+### 3. Quality Scoring
+
+**Quality checks:**
+
+| Check | Weight | Description |
+|-------|--------|-------------|
+| Minimum content length | 15 | Content >500 characters |
+| Examples section | 20 | Includes usage examples |
+| Clear instructions | 25 | Has `<instructions>` tags |
+| Security considerations | 15 | Mentions security/safety |
+| Output requirements | 10 | Defines deliverables |
+| Professional language | 10 | No TODO/FIXME markers |
+
+**Scoring:** Each command gets a quality score of 0-100 based on checks passed.
+
+### 4. Performance Metrics
+
+**Targets:**
+- File discovery: &lt;100ms
+- Total validation: &lt;2000ms
+- Current performance: ~3ms discovery + ~28ms validation
+
+**Memory tracking:**
+- Heap usage monitored
+- Delta reported
+- Average file processing time tracked
+
+## Safety Validation System
+
+The Dagger-based safety system provides containerized validation for dangerous commands.
+
+### Running Safety Validation
+
+```bash
+# Run Dagger safety validation
+bun run safety-validate
+```
+
+**What it validates:**
+
+<Steps>
+  <Step title="Pattern Detection">
+    Identifies dangerous commands automatically via regex patterns:
+
+    - `rm -rf` patterns
+    - `curl | bash` patterns
+    - `sudo` usage
+    - `chmod` operations
+    - `docker --privileged`
+    - `eval()` calls
+  </Step>
+
+  <Step title="Container Isolation">
+    Commands marked as dangerous execute in isolated Dagger containers:
+
+    - Ubuntu 22.04 base image
+    - Resource limits enforced (CPU/memory caps)
+    - Read-only project mounts
+    - Network restrictions
+  </Step>
+
+  <Step title="Rollback Validation">
+    Verifies execution safety before allowing persistence:
+
+    - Automatic cleanup
+    - Comprehensive audit logging
+    - Safety recommendations generated
+  </Step>
+</Steps>
+
+### Safety Levels
+
+Commands are classified into safety levels:
+
+| Level | Patterns | Examples |
+|-------|----------|----------|
+| **Critical** | `rm -rf`, `curl.*\|.*bash`, `sudo` | File deletion, pipe to shell |
+| **High** | `chmod`, `docker.*--privileged`, `eval` | Permission changes, privileged containers |
+| **Medium** | `npm install -g`, `systemctl`, `wget` | Global installs, system services |
+| **Low** | Standard commands | Regular development commands |
+
+### Dagger Availability
+
+The safety validator checks for Dagger availability:
+
+```bash
+# Check if Dagger is installed
+dagger version
+```
+
+<Warning>
+  If Dagger is not available, container validation is disabled. Install from [dagger.io](https://dagger.io) for full safety validation.
+</Warning>
+
+## Plugin Validation
+
+Validates the plugin manifest and marketplace configuration:
+
+```bash
+bun run validate:plugin
+```
+
+**Checks:**
+
+<Steps>
+  <Step title="Plugin Manifest">
+    Validates `.claude-plugin/plugin.json`:
+
+    - Required fields: name, version, description, author
+    - Valid semantic versioning
+    - Agent references match actual files
+    - Phase counts match actual command files
+  </Step>
+
+  <Step title="Marketplace Config">
+    Validates `.claude-plugin/marketplace.json` (optional):
+
+    - Plugins array exists
+    - ccprompts plugin included
+    - Valid configuration structure
+  </Step>
+
+  <Step title="Directory Structure">
+    Validates symlinks and directories:
+
+    - `commands/` symlink → `.claude/commands/`
+    - `agents/` symlink → `.claude/agents/`
+    - All 12 phase directories present
+  </Step>
+
+  <Step title="Documentation">
+    Checks for required documentation:
+
+    - README.md
+    - PLUGIN.md
+    - CLAUDE.md
+  </Step>
+</Steps>
+
+## Command Registry Generation
+
+Validation automatically generates a command registry:
+
+```json .claude/command-registry.json
+{
+  "version": "1.0.0",
+  "last_updated": "2026-03-14T...",
+  "commands": {
+    "analyze-project": {
+      "id": "analyze-project",
+      "name": "Analyze Project",
+      "category": "analysis",
+      "phase": 0,
+      "description": "Auto-detects project type...",
+      "usage": "/analyze-project",
+      "safety_level": "low"
+    }
+  },
+  "categories": { /* ... */ },
+  "phases": [ /* ... */ ],
+  "validation_results": { /* ... */ }
+}
+```
+
+## Validation Output
+
+### Success Output
+
+```bash
+[TEST] Starting comprehensive ccprompts validation...
+
+Found 75 markdown files to validate
+[STATS] Discovery: 3ms
+
+[SECURITY]  Running Dagger safety validation...
+[SECURITY]  Safety validation completed in 450ms
+
+[OK] Total files processed: 75
+[OK] Command files: 70
+[OK] Valid files: 75
+Validation completed in 481ms
+
+[SECURITY]  No security issues detected
+[OK] Command registry generated: .claude/command-registry.json
+
+[SUCCESS] All validations passed!
+```
+
+### Error Output
+
+```bash
+[ERROR] Errors (3):
+   analyze-project.md: Missing Usage section
+   security-audit.md: SECURITY - Hardcoded API key detected
+   .claude/commands: Expected 70 commands, found 69
+
+[CRITICAL] Validation failed with 3 errors
+```
+
+## Validation Workflow
+
+Recommended workflow for development:
+
+<Steps>
+  <Step title="Make Changes">
+    Edit command files or add new commands
+  </Step>
+
+  <Step title="Quick Validation">
+    ```bash
+    bun run validate
+    ```
+  </Step>
+
+  <Step title="Fix Lint Issues">
+    ```bash
+    bun run lint:fix
+    ```
+  </Step>
+
+  <Step title="Run Security Scan">
+    ```bash
+    bun run security-scan
+    ```
+  </Step>
+
+  <Step title="Full CI Check">
+    ```bash
+    bun run ci
+    ```
+  </Step>
+
+  <Step title="Commit">
+    ```bash
+    git add .
+    git commit -m "feat: add new command"
+    ```
+  </Step>
+</Steps>
+
+## Validation Metrics
+
+The validation system reports comprehensive metrics:
+
+```bash
+[METRICS] Quality Metrics:
+   Success rate: 100.0%
+   Error rate: 0.0%
+   Warning rate: 4.0%
+   Security score: 100%
+   Overall quality grade: A (94.0/100)
+
+[PERF] Performance Metrics:
+   File discovery: 3ms
+   Validation time: 28ms
+   Registry generation: 5ms
+   Average file processing: 0.4ms
+   Memory usage: 45.2MB (Δ12.1MB)
+   Safety validation: 450ms
+   Commands analyzed: 70
+   Dangerous patterns: 12
+   Container tests: 8
+   Dagger available: [OK]
+   Discovery target: [OK] (<100ms)
+   Validation target: [OK] (<2000ms)
+```
+
+## Troubleshooting Validation
+
+### Command Count Mismatch
+
+**Error:** `Expected 70 commands, found X`
+
+**Fix:**
+
+```bash
+# Count actual command files
+find .claude/commands -name "*.md" | wc -l
+
+# Update .claude-plugin/plugin.json if adding/removing commands
+# Update phase counts to match actual files
+
+# Re-run validation
+bun run validate
+```
+
+### Security Issues
+
+**Error:** `SECURITY - Hardcoded API key detected`
+
+**Fix:** Use placeholders for sensitive data:
+
+<CodeGroup>
+```javascript Bad
+const API_KEY = "sk-1234567890abcdef";
+```
+
+```javascript Good
+const API_KEY = "REPLACE_WITH_YOUR_API_KEY";
+// or
+const API_KEY = process.env.API_KEY;
+```
+</CodeGroup>
+
+### Markdown Lint Errors
+
+**Error:** Various markdown formatting issues
+
+**Fix:**
+
+```bash
+# Auto-fix most issues
+bun run lint:fix
+
+# Check remaining issues
+bun run lint
+```

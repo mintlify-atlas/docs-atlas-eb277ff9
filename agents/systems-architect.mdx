@@ -1,0 +1,503 @@
+---
+title: "Systems Architect Agent"
+description: "Real-time systems expert specializing in ultra-low latency, deterministic design, and hard real-time constraints"
+icon: "diagram-project"
+---
+
+The Systems Architect agent (also known as Real-Time Systems Architect) provides profound expertise in deterministic computing, ultra-low latency design, real-time operating systems, and time-critical system optimization. This agent specializes in systems with hard real-time constraints and microsecond-level response requirements.
+
+## When to Use This Agent
+
+The Systems Architect agent excels at:
+
+<CardGroup cols={2}>
+  <Card title="Real-Time Systems" icon="clock">
+    Hard real-time constraints, RTOS design, and deterministic behavior
+  </Card>
+  <Card title="Ultra-Low Latency" icon="bolt">
+    Microsecond-level optimization, kernel bypass, and hardware acceleration
+  </Card>
+  <Card title="Deterministic Design" icon="ruler">
+    Predictable timing, schedulability analysis, and worst-case execution
+  </Card>
+  <Card title="Time-Critical Systems" icon="stopwatch">
+    Interrupt handling, priority management, and deadline guarantees
+  </Card>
+</CardGroup>
+
+## Example Usage
+
+<CodeGroup>
+```bash Autonomous Systems
+user: "I need to architect a real-time control system for autonomous vehicles with microsecond-level response times"
+
+agent: "I'll design ultra-low latency control systems with hard real-time guarantees, deterministic scheduling, and failsafe mechanisms.
+
+Let's start with the timing requirements analysis..."
+```
+
+```bash High-Frequency Trading
+user: "Can you help me design a high-frequency trading system that minimizes latency and ensures deterministic execution?"
+
+agent: "I'll architect an ultra-low latency trading system with kernel bypass, DPDK networking, and deterministic performance.
+
+Let me analyze your latency budget..."
+```
+</CodeGroup>
+
+## Core Capabilities
+
+### 1. Design Hard Real-Time Architectures
+
+Mathematically proven real-time guarantees:
+
+<AccordionGroup>
+  <Accordion title="Rate-Monotonic Analysis">
+    ```c
+    // Rate-Monotonic Scheduling (RMS)
+    // Priority assigned based on period (shorter period = higher priority)
+    
+    typedef struct {
+        int period;          // Task period (ms)
+        int execution_time;  // Worst-case execution time (ms)
+        int deadline;        // Relative deadline (ms)
+        int priority;        // Priority (higher number = higher priority)
+    } Task;
+    
+    // Schedulability test: U = Σ(Ci/Ti) ≤ n(2^(1/n) - 1)
+    float calculate_utilization(Task tasks[], int n) {
+        float total_util = 0.0;
+        for (int i = 0; i < n; i++) {
+            total_util += (float)tasks[i].execution_time / tasks[i].period;
+        }
+        return total_util;
+    }
+    
+    bool is_schedulable_rms(Task tasks[], int n) {
+        float utilization = calculate_utilization(tasks, n);
+        float bound = n * (pow(2.0, 1.0/n) - 1);
+        return utilization <= bound;
+    }
+    ```
+  </Accordion>
+  
+  <Accordion title="Earliest Deadline First (EDF)">
+    ```c
+    // EDF Scheduling - dynamic priority based on absolute deadline
+    // Optimal for single processor systems
+    
+    typedef struct {
+        int id;
+        int arrival_time;
+        int execution_time;
+        int absolute_deadline;
+        int remaining_time;
+    } EDFTask;
+    
+    // EDF schedulability: U = Σ(Ci/Ti) ≤ 1
+    bool is_schedulable_edf(Task tasks[], int n) {
+        float utilization = calculate_utilization(tasks, n);
+        return utilization <= 1.0;
+    }
+    
+    // Select task with earliest deadline
+    EDFTask* select_next_task(EDFTask tasks[], int n, int current_time) {
+        EDFTask* selected = NULL;
+        int earliest_deadline = INT_MAX;
+        
+        for (int i = 0; i < n; i++) {
+            if (tasks[i].remaining_time > 0 && 
+                tasks[i].absolute_deadline < earliest_deadline) {
+                earliest_deadline = tasks[i].absolute_deadline;
+                selected = &tasks[i];
+            }
+        }
+        return selected;
+    }
+    ```
+  </Accordion>
+  
+  <Accordion title="Priority Ceiling Protocol">
+    ```c
+    // Prevent priority inversion with priority ceiling
+    
+    typedef struct {
+        pthread_mutex_t lock;
+        int ceiling_priority;  // Highest priority of tasks using this resource
+    } ResourceWithCeiling;
+    
+    // Initialize resource with priority ceiling
+    void init_resource(ResourceWithCeiling* res, int ceiling) {
+        pthread_mutexattr_t attr;
+        pthread_mutexattr_init(&attr);
+        pthread_mutexattr_setprotocol(&attr, PTHREAD_PRIO_PROTECT);
+        pthread_mutexattr_setprioceiling(&attr, ceiling);
+        pthread_mutex_init(&res->lock, &attr);
+        res->ceiling_priority = ceiling;
+    }
+    ```
+  </Accordion>
+</AccordionGroup>
+
+### 2. Optimize Ultra-Low Latency Pathways
+
+Microsecond and nanosecond optimizations:
+
+<Tabs>
+  <Tab title="CPU Affinity">
+    ```c
+    #define _GNU_SOURCE
+    #include <sched.h>
+    #include <pthread.h>
+    
+    // Pin thread to specific CPU core
+    void pin_to_core(int core_id) {
+        cpu_set_t cpuset;
+        CPU_ZERO(&cpuset);
+        CPU_SET(core_id, &cpuset);
+        
+        pthread_t current_thread = pthread_self();
+        if (pthread_setaffinity_np(current_thread, sizeof(cpu_set_t), &cpuset) != 0) {
+            perror("pthread_setaffinity_np");
+        }
+    }
+    
+    // Isolate cores from kernel scheduler
+    // Boot parameter: isolcpus=2,3
+    // Reserve cores 2 and 3 for real-time tasks
+    ```
+  </Tab>
+  
+  <Tab title="Kernel Bypass">
+    ```c
+    // DPDK (Data Plane Development Kit) for kernel bypass networking
+    #include <rte_eal.h>
+    #include <rte_ethdev.h>
+    #include <rte_mbuf.h>
+    
+    #define RX_RING_SIZE 1024
+    #define TX_RING_SIZE 1024
+    #define NUM_MBUFS 8191
+    #define MBUF_CACHE_SIZE 250
+    
+    // Initialize DPDK
+    int init_dpdk(int argc, char* argv[]) {
+        int ret = rte_eal_init(argc, argv);
+        if (ret < 0) {
+            rte_exit(EXIT_FAILURE, "Error with EAL initialization\n");
+        }
+        return ret;
+    }
+    
+    // Zero-copy packet processing
+    void process_packets(uint16_t port) {
+        struct rte_mbuf* bufs[BURST_SIZE];
+        const uint16_t nb_rx = rte_eth_rx_burst(port, 0, bufs, BURST_SIZE);
+        
+        for (uint16_t i = 0; i < nb_rx; i++) {
+            // Process packet directly in NIC memory (zero-copy)
+            process_packet_inline(bufs[i]);
+        }
+        
+        // Send processed packets
+        const uint16_t nb_tx = rte_eth_tx_burst(port, 0, bufs, nb_rx);
+        
+        // Free unsent packets
+        for (uint16_t i = nb_tx; i < nb_rx; i++) {
+            rte_pktmbuf_free(bufs[i]);
+        }
+    }
+    ```
+  </Tab>
+  
+  <Tab title="Interrupt Coalescing">
+    ```c
+    // Reduce interrupt overhead by batching
+    #include <linux/ethtool.h>
+    
+    void configure_interrupt_coalescing(int sock_fd, const char* iface) {
+        struct ethtool_coalesce ecoal;
+        struct ifreq ifr;
+        
+        memset(&ecoal, 0, sizeof(ecoal));
+        ecoal.cmd = ETHTOOL_GCOALESCE;
+        
+        strncpy(ifr.ifr_name, iface, IFNAMSIZ);
+        ifr.ifr_data = (char*)&ecoal;
+        
+        // Set interrupt coalescing parameters
+        ecoal.rx_coalesce_usecs = 50;      // Max 50μs delay
+        ecoal.rx_max_coalesced_frames = 16; // Max 16 frames
+        ecoal.cmd = ETHTOOL_SCOALESCE;
+        
+        ioctl(sock_fd, SIOCETHTOOL, &ifr);
+    }
+    ```
+  </Tab>
+  
+  <Tab title="Hardware Acceleration">
+    ```c
+    // FPGA integration for ultra-low latency
+    #include <xil_io.h>
+    
+    #define FPGA_BASE_ADDR 0x43C00000
+    #define CTRL_REG_OFFSET 0x00
+    #define DATA_REG_OFFSET 0x04
+    
+    // Direct hardware access with memory-mapped I/O
+    inline void fpga_write(uint32_t offset, uint32_t value) {
+        Xil_Out32(FPGA_BASE_ADDR + offset, value);
+    }
+    
+    inline uint32_t fpga_read(uint32_t offset) {
+        return Xil_In32(FPGA_BASE_ADDR + offset);
+    }
+    
+    // Offload computation to FPGA
+    uint32_t fpga_process(uint32_t data) {
+        fpga_write(DATA_REG_OFFSET, data);
+        fpga_write(CTRL_REG_OFFSET, 0x01);  // Start processing
+        
+        // Busy-wait for completion (deterministic timing)
+        while (!(fpga_read(CTRL_REG_OFFSET) & 0x02));
+        
+        return fpga_read(DATA_REG_OFFSET);
+    }
+    ```
+  </Tab>
+</Tabs>
+
+### 3. Implement Deterministic Memory Management
+
+Eliminate unpredictable latency:
+
+```c
+// Memory pool for deterministic allocation
+typedef struct {
+    void* pool;
+    size_t block_size;
+    size_t num_blocks;
+    uint8_t* free_list;
+} MemoryPool;
+
+// Initialize memory pool
+MemoryPool* create_pool(size_t block_size, size_t num_blocks) {
+    MemoryPool* pool = malloc(sizeof(MemoryPool));
+    pool->block_size = block_size;
+    pool->num_blocks = num_blocks;
+    
+    // Pre-allocate all memory
+    pool->pool = malloc(block_size * num_blocks);
+    pool->free_list = malloc(num_blocks);
+    
+    // Initialize free list
+    for (size_t i = 0; i < num_blocks; i++) {
+        pool->free_list[i] = 1;  // Mark as free
+    }
+    
+    return pool;
+}
+
+// O(1) deterministic allocation
+void* pool_alloc(MemoryPool* pool) {
+    for (size_t i = 0; i < pool->num_blocks; i++) {
+        if (pool->free_list[i]) {
+            pool->free_list[i] = 0;  // Mark as used
+            return (char*)pool->pool + (i * pool->block_size);
+        }
+    }
+    return NULL;  // Pool exhausted
+}
+
+// O(1) deterministic deallocation
+void pool_free(MemoryPool* pool, void* ptr) {
+    size_t index = ((char*)ptr - (char*)pool->pool) / pool->block_size;
+    pool->free_list[index] = 1;  // Mark as free
+}
+
+// Lock-free stack for multi-threaded access
+typedef struct Node {
+    void* data;
+    struct Node* next;
+} Node;
+
+typedef struct {
+    _Atomic(Node*) head;
+} LockFreeStack;
+
+void push(LockFreeStack* stack, void* data) {
+    Node* node = malloc(sizeof(Node));
+    node->data = data;
+    Node* old_head = atomic_load(&stack->head);
+    do {
+        node->next = old_head;
+    } while (!atomic_compare_exchange_weak(&stack->head, &old_head, node));
+}
+```
+
+### 4. Engineer Real-Time Operating Systems
+
+RTOS kernel components:
+
+- **Priority-driven schedulers** - Preemptive scheduling
+- **Interrupt service routines** - Minimal ISR latency
+- **Device drivers** - Deterministic I/O operations
+- **Inter-task communication** - Message queues and semaphores
+
+### 5. Design Time-Critical Communication
+
+Deterministic networking:
+
+```c
+// Time-Sensitive Networking (TSN)
+// IEEE 802.1Qbv - Time-Aware Shaper
+
+typedef struct {
+    uint64_t base_time;     // Cycle start time
+    uint64_t cycle_time;    // Cycle duration
+    int num_gates;
+    struct {
+        uint64_t interval;  // Gate open duration
+        uint8_t gate_state; // Open/close state
+    } gates[8];
+} TSNSchedule;
+
+// Precision Time Protocol (PTP) for clock synchronization
+// Achieves sub-microsecond accuracy
+void sync_with_ptp_master() {
+    // PTP message exchange for clock synchronization
+    // 1. Sync message from master
+    // 2. Follow_Up with precise timestamp
+    // 3. Delay_Req from slave
+    // 4. Delay_Resp from master
+    // Calculate offset and adjust local clock
+}
+```
+
+### 6. Optimize Hardware-Software Integration
+
+Co-design optimization:
+
+- **Custom hardware interfaces** - Memory-mapped I/O
+- **FPGA acceleration** - Offload time-critical operations
+- **Dedicated cores** - CPU isolation for real-time tasks
+- **DMA patterns** - Zero-copy data transfer
+
+### 7. Implement Fault-Tolerant Real-Time Systems
+
+Reliability with timing guarantees:
+
+```c
+// Watchdog timer for fault detection
+void setup_watchdog(int timeout_ms) {
+    struct itimerspec timer;
+    timer_t watchdog_timer;
+    
+    timer.it_value.tv_sec = timeout_ms / 1000;
+    timer.it_value.tv_nsec = (timeout_ms % 1000) * 1000000;
+    timer.it_interval.tv_sec = 0;
+    timer.it_interval.tv_nsec = 0;
+    
+    timer_create(CLOCK_MONOTONIC, NULL, &watchdog_timer);
+    timer_settime(watchdog_timer, 0, &timer, NULL);
+}
+
+// Graceful degradation
+void handle_deadline_miss() {
+    // 1. Log the violation
+    // 2. Switch to safe mode
+    // 3. Notify monitoring system
+    // 4. Continue with reduced functionality
+}
+```
+
+## The 7-Step Methodology
+
+<Steps>
+  <Step title="Hard Real-Time Design">
+    Apply rate-monotonic analysis and schedulability proofs
+  </Step>
+  <Step title="Ultra-Low Latency Optimization">
+    Implement CPU affinity, kernel bypass, and hardware acceleration
+  </Step>
+  <Step title="Deterministic Memory">
+    Design lock-free structures and memory pools
+  </Step>
+  <Step title="RTOS Engineering">
+    Architect custom kernels and priority schedulers
+  </Step>
+  <Step title="Time-Critical Communication">
+    Implement TSN, PTP, and zero-copy messaging
+  </Step>
+  <Step title="Hardware-Software Co-design">
+    Optimize FPGA integration and DMA patterns
+  </Step>
+  <Step title="Fault Tolerance">
+    Create redundancy and graceful degradation
+  </Step>
+</Steps>
+
+## Best Practices
+
+<CardGroup cols={2}>
+  <Card title="Timing Analysis" icon="clock">
+    - Calculate worst-case execution time
+    - Prove schedulability mathematically
+    - Measure jitter and variance
+    - Profile with cycle-accurate tools
+  </Card>
+  <Card title="Determinism" icon="ruler">
+    - Avoid dynamic memory allocation
+    - Disable interrupts in critical sections
+    - Use priority ceiling protocol
+    - Pre-allocate all resources
+  </Card>
+  <Card title="Latency Reduction" icon="bolt">
+    - Pin threads to isolated cores
+    - Use kernel bypass (DPDK)
+    - Implement zero-copy patterns
+    - Offload to hardware when possible
+  </Card>
+  <Card title="Reliability" icon="shield">
+    - Implement redundancy
+    - Add watchdog timers
+    - Handle graceful degradation
+    - Monitor timing violations
+  </Card>
+</CardGroup>
+
+<Warning>
+**Critical**: Real-time systems require mathematical proof of schedulability. Never deploy without worst-case execution time analysis and deadline verification.
+</Warning>
+
+## Latency Budget Example
+
+```
+Total System Latency: 100μs (requirement)
+
+1. Sensor reading:        5μs
+2. Data validation:       2μs
+3. Processing:          50μs
+4. Decision logic:      15μs
+5. Actuator command:    10μs
+6. Network transmission: 8μs
+7. Buffer (slack):      10μs
+--------------------------------
+Total:                 100μs
+
+Worst-case guarantee: 95μs (5μs slack)
+```
+
+## Related Agents
+
+<CardGroup cols={2}>
+  <Card title="Rust Expert" icon="rust" href="/agents/rust-expert">
+    For systems programming and memory safety
+  </Card>
+  <Card title="Performance Optimizer" icon="bolt" href="/agents/performance-optimizer">
+    For system-wide performance optimization
+  </Card>
+  <Card title="Go Expert" icon="golang" href="/agents/golang-pro">
+    For concurrent systems with goroutines
+  </Card>
+</CardGroup>

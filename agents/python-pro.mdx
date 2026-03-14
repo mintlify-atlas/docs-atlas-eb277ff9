@@ -1,0 +1,341 @@
+---
+title: "Python Pro Agent"
+description: "Advanced Python expert specializing in decorators, generators, async/await, and metaprogramming"
+icon: "python"
+---
+
+The Python Pro agent provides elite-level expertise in advanced Python programming patterns, metaprogramming techniques, and high-performance async applications. This agent specializes in CPython internals, advanced decorator patterns, and sophisticated Pythonic design idioms.
+
+## When to Use This Agent
+
+The Python Pro agent excels at:
+
+<CardGroup cols={2}>
+  <Card title="Metaprogramming" icon="wand-magic-sparkles">
+    Decorators, metaclasses, descriptors, and code generation
+  </Card>
+  <Card title="Async Patterns" icon="arrows-spin">
+    Asyncio optimization, coroutines, and concurrent futures
+  </Card>
+  <Card title="Generator Protocols" icon="repeat">
+    Yield expressions, async generators, and bidirectional communication
+  </Card>
+  <Card title="Type Systems" icon="code">
+    Advanced typing, protocols, generics, and runtime type checking
+  </Card>
+</CardGroup>
+
+## Example Usage
+
+<CodeGroup>
+```bash Advanced Decorators
+user: "I need to create a decorator that automatically validates function arguments and caches results based on type hints"
+
+agent: "I'll create a sophisticated decorator using functools.wraps, inspect module for signature analysis, and implement type-aware caching with descriptor protocols.
+
+Here's a production-ready implementation..."
+```
+
+```bash Async Optimization
+user: "My async Python application has performance issues with concurrent database operations and memory usage"
+
+agent: "I'll implement advanced async patterns using asyncio.gather, connection pooling, async context managers, and memory-efficient generator-based processing.
+
+Let's optimize your async code..."
+```
+</CodeGroup>
+
+## Core Capabilities
+
+### 1. Metaprogramming Architecture Analysis
+
+Design elegant metaprogramming solutions:
+
+<AccordionGroup>
+  <Accordion title="Code Generation Requirements">
+    - Dynamic class creation
+    - Metaclass hierarchies
+    - AST manipulation
+    - Runtime code generation
+  </Accordion>
+  
+  <Accordion title="Decorator Composition">
+    - Parameterized decorators
+    - Decorator factories
+    - Class and method decorators
+    - State management in decorators
+  </Accordion>
+  
+  <Accordion title="Descriptor Protocols">
+    - Data descriptors
+    - Computed properties
+    - Attribute access customization
+    - Descriptor-based validation
+  </Accordion>
+  
+  <Accordion title="Dynamic Attribute Management">
+    - __getattr__ and __setattr__ patterns
+    - Property descriptors
+    - Attribute proxies
+    - Dynamic attribute generation
+  </Accordion>
+</AccordionGroup>
+
+### 2. Advanced Pattern Identification
+
+Implement sophisticated Python patterns:
+
+- **Context managers** - Resource management and cleanup
+- **Protocol-based programming** - Duck typing with protocols
+- **Abstract base classes** - Interface definitions
+- **Mixin compositions** - Multiple inheritance patterns
+- **Design patterns** - Gang of Four patterns in Python
+
+### 3. Decorator and Generator Mastery
+
+Advanced decorator and generator techniques:
+
+<Tabs>
+  <Tab title="Advanced Decorators">
+    ```python
+    from functools import wraps
+    from typing import TypeVar, Callable
+    import inspect
+    
+    F = TypeVar('F', bound=Callable)
+    
+    def typed_cache(func: F) -> F:
+        """Decorator that caches based on type hints."""
+        cache = {}
+        sig = inspect.signature(func)
+        
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            # Validate types
+            bound = sig.bind(*args, **kwargs)
+            for name, value in bound.arguments.items():
+                param = sig.parameters[name]
+                if param.annotation != inspect.Parameter.empty:
+                    if not isinstance(value, param.annotation):
+                        raise TypeError(f"{name} must be {param.annotation}")
+            
+            # Cache based on args
+            key = (args, tuple(sorted(kwargs.items())))
+            if key not in cache:
+                cache[key] = func(*args, **kwargs)
+            return cache[key]
+        
+        return wrapper
+    ```
+  </Tab>
+  
+  <Tab title="Generator Protocols">
+    ```python
+    from typing import Generator
+    
+    def bidirectional_generator() -> Generator[int, str, None]:
+        """Generator with bidirectional communication."""
+        value = 0
+        while True:
+            sent = yield value
+            if sent:
+                print(f"Received: {sent}")
+                value += len(sent)
+            else:
+                value += 1
+    
+    # Usage
+    gen = bidirectional_generator()
+    print(next(gen))  # 0
+    print(gen.send("hello"))  # 5
+    print(gen.send("world"))  # 10
+    ```
+  </Tab>
+  
+  <Tab title="Async Generators">
+    ```python
+    import asyncio
+    from typing import AsyncGenerator
+    
+    async def async_data_stream(url: str) -> AsyncGenerator[dict, None]:
+        """Async generator for streaming data."""
+        async with aiohttp.ClientSession() as session:
+            async with session.get(url) as response:
+                async for line in response.content:
+                    if data := parse_line(line):
+                        yield data
+                        await asyncio.sleep(0)  # Yield control
+    
+    # Async context manager
+    class AsyncResource:
+        async def __aenter__(self):
+            await self.connect()
+            return self
+        
+        async def __aexit__(self, *exc):
+            await self.cleanup()
+    ```
+  </Tab>
+</Tabs>
+
+### 4. Async/Await Optimization Implementation
+
+Design high-performance async systems:
+
+- **Event loop optimization** - Custom loop policies and executors
+- **Task scheduling** - Concurrent task management
+- **Async context managers** - Resource cleanup in async code
+- **Connection pooling** - Database and HTTP connection management
+- **Backpressure handling** - Flow control in async streams
+- **Memory efficiency** - Generator-based async processing
+
+### 5. Type System Integration
+
+Leverage advanced typing features:
+
+```python
+from typing import TypeVar, Protocol, Generic, overload
+
+# Protocol typing
+class Drawable(Protocol):
+    def draw(self) -> None: ...
+
+def render(obj: Drawable) -> None:
+    obj.draw()
+
+# Generic types with constraints
+T = TypeVar('T', bound='Comparable')
+
+class Comparable(Protocol):
+    def __lt__(self, other: 'Comparable') -> bool: ...
+
+def min_value(a: T, b: T) -> T:
+    return a if a < b else b
+
+# Overload decorators
+@overload
+def process(data: str) -> str: ...
+@overload
+def process(data: int) -> int: ...
+
+def process(data):
+    return data
+```
+
+### 6. Memory and Performance Validation
+
+Optimize Python performance:
+
+- **Memory profiling** - memory_profiler and tracemalloc
+- **Object lifecycle** - Weakref and garbage collection
+- **GC optimization** - Disabling GC for critical sections
+- **cProfile analysis** - CPU profiling and hotspot identification
+- **Asyncio debugging** - Debug mode and task monitoring
+
+### 7. Code Quality Measurement
+
+Implement comprehensive testing:
+
+- **Pytest fixtures** - Advanced fixture patterns
+- **Async tests** - pytest-asyncio patterns
+- **Property-based testing** - Hypothesis integration
+- **Performance regression** - Benchmark tracking
+- **Coverage analysis** - pytest-cov integration
+
+## The 7-Step Methodology
+
+<Steps>
+  <Step title="Metaprogramming Analysis">
+    Analyze code generation, decorator, and metaclass requirements
+  </Step>
+  <Step title="Pattern Identification">
+    Identify sophisticated Python patterns and idioms
+  </Step>
+  <Step title="Decorator & Generator Design">
+    Implement advanced decorator and generator patterns
+  </Step>
+  <Step title="Async Optimization">
+    Design high-performance async systems with asyncio
+  </Step>
+  <Step title="Type System Integration">
+    Leverage advanced typing features and runtime checks
+  </Step>
+  <Step title="Performance Validation">
+    Profile memory usage and CPU performance
+  </Step>
+  <Step title="Quality Measurement">
+    Implement comprehensive testing and monitoring
+  </Step>
+</Steps>
+
+## Advanced Patterns
+
+<CodeGroup>
+```python Descriptor Protocol
+class TypedProperty:
+    """Type-validated property descriptor."""
+    def __init__(self, name, expected_type):
+        self.name = name
+        self.expected_type = expected_type
+    
+    def __get__(self, obj, objtype=None):
+        if obj is None:
+            return self
+        return obj.__dict__.get(self.name)
+    
+    def __set__(self, obj, value):
+        if not isinstance(value, self.expected_type):
+            raise TypeError(f"{self.name} must be {self.expected_type}")
+        obj.__dict__[self.name] = value
+
+class Person:
+    name = TypedProperty('name', str)
+    age = TypedProperty('age', int)
+```
+
+```python Metaclass Pattern
+class Singleton(type):
+    """Singleton metaclass."""
+    _instances = {}
+    
+    def __call__(cls, *args, **kwargs):
+        if cls not in cls._instances:
+            cls._instances[cls] = super().__call__(*args, **kwargs)
+        return cls._instances[cls]
+
+class Database(metaclass=Singleton):
+    def __init__(self):
+        self.connection = None
+```
+
+```python Async Context Manager
+class AsyncDatabaseConnection:
+    async def __aenter__(self):
+        self.conn = await create_connection()
+        return self.conn
+    
+    async def __aexit__(self, exc_type, exc_val, exc_tb):
+        await self.conn.close()
+        if exc_type is not None:
+            await self.conn.rollback()
+
+# Usage
+async with AsyncDatabaseConnection() as conn:
+    await conn.execute("SELECT * FROM users")
+```
+</CodeGroup>
+
+<Note>
+**Performance Tip**: For CPU-bound tasks, consider using ProcessPoolExecutor. For I/O-bound tasks, use async/await patterns.
+</Note>
+
+## Related Agents
+
+<CardGroup cols={2}>
+  <Card title="FastAPI Optimizer" icon="gauge" href="/agents/fastapi-optimizer">
+    For FastAPI-specific async optimization
+  </Card>
+  <Card title="Performance Optimizer" icon="bolt" href="/agents/performance-optimizer">
+    For system-wide performance analysis
+  </Card>
+</CardGroup>

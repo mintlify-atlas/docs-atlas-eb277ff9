@@ -1,0 +1,50 @@
+---
+title: "Debug-Session"
+description: "Advanced debugging and troubleshooting system for Claude Code: 1. Comprehensive session state analysis and diagnostics 2. Performance profiling and bottleneck i"
+---
+
+# Debug-Session
+
+Advanced debugging and troubleshooting system for Claude Code: 1. Comprehensive session state analysis and diagnostics 2. Performance profiling and bottleneck identification 3. Configuration validation and error detection 4. Tool and MCP server connectivity troubleshooting 5. Historical issue analysis and pattern recognition 6. Automated fix suggestions and resolution guidance
+
+## Usage
+
+```bash
+/debug-session [issue-type] [scope] [verbosity]
+```
+
+## Parameters
+
+<ParamField path="issue-type" type="string">
+  connection, performance, commands, workflows, prompts, tools, mcp
+</ParamField>
+
+<ParamField path="scope" type="string">
+  current-session, environment, configuration, history
+</ParamField>
+
+<ParamField path="verbosity" type="string">
+  basic, detailed, diagnostic, trace
+</ParamField>
+
+## Examples
+
+<CodeGroup>
+
+```bash Basic Usage
+/debug-session
+/debug-session connection environment detailed
+/debug-session performance current-session
+/debug-session commands configuration diagnostic
+/debug-session mcp environment trace
+```
+
+</CodeGroup>
+
+## Related Commands
+
+- `/validate-environment` - Proactive environment health checking
+- `/health-check` - Comprehensive project health assessment
+- `/export-config` - Backup configurations before troubleshooting
+- `/prompt-stats` - Analyze usage patterns affecting performance
+

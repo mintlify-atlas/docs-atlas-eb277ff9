@@ -1,0 +1,359 @@
+---
+title: Plugin Installation
+description: Install ccprompts via the Claude Code plugin marketplace
+---
+
+The recommended way to install ccprompts is as a Claude Code plugin. This gives you instant access to all 70+ commands and 10 specialized agents in any project.
+
+## Quick Installation
+
+<Steps>
+  <Step title="Add the ccprompts marketplace">
+    Open Claude Code and run:
+    
+    ```bash
+    /plugin marketplace add ursisterbtw/ccprompts
+    ```
+    
+    This adds the ccprompts GitHub repository as a plugin marketplace source.
+  </Step>
+
+  <Step title="Install the plugin">
+    ```bash
+    /plugin install ccprompts@ursisterbtw
+    ```
+    
+    This downloads and installs the plugin from the marketplace.
+  </Step>
+
+  <Step title="Restart Claude Code">
+    Close and reopen Claude Code to load the plugin.
+    
+    <Note>
+    Plugin commands are only available after restarting Claude Code.
+    </Note>
+  </Step>
+
+  <Step title="Verify installation">
+    Check that the plugin is working:
+    
+    ```bash
+    /help
+    ```
+    
+    You should see ccprompts commands in the list.
+  </Step>
+</Steps>
+
+## Benefits of Plugin Installation
+
+<CardGroup cols={2}>
+  <Card title="Universal Access" icon="globe">
+    All commands available in any project without manual copying
+  </Card>
+  
+  <Card title="Automatic Updates" icon="arrows-rotate">
+    Get new features and fixes when versions are released
+  </Card>
+  
+  <Card title="Clean Separation" icon="layer-group">
+    Keep your code separate from the command ecosystem
+  </Card>
+  
+  <Card title="Team Consistency" icon="users">
+    Share plugin configuration for team-wide consistency
+  </Card>
+</CardGroup>
+
+## Verification Commands
+
+After installation, test these commands to ensure everything is working:
+
+### Check Available Commands
+
+```bash
+/help
+```
+
+You should see 70+ commands across 12 development phases.
+
+### Test Project Analysis
+
+```bash
+/analyze-project
+```
+
+Runs the intelligent project analyzer with personalized recommendations.
+
+### View Available Agents
+
+```bash
+/agents
+```
+
+Displays the 10 specialized AI agents included with ccprompts:
+
+- **rust-expert** - Rust programming and systems development
+- **python-expert** - Modern Python development and ecosystem
+- **golang-pro** - Go concurrency and systems programming
+- **javascript-expert** - JavaScript and modern web development
+- **bash-shell-scripting** - Shell automation and scripting
+- **fastapi-optimizer** - FastAPI performance and patterns
+- **documentation-writer** - Technical documentation creation
+- **performance-optimizer** - System-wide performance optimization
+- **systems-architect** - Architecture design and patterns
+- **agent-template-wizard** - Custom agent creation assistant
+
+### Test a Command
+
+Try a simple command to verify functionality:
+
+```bash
+/document quick
+```
+
+Generates quick documentation for your project.
+
+## Plugin Permissions
+
+ccprompts automatically configures these permissions:
+
+<CodeGroup>
+  ```json Allowed Permissions
+  {
+    "permissions": {
+      "allow": [
+        "Bash(git:*)",
+        "Bash(npm:*)",
+        "Bash(pip:*)",
+        "Bash(cargo:*)",
+        "Read",
+        "Write",
+        "Edit",
+        "Glob",
+        "Grep"
+      ]
+    }
+  }
+  ```
+
+  ```json Denied Permissions
+  {
+    "permissions": {
+      "deny": [
+        "Bash(rm -rf:*)",
+        "Bash(sudo:*)"
+      ]
+    }
+  }
+  ```
+</CodeGroup>
+
+<Warning>
+The plugin denies dangerous operations like `rm -rf` and `sudo` commands for safety.
+</Warning>
+
+## Environment Variables
+
+The plugin sets these optional environment variables:
+
+```json
+{
+  "env": {
+    "CLAUDE_CODE_PROJECT_TYPE": "command-ecosystem",
+    "CLAUDE_CODE_ENABLE_MCP": "1"
+  }
+}
+```
+
+- `CLAUDE_CODE_PROJECT_TYPE` - Identifies the project type for context
+- `CLAUDE_CODE_ENABLE_MCP` - Enables Model Context Protocol integration
+
+## Command Categories
+
+ccprompts organizes 70+ commands across 12 development phases:
+
+<AccordionGroup>
+  <Accordion title="Phase 00: Initial Workflow (2 commands)">
+    - `/analyze-project` - Intelligent project analysis
+    - `/intelligent-chain` - Smart command sequencing
+  </Accordion>
+
+  <Accordion title="Phase 01: Project Setup (3 commands)">
+    - `/document` - Comprehensive documentation
+    - `/learn` - Interactive learning and onboarding
+    - `/mcp` - Model Context Protocol setup
+  </Accordion>
+
+  <Accordion title="Phase 02: Development (5 commands)">
+    - `/backup` - Version control and backup
+    - `/debug-session` - Advanced debugging
+    - `/migrate` - Database and framework migrations
+    - `/optimize` - Performance optimization
+    - `/refactor` - Safe code refactoring
+  </Accordion>
+
+  <Accordion title="Phase 03: Security (4 commands)">
+    - `/audit-security` - Security auditing
+    - `/harden` - System hardening
+    - `/compliance` - Compliance frameworks
+    - `/penetration-test` - Security testing
+  </Accordion>
+
+  <Accordion title="Phase 04: Testing (2 commands)">
+    - `/test` - Comprehensive testing
+    - `/troubleshoot` - Advanced troubleshooting
+  </Accordion>
+
+  <Accordion title="Phase 05: Deployment (4 commands)">
+    - `/setup-ci` - CI/CD pipeline setup
+    - `/deploy` - Deployment automation
+    - `/rollback` - Safe rollback procedures
+    - `/monitor` - Monitoring and observability
+  </Accordion>
+
+  <Accordion title="Phase 06: Collaboration (4 commands)">
+    - `/code-review` - Automated code review
+    - `/pair-program` - Pair programming
+    - `/knowledge-transfer` - Team knowledge sharing
+    - `/handoff` - Project handoff documentation
+  </Accordion>
+
+  <Accordion title="Phase 07: Utilities (10 commands)">
+    - `/scaffold` - Project scaffolding
+    - `/convert` - Format conversion
+    - `/search` - Advanced codebase search
+    - `/visualize` - Architecture visualization
+    - And 6 more utility commands
+  </Accordion>
+
+  <Accordion title="Phase 08: Extras (4 commands)">
+    - `/health-check` - System health monitoring
+    - `/modernize` - Stack modernization
+    - `/benchmark` - Performance benchmarking
+    - `/accessibility` - Accessibility compliance
+  </Accordion>
+
+  <Accordion title="Phase 09: Agentic Capabilities (12 commands)">
+    - `/agent-create` - Custom agent creation
+    - `/agent-orchestrate` - Multi-agent coordination
+    - `/mcp-integrate` - MCP server integration
+    - `/workflow-automate` - Workflow automation
+    - And 8 more agentic commands
+  </Accordion>
+
+  <Accordion title="Phase 10: AI-Native Development (10 commands)">
+    - `/ai-pair` - AI pair programming
+    - `/ai-review` - AI-powered code review
+    - `/ai-suggest` - Intelligent suggestions
+    - `/ai-refactor` - AI-assisted refactoring
+    - And 6 more AI-native commands
+  </Accordion>
+
+  <Accordion title="Phase 11: Enterprise Scale (8 commands)">
+    - `/governance` - Enterprise governance
+    - `/multi-repo` - Multi-repository management
+    - `/compliance-audit` - Compliance auditing
+    - `/architecture-review` - Architecture validation
+    - And 4 more enterprise commands
+  </Accordion>
+</AccordionGroup>
+
+## Updating the Plugin
+
+To update ccprompts to the latest version:
+
+<Steps>
+  <Step title="Uninstall current version">
+    ```bash
+    /plugin uninstall ccprompts@ursisterbtw
+    ```
+  </Step>
+
+  <Step title="Reinstall latest version">
+    ```bash
+    /plugin install ccprompts@ursisterbtw
+    ```
+  </Step>
+
+  <Step title="Restart Claude Code">
+    Close and reopen Claude Code to load the updated plugin.
+  </Step>
+</Steps>
+
+## Uninstalling the Plugin
+
+To remove ccprompts:
+
+<Steps>
+  <Step title="Uninstall the plugin">
+    ```bash
+    /plugin uninstall ccprompts@ursisterbtw
+    ```
+  </Step>
+
+  <Step title="Remove marketplace (optional)">
+    ```bash
+    /plugin marketplace remove ursisterbtw/ccprompts
+    ```
+  </Step>
+
+  <Step title="Restart Claude Code">
+    Close and reopen Claude Code to complete removal.
+  </Step>
+</Steps>
+
+## Troubleshooting
+
+### Commands Not Available After Installation
+
+<Steps>
+  <Step title="Verify installation">
+    ```bash
+    /plugin
+    ```
+    
+    Check if ccprompts appears in the installed plugins list.
+  </Step>
+
+  <Step title="Restart Claude Code">
+    **Required:** Plugins only load after restarting Claude Code.
+  </Step>
+
+  <Step title="Check marketplace">
+    ```bash
+    /plugin marketplace list
+    ```
+    
+    Ensure `ursisterbtw/ccprompts` is in the marketplace list.
+  </Step>
+</Steps>
+
+### Permission Errors
+
+If you encounter permission errors:
+
+1. Trust the repository folder where you're using ccprompts
+2. Review the command's required permissions
+3. Check your `.claude/settings.json` for conflicts
+
+### Plugin Not Found
+
+If installation fails with "plugin not found":
+
+1. Verify the marketplace was added correctly
+2. Check your internet connection
+3. Try removing and re-adding the marketplace
+4. Ensure you're using the correct plugin identifier: `ccprompts@ursisterbtw`
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Team Installation" icon="users" href="/setup/team-installation">
+    Configure ccprompts for team-wide use
+  </Card>
+  
+  <Card title="Using Commands" icon="terminal" href="/commands/overview">
+    Learn how to use the 70+ available commands
+  </Card>
+</CardGroup>

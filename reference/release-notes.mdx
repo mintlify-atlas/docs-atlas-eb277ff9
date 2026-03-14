@@ -1,0 +1,50 @@
+---
+title: "Release-Notes"
+description: "Intelligent release note automation system: 1. Automated content extraction from commits, PRs, and issues 2. AI-powered categorization and impact analysis"
+---
+
+# Release-Notes
+
+Intelligent release note automation system: 1. Automated content extraction from commits, PRs, and issues 2. AI-powered categorization and impact analysis 3. Multi-audience content adaptation and formatting 4. Visual asset generation and integration 5. Distribution automation across multiple channels 6. Feedback collection and continuous improvement
+
+## Usage
+
+```bash
+/release-notes [version] [audience] [format]
+```
+
+## Parameters
+
+<ParamField path="version" type="string">
+  auto, major, minor, patch, specific-version
+</ParamField>
+
+<ParamField path="audience" type="string">
+  technical, business, customer, internal, all
+</ParamField>
+
+<ParamField path="format" type="string">
+  markdown, html, email, slack, pdf, changelog
+</ParamField>
+
+## Examples
+
+<CodeGroup>
+
+```bash Basic Usage
+/release-notes auto customer markdown
+/release-notes v2.1.0 technical html
+/release-notes minor business email
+/release-notes patch all slack
+```
+
+</CodeGroup>
+
+## Related Commands
+
+- `/daily-standup` - Track progress and blockers for release planning
+- `/code-review` - Ensure quality before releases
+- `/deploy` - Coordinate release deployment and validation
+- `/document` - Generate supporting documentation for releases
+- `/workflow-builder` - Create custom release processes and automation
+

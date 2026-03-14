@@ -1,0 +1,431 @@
+---
+title: "Installation"
+description: "Install ccprompts as a Claude Code plugin or clone the repository for customization"
+---
+
+## Installation Methods
+
+ccprompts offers two installation approaches: **plugin installation** for instant access across all projects, or **repository installation** for full customization and development.
+
+<CardGroup cols={2}>
+  <Card title="Plugin Installation" icon="plug">
+    Recommended for most users - instant access in any project
+  </Card>
+  <Card title="Repository Installation" icon="code-branch">
+    For customization, development, and private extensions
+  </Card>
+</CardGroup>
+
+## Method 1: Plugin Installation (Recommended)
+
+Install ccprompts as a Claude Code plugin for instant access to all 70+ commands and 10 specialized agents in any project.
+
+### Quick Plugin Installation
+
+<Steps>
+  <Step title="Add the Marketplace">
+    Add the ccprompts marketplace in Claude Code:
+    
+    ```bash
+    /plugin marketplace add ursisterbtw/ccprompts
+    ```
+  </Step>
+  
+  <Step title="Install the Plugin">
+    Install ccprompts from the marketplace:
+    
+    ```bash
+    /plugin install ccprompts@ursisterbtw
+    ```
+  </Step>
+  
+  <Step title="Restart Claude Code">
+    Restart Claude Code to activate the plugin and load all commands
+  </Step>
+  
+  <Step title="Verify Installation">
+    Check that commands are available:
+    
+    ```bash
+    /help
+    ```
+    
+    You should see all 70+ ccprompts commands listed
+  </Step>
+</Steps>
+
+<Tip>
+After installation, try `/analyze-project` to get personalized recommendations for your codebase.
+</Tip>
+
+### Benefits of Plugin Installation
+
+<CardGroup cols={2}>
+  <Card title="Universal Access" icon="globe">
+    All commands available in every project without manual setup
+  </Card>
+  
+  <Card title="Automatic Updates" icon="arrows-rotate">
+    Get new versions and features automatically when released
+  </Card>
+  
+  <Card title="Clean Separation" icon="layer-group">
+    Your project code stays separate from the command ecosystem
+  </Card>
+  
+  <Card title="Team Consistency" icon="users">
+    Shared configuration ensures everyone uses the same workflows
+  </Card>
+</CardGroup>
+
+### Team-Wide Installation
+
+For automatic installation across your entire team, add ccprompts to your project's `.claude/settings.json`:
+
+```json .claude/settings.json
+{
+  "pluginMarketplaces": [
+    "ursisterbtw/ccprompts"
+  ],
+  "plugins": [
+    "ccprompts@ursisterbtw"
+  ]
+}
+```
+
+Team members who trust the repository folder will automatically get the plugin installed when they open the project.
+
+<Note>
+This requires team members to trust the repository folder in Claude Code settings.
+</Note>
+
+## Method 2: Repository Installation
+
+Clone the repository for full customization, private extensions, or contribution development.
+
+### Prerequisites
+
+<AccordionGroup>
+  <Accordion title="Bun (Required for validation)" icon="terminal">
+    Install Bun for running validation and tests:
+    
+    **Linux/macOS:**
+    ```bash
+    curl -fsSL https://bun.sh/install | bash
+    ```
+    
+    **Windows:**
+    Use WSL with the script above or the official installer from [bun.sh](https://bun.sh)
+    
+    Verify installation:
+    ```bash
+    bun --version
+    ```
+  </Accordion>
+  
+  <Accordion title="Dagger (Recommended for safety)" icon="docker">
+    Install Dagger for containerized command execution (optional but recommended):
+    
+    **Linux:**
+    ```bash
+    curl -fsSL https://dl.dagger.io/dagger/install.sh | BIN_DIR=$HOME/.local/bin sh
+    ```
+    
+    **macOS:**
+    ```bash
+    brew install dagger/tap/dagger
+    ```
+    
+    **Windows:**
+    ```powershell
+    winget install Dagger.Cli
+    ```
+  </Accordion>
+</AccordionGroup>
+
+### Repository Clone and Setup
+
+<CodeGroup>
+
+```bash Standard Installation
+# Clone the repository
+git clone https://github.com/ursisterbtw/ccprompts.git
+cd ccprompts
+
+# Install dependencies
+bun install
+
+# Validate all commands
+bun run validate
+```
+
+```fish Fish Shell (One-liner)
+# Clone, navigate, install, and validate in one command
+git clone https://github.com/ursisterbtw/ccprompts.git; and cd ccprompts; and bun i; and bun run validate
+```
+
+```bash Local Development Setup
+# Clone the repository
+git clone https://github.com/ursisterbtw/ccprompts.git
+cd ccprompts
+
+# Install dependencies
+bun install
+
+# Run full CI pipeline (validate + lint + link-check)
+bun run ci
+
+# Add as local marketplace
+/plugin marketplace add /path/to/ccprompts
+
+# Install the plugin
+/plugin install ccprompts@ccprompts
+```
+
+</CodeGroup>
+
+### Validation Commands
+
+After installation, validate the command structure:
+
+<CodeGroup>
+
+```bash Basic Validation
+# Validate all 70+ commands
+bun run validate
+```
+
+```bash Full CI Pipeline
+# Run validate + lint + link-check
+bun run ci
+```
+
+```bash Security-Focused
+# Security-focused validation only
+bun run security-scan
+```
+
+```bash Safety System
+# Dagger container safety validation
+bun run safety-validate
+```
+
+```bash Testing
+# Run Jest tests
+bun run test:jest
+
+# Run command validation tests
+bun run test:validate
+
+# Run all tests
+bun run test
+```
+
+</CodeGroup>
+
+### Benefits of Repository Installation
+
+<CardGroup cols={2}>
+  <Card title="Full Customization" icon="screwdriver-wrench">
+    Modify commands and agents to fit your specific needs and workflows
+  </Card>
+  
+  <Card title="Private Extensions" icon="lock">
+    Add company-specific commands and internal workflows
+  </Card>
+  
+  <Card title="Development Control" icon="code">
+    Test and validate changes before team deployment
+  </Card>
+  
+  <Card title="Learning Resource" icon="graduation-cap">
+    Study command structure and agent design patterns
+  </Card>
+</CardGroup>
+
+## Configuration
+
+### Plugin Permissions
+
+The plugin requires these permissions (automatically configured):
+
+```json Plugin Permissions
+{
+  "permissions": {
+    "allow": [
+      "Bash(git:*)",
+      "Bash(npm:*)",
+      "Bash(pip:*)",
+      "Bash(cargo:*)",
+      "Read",
+      "Write",
+      "Edit",
+      "Glob",
+      "Grep"
+    ],
+    "deny": [
+      "Bash(rm -rf:*)",
+      "Bash(sudo:*)"
+    ]
+  }
+}
+```
+
+<Warning>
+Dangerous commands like `rm -rf` and `sudo` are automatically denied and must be executed through the Dagger safety system.
+</Warning>
+
+### Environment Variables
+
+Optional environment configuration for enhanced functionality:
+
+```json Environment Configuration
+{
+  "env": {
+    "CLAUDE_CODE_PROJECT_TYPE": "command-ecosystem",
+    "CLAUDE_CODE_ENABLE_MCP": "1"
+  }
+}
+```
+
+## Verification
+
+Verify your installation is working correctly:
+
+<Steps>
+  <Step title="Check Available Commands">
+    List all available commands:
+    
+    ```bash
+    /help
+    ```
+    
+    You should see 70+ ccprompts commands organized by phase
+  </Step>
+  
+  <Step title="Try Project Analysis">
+    Run the intelligent project analyzer:
+    
+    ```bash
+    /analyze-project
+    ```
+    
+    This will analyze your codebase and provide personalized recommendations
+  </Step>
+  
+  <Step title="View Available Agents">
+    Check the specialized agents:
+    
+    ```bash
+    /agents
+    ```
+    
+    You should see all 10 specialized agents listed
+  </Step>
+  
+  <Step title="Validate Installation (Repository Only)">
+    For repository installations, validate the command structure:
+    
+    ```bash
+    bun run validate
+    ```
+    
+    All 70 commands should pass validation
+  </Step>
+</Steps>
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="Commands Not Available After Installation">
+    **Solution:**
+    
+    1. **Restart Claude Code** - Required after plugin installation
+    2. **Check Installation** - Run `/plugin` to verify ccprompts is installed
+    3. **Verify Marketplace** - Ensure marketplace was added correctly:
+       ```bash
+       /plugin marketplace list
+       ```
+  </Accordion>
+  
+  <Accordion title="Permission Errors">
+    **Solution:**
+    
+    1. Check your `.claude/settings.json` permissions configuration
+    2. Trust the repository folder if using team configuration
+    3. Review the command's required permissions in the command documentation
+    4. Dangerous commands require Dagger safety system
+  </Accordion>
+  
+  <Accordion title="Validation Failures (Repository)">
+    **Solution:**
+    
+    1. **Check Node.js version** - Requires Node.js >= 18.0.0, < 23.0.0
+       ```bash
+       node --version
+       ```
+    2. **Reinstall dependencies**
+       ```bash
+       bun install --frozen-lockfile
+       ```
+    3. **Check expected command count** - Should have exactly 70 commands
+       ```bash
+       EXPECTED_COMMAND_COUNT=70 node scripts/validate-commands.js
+       ```
+  </Accordion>
+  
+  <Accordion title="Symlink Issues (Local Development)">
+    **Solution for Windows:**
+    
+    Use directory junctions instead of symlinks:
+    ```powershell
+    mklink /J commands .claude\commands
+    mklink /J agents .claude\agents
+    ```
+    
+    **Alternative (not recommended for development):**
+    ```bash
+    cp -r .claude/commands commands
+    cp -r .claude/agents agents
+    ```
+  </Accordion>
+  
+  <Accordion title="Dagger Not Available">
+    **Solution:**
+    
+    Dagger is optional but recommended. If Dagger is not installed:
+    
+    1. Commands will still work but dangerous operations won't be containerized
+    2. Install Dagger for full safety system support (see Prerequisites above)
+    3. The safety system provides 65.7% validation rate across 517+ test cases
+  </Accordion>
+</AccordionGroup>
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Quick Start Guide" icon="rocket" href="/quickstart">
+    Get up and running with your first command in minutes
+  </Card>
+  
+  <Card title="Command Reference" icon="book-open" href="/reference/analyze-project">
+    Explore all 70+ commands with detailed documentation
+  </Card>
+  
+  <Card title="Agent Documentation" icon="robot" href="/agents/rust-expert">
+    Learn about the 10 specialized AI agents
+  </Card>
+  
+  <Card title="Contributing Guide" icon="code-pull-request" href="/development/contributing">
+    Create custom commands and contribute to ccprompts
+  </Card>
+</CardGroup>
+
+## Additional Resources
+
+- **Documentation**: [GitHub Repository](https://github.com/ursisterbtw/ccprompts)
+- **Issues**: [Report Bugs](https://github.com/ursisterbtw/ccprompts/issues)
+- **Discussions**: [Community Forum](https://github.com/ursisterbtw/ccprompts/discussions)
+- **Plugin Guide**: [PLUGIN.md](https://github.com/ursisterbtw/ccprompts/blob/main/PLUGIN.md)
+- **Safety Documentation**: [SAFETY.md](https://github.com/ursisterbtw/ccprompts/blob/main/SAFETY.md)
+- **Contributing**: [CONTRIBUTING.md](https://github.com/ursisterbtw/ccprompts/blob/main/CONTRIBUTING.md)

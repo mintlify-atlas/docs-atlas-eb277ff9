@@ -1,0 +1,192 @@
+---
+title: "Safety System Overview"
+description: "Three-layer safety architecture for secure command execution"
+---
+
+<Info>
+  The ccprompts safety system protects against dangerous operations through pattern detection, validation, and container isolation.
+</Info>
+
+## Three-layer safety architecture
+
+The ccprompts safety system implements defense in depth through three complementary layers:
+
+<Steps>
+<Step title="Pattern Detection">
+
+The first layer analyzes command content for dangerous patterns before execution. All 70+ commands are scanned for:
+
+- **Critical patterns**: Immediate security threats (e.g., `rm -rf /`, `curl | bash`)
+- **High-risk patterns**: Significant security concerns (e.g., `sudo`, `eval`, `chmod`)
+- **Medium-risk patterns**: Operations requiring caution (e.g., file modifications, network operations)
+
+Pattern detection occurs in two phases:
+1. Static analysis during command validation
+2. Runtime analysis when commands are executed
+
+</Step>
+
+<Step title="Validation System">
+
+The second layer validates detected patterns and classifies safety levels:
+
+```javascript
+const levels = {
+  critical: 'Immediate security threat',
+  high: 'Significant security concern',
+  medium: 'Caution required',
+  low: 'Standard operations'
+};
+```
+
+Each command receives:
+- Safety classification based on detected patterns
+- Specific recommendations for safe execution
+- Container validation requirements
+
+</Step>
+
+<Step title="Container Isolation">
+
+The third layer executes dangerous commands in isolated Dagger containers:
+
+- Commands run in ephemeral Ubuntu 22.04 containers
+- Full filesystem isolation from host system
+- Automatic cleanup after execution
+- Network controls and resource limits
+
+</Step>
+</Steps>
+
+## Safety pattern categories
+
+The system recognizes patterns across multiple security categories:
+
+### Critical patterns
+
+<Warning>
+  Critical patterns indicate immediate security threats and always trigger container isolation.
+</Warning>
+
+<CodeGroup>
+```javascript Filesystem threats
+{
+  pattern: /rm\s+-rf\s+[\/\$]/gi,
+  severity: 'critical',
+  message: 'Recursive file deletion with system paths',
+  category: 'filesystem'
+}
+```
+
+```javascript Remote execution
+{
+  pattern: /curl.*\|\s*(sh|bash)/gi,
+  severity: 'critical',
+  message: 'Pipe to shell from curl (remote code execution)',
+  category: 'network'
+}
+```
+
+```javascript Container privileges
+{
+  pattern: /docker.*--privileged/gi,
+  severity: 'critical',
+  message: 'Docker privileged mode execution',
+  category: 'container'
+}
+```
+</CodeGroup>
+
+### High-risk patterns
+
+<CodeGroup>
+```javascript Privilege escalation
+{
+  pattern: /sudo\s+(?!apt|npm|pip|yum|dnf)/gi,
+  severity: 'high',
+  message: 'Sudo execution with non-package managers',
+  category: 'privilege'
+}
+```
+
+```javascript Dynamic execution
+{
+  pattern: /eval\s*\(/gi,
+  severity: 'high',
+  message: 'Dynamic code evaluation',
+  category: 'execution'
+}
+```
+</CodeGroup>
+
+### Medium-risk patterns
+
+Medium-risk patterns include file operations, network requests, and permission changes that require caution but may be legitimate operations.
+
+<Note>
+  Medium-risk patterns support skip conditions (e.g., skip if context includes "test", "example", "demo").
+</Note>
+
+## Safety classification
+
+Commands are classified based on all detected patterns:
+
+```javascript
+classifySafetyLevel(content) {
+  // Check critical patterns first
+  for (const pattern of CRITICAL_PATTERNS) {
+    if (pattern.test(content)) return 'dangerous';
+  }
+  
+  // Check high-risk patterns
+  for (const pattern of HIGH_RISK_PATTERNS) {
+    if (pattern.test(content)) return 'dangerous';
+  }
+  
+  // Check medium-risk patterns
+  for (const pattern of MEDIUM_RISK_PATTERNS) {
+    if (pattern.test(content)) return 'caution';
+  }
+  
+  return 'safe';
+}
+```
+
+## Validation metrics
+
+The safety system tracks comprehensive metrics across all validations:
+
+- **Total commands**: All commands analyzed
+- **Safe commands**: No dangerous patterns detected
+- **Dangerous commands**: Critical or high-risk patterns found
+- **Container tests**: Commands validated in containers
+- **Success rate**: Percentage of safe commands
+- **Validation time**: Total time for all safety checks
+
+View metrics by running:
+
+```bash
+bun run safety-validate
+```
+
+## Next steps
+
+<CardGroup cols={2}>
+
+<Card title="Dagger Containers" icon="box" href="/safety/dagger-containers">
+  Learn how container isolation protects your system
+</Card>
+
+<Card title="Safe Execution" icon="shield-check" href="/safety/safe-execution">
+  Use safe-run.sh and quick-safe.sh scripts
+</Card>
+
+<Card title="Validation System" icon="check-circle" href="/safety/validation-system">
+  Understand pattern detection and classification
+</Card>
+
+<Card title="API Reference" icon="code" href="/api-reference/introduction">
+  Explore the safety API
+</Card>
+
+</CardGroup>

@@ -1,0 +1,327 @@
+[
+  {
+    "source": "/home/daytona/workspace/source/.claude/commands/00-initial-workflow/analyze-project.md",
+    "output": "/home/daytona/workspace/docs/reference/analyze-project.mdx",
+    "title": "Analyze-Project"
+  },
+  {
+    "source": "/home/daytona/workspace/source/.claude/commands/00-initial-workflow/intelligent-chain.md",
+    "output": "/home/daytona/workspace/docs/reference/intelligent-chain.mdx",
+    "title": "Intelligent Chain"
+  },
+  {
+    "source": "/home/daytona/workspace/source/.claude/commands/01-project-setup/document.md",
+    "output": "/home/daytona/workspace/docs/reference/document.mdx",
+    "title": "Document"
+  },
+  {
+    "source": "/home/daytona/workspace/source/.claude/commands/01-project-setup/learn.md",
+    "output": "/home/daytona/workspace/docs/reference/learn.mdx",
+    "title": "Learn"
+  },
+  {
+    "source": "/home/daytona/workspace/source/.claude/commands/01-project-setup/mcp.md",
+    "output": "/home/daytona/workspace/docs/reference/mcp.mdx",
+    "title": "MCP"
+  },
+  {
+    "source": "/home/daytona/workspace/source/.claude/commands/02-development/backup.md",
+    "output": "/home/daytona/workspace/docs/reference/backup.mdx",
+    "title": "Backup"
+  },
+  {
+    "source": "/home/daytona/workspace/source/.claude/commands/02-development/debug-session.md",
+    "output": "/home/daytona/workspace/docs/reference/debug-session.mdx",
+    "title": "Debug-Session"
+  },
+  {
+    "source": "/home/daytona/workspace/source/.claude/commands/02-development/migrate.md",
+    "output": "/home/daytona/workspace/docs/reference/migrate.mdx",
+    "title": "Migrate"
+  },
+  {
+    "source": "/home/daytona/workspace/source/.claude/commands/02-development/optimize.md",
+    "output": "/home/daytona/workspace/docs/reference/optimize.mdx",
+    "title": "Optimize"
+  },
+  {
+    "source": "/home/daytona/workspace/source/.claude/commands/02-development/refactor.md",
+    "output": "/home/daytona/workspace/docs/reference/refactor.mdx",
+    "title": "Safe Refactoring"
+  },
+  {
+    "source": "/home/daytona/workspace/source/.claude/commands/03-security/audit-security.md",
+    "output": "/home/daytona/workspace/docs/reference/audit-security.mdx",
+    "title": "Audit-Security"
+  },
+  {
+    "source": "/home/daytona/workspace/source/.claude/commands/03-security/comply.md",
+    "output": "/home/daytona/workspace/docs/reference/comply.mdx",
+    "title": "Comply"
+  },
+  {
+    "source": "/home/daytona/workspace/source/.claude/commands/03-security/harden.md",
+    "output": "/home/daytona/workspace/docs/reference/harden.mdx",
+    "title": "Harden"
+  },
+  {
+    "source": "/home/daytona/workspace/source/.claude/commands/03-security/incident-response.md",
+    "output": "/home/daytona/workspace/docs/reference/incident-response.mdx",
+    "title": "Incident-Response"
+  },
+  {
+    "source": "/home/daytona/workspace/source/.claude/commands/04-testing/test.md",
+    "output": "/home/daytona/workspace/docs/reference/test.mdx",
+    "title": "Test"
+  },
+  {
+    "source": "/home/daytona/workspace/source/.claude/commands/04-testing/troubleshoot.md",
+    "output": "/home/daytona/workspace/docs/reference/troubleshoot.mdx",
+    "title": "Troubleshoot"
+  },
+  {
+    "source": "/home/daytona/workspace/source/.claude/commands/05-deployment/deploy.md",
+    "output": "/home/daytona/workspace/docs/reference/deploy.mdx",
+    "title": "Deploy"
+  },
+  {
+    "source": "/home/daytona/workspace/source/.claude/commands/05-deployment/git.md",
+    "output": "/home/daytona/workspace/docs/reference/git.mdx",
+    "title": "Git"
+  },
+  {
+    "source": "/home/daytona/workspace/source/.claude/commands/05-deployment/pre-commit.md",
+    "output": "/home/daytona/workspace/docs/reference/pre-commit.mdx",
+    "title": "Pre-Commit"
+  },
+  {
+    "source": "/home/daytona/workspace/source/.claude/commands/05-deployment/setup-ci.md",
+    "output": "/home/daytona/workspace/docs/reference/setup-ci.mdx",
+    "title": "CI/CD Pipeline Setup"
+  },
+  {
+    "source": "/home/daytona/workspace/source/.claude/commands/06-collaboration/code-review.md",
+    "output": "/home/daytona/workspace/docs/reference/code-review.mdx",
+    "title": "Code-Review"
+  },
+  {
+    "source": "/home/daytona/workspace/source/.claude/commands/06-collaboration/daily-standup.md",
+    "output": "/home/daytona/workspace/docs/reference/daily-standup.mdx",
+    "title": "Daily Standup Automation"
+  },
+  {
+    "source": "/home/daytona/workspace/source/.claude/commands/06-collaboration/monitor.md",
+    "output": "/home/daytona/workspace/docs/reference/monitor.mdx",
+    "title": "Monitor"
+  },
+  {
+    "source": "/home/daytona/workspace/source/.claude/commands/06-collaboration/tech-debt.md",
+    "output": "/home/daytona/workspace/docs/reference/tech-debt.mdx",
+    "title": "Tech-Debt"
+  },
+  {
+    "source": "/home/daytona/workspace/source/.claude/commands/07-utilities/best-practices.md",
+    "output": "/home/daytona/workspace/docs/reference/best-practices.mdx",
+    "title": "Best-Practices"
+  },
+  {
+    "source": "/home/daytona/workspace/source/.claude/commands/07-utilities/knowledge-base.md",
+    "output": "/home/daytona/workspace/docs/reference/knowledge-base.mdx",
+    "title": "Knowledge-Base"
+  },
+  {
+    "source": "/home/daytona/workspace/source/.claude/commands/07-utilities/quick-fix.md",
+    "output": "/home/daytona/workspace/docs/reference/quick-fix.mdx",
+    "title": "Quick-Fix"
+  },
+  {
+    "source": "/home/daytona/workspace/source/.claude/commands/07-utilities/release-notes.md",
+    "output": "/home/daytona/workspace/docs/reference/release-notes.mdx",
+    "title": "Release-Notes"
+  },
+  {
+    "source": "/home/daytona/workspace/source/.claude/commands/07-utilities/smart-suggest.md",
+    "output": "/home/daytona/workspace/docs/reference/smart-suggest.mdx",
+    "title": "Smart-Suggest"
+  },
+  {
+    "source": "/home/daytona/workspace/source/.claude/commands/07-utilities/sprint-planning.md",
+    "output": "/home/daytona/workspace/docs/reference/sprint-planning.mdx",
+    "title": "Sprint-Planning"
+  },
+  {
+    "source": "/home/daytona/workspace/source/.claude/commands/07-utilities/validate-environment.md",
+    "output": "/home/daytona/workspace/docs/reference/validate-environment.mdx",
+    "title": "Validate-Environment"
+  },
+  {
+    "source": "/home/daytona/workspace/source/.claude/commands/08-extras/health-check.md",
+    "output": "/home/daytona/workspace/docs/reference/health-check.mdx",
+    "title": "Health-Check"
+  },
+  {
+    "source": "/home/daytona/workspace/source/.claude/commands/08-extras/modernize.md",
+    "output": "/home/daytona/workspace/docs/reference/modernize.mdx",
+    "title": "Modernize"
+  },
+  {
+    "source": "/home/daytona/workspace/source/.claude/commands/08-extras/new-feature.md",
+    "output": "/home/daytona/workspace/docs/reference/new-feature.mdx",
+    "title": "New-Feature"
+  },
+  {
+    "source": "/home/daytona/workspace/source/.claude/commands/08-extras/workflow-builder.md",
+    "output": "/home/daytona/workspace/docs/reference/workflow-builder.mdx",
+    "title": "Workflow-Builder"
+  },
+  {
+    "source": "/home/daytona/workspace/source/.claude/commands/09-agentic-capabilities/agent-communicate.md",
+    "output": "/home/daytona/workspace/docs/reference/agent-communicate.mdx",
+    "title": "Agent Communicate - Inter-Agent Communication and Coordination Protocols"
+  },
+  {
+    "source": "/home/daytona/workspace/source/.claude/commands/09-agentic-capabilities/agent-learn.md",
+    "output": "/home/daytona/workspace/docs/reference/agent-learn.mdx",
+    "title": "Agent Learn - Agent Learning and Adaptation from Project Patterns"
+  },
+  {
+    "source": "/home/daytona/workspace/source/.claude/commands/09-agentic-capabilities/agent-monitor.md",
+    "output": "/home/daytona/workspace/docs/reference/agent-monitor.mdx",
+    "title": "Agent Monitor - Agent Performance Monitoring and Optimization"
+  },
+  {
+    "source": "/home/daytona/workspace/source/.claude/commands/09-agentic-capabilities/agent-orchestrate.md",
+    "output": "/home/daytona/workspace/docs/reference/agent-orchestrate.mdx",
+    "title": "Agent-Orchestrate"
+  },
+  {
+    "source": "/home/daytona/workspace/source/.claude/commands/09-agentic-capabilities/agent-specialize.md",
+    "output": "/home/daytona/workspace/docs/reference/agent-specialize.mdx",
+    "title": "Agent Specialize - Agent Role Specialization and Capability Assignment"
+  },
+  {
+    "source": "/home/daytona/workspace/source/.claude/commands/09-agentic-capabilities/context-manager.md",
+    "output": "/home/daytona/workspace/docs/reference/context-manager.mdx",
+    "title": "Context Manager - Advanced Context Management and Semantic Understanding"
+  },
+  {
+    "source": "/home/daytona/workspace/source/.claude/commands/09-agentic-capabilities/context-persist.md",
+    "output": "/home/daytona/workspace/docs/reference/context-persist.mdx",
+    "title": "Context Persist - Context Persistence and Retrieval Across Sessions"
+  },
+  {
+    "source": "/home/daytona/workspace/source/.claude/commands/09-agentic-capabilities/mcp-configure.md",
+    "output": "/home/daytona/workspace/docs/reference/mcp-configure.mdx",
+    "title": "MCP Configure - Advanced MCP Server Configuration and Management"
+  },
+  {
+    "source": "/home/daytona/workspace/source/.claude/commands/09-agentic-capabilities/mcp-discover.md",
+    "output": "/home/daytona/workspace/docs/reference/mcp-discover.mdx",
+    "title": "MCP-Discover"
+  },
+  {
+    "source": "/home/daytona/workspace/source/.claude/commands/09-agentic-capabilities/mcp-extend.md",
+    "output": "/home/daytona/workspace/docs/reference/mcp-extend.mdx",
+    "title": "MCP Extend - Custom MCP Server Development and Extension"
+  },
+  {
+    "source": "/home/daytona/workspace/source/.claude/commands/09-agentic-capabilities/workflow-automate.md",
+    "output": "/home/daytona/workspace/docs/reference/workflow-automate.mdx",
+    "title": "Workflow Automate - Multi-Step Workflow Automation with Agent Coordination"
+  },
+  {
+    "source": "/home/daytona/workspace/source/.claude/commands/09-agentic-capabilities/workflow-visual.md",
+    "output": "/home/daytona/workspace/docs/reference/workflow-visual.mdx",
+    "title": "Workflow Visual - Visual Workflow Builder for Agent Orchestration"
+  },
+  {
+    "source": "/home/daytona/workspace/source/.claude/commands/10-ai-native-development/ai-debug.md",
+    "output": "/home/daytona/workspace/docs/reference/ai-debug.mdx",
+    "title": "AI Debug - AI-Assisted Debugging and Error Resolution"
+  },
+  {
+    "source": "/home/daytona/workspace/source/.claude/commands/10-ai-native-development/ai-mentor.md",
+    "output": "/home/daytona/workspace/docs/reference/ai-mentor.mdx",
+    "title": "AI Mentor - AI Mentoring and Skill Development Guidance"
+  },
+  {
+    "source": "/home/daytona/workspace/source/.claude/commands/10-ai-native-development/ai-pair-program.md",
+    "output": "/home/daytona/workspace/docs/reference/ai-pair-program.mdx",
+    "title": "AI-Pair-Program"
+  },
+  {
+    "source": "/home/daytona/workspace/source/.claude/commands/10-ai-native-development/code-explain.md",
+    "output": "/home/daytona/workspace/docs/reference/code-explain.mdx",
+    "title": "Code Explain - Advanced Code Explanation and Documentation"
+  },
+  {
+    "source": "/home/daytona/workspace/source/.claude/commands/10-ai-native-development/code-generate.md",
+    "output": "/home/daytona/workspace/docs/reference/code-generate.mdx",
+    "title": "Code Generate - Advanced AI-Powered Code Generation"
+  },
+  {
+    "source": "/home/daytona/workspace/source/.claude/commands/10-ai-native-development/pattern-detect.md",
+    "output": "/home/daytona/workspace/docs/reference/pattern-detect.mdx",
+    "title": "Pattern Detect - Pattern Detection and Architectural Analysis"
+  },
+  {
+    "source": "/home/daytona/workspace/source/.claude/commands/10-ai-native-development/predictive-dev.md",
+    "output": "/home/daytona/workspace/docs/reference/predictive-dev.mdx",
+    "title": "Predictive Dev - Predictive Development and Proactive Suggestions"
+  },
+  {
+    "source": "/home/daytona/workspace/source/.claude/commands/10-ai-native-development/refactor-semantic.md",
+    "output": "/home/daytona/workspace/docs/reference/refactor-semantic.mdx",
+    "title": "Refactor Semantic - Semantic-Aware Refactoring and Optimization"
+  },
+  {
+    "source": "/home/daytona/workspace/source/.claude/commands/10-ai-native-development/semantic-understand.md",
+    "output": "/home/daytona/workspace/docs/reference/semantic-understand.mdx",
+    "title": "Semantic Understand - Deep Semantic Code Understanding and Analysis"
+  },
+  {
+    "source": "/home/daytona/workspace/source/.claude/commands/10-ai-native-development/test-intelligent.md",
+    "output": "/home/daytona/workspace/docs/reference/test-intelligent.mdx",
+    "title": "Test Intelligent - Intelligent Test Generation and Optimization"
+  },
+  {
+    "source": "/home/daytona/workspace/source/.claude/commands/11-enterprise-scale/analytics-advanced.md",
+    "output": "/home/daytona/workspace/docs/reference/analytics-advanced.mdx",
+    "title": "Analytics Advanced - Advanced Analytics and Reporting Dashboard"
+  },
+  {
+    "source": "/home/daytona/workspace/source/.claude/commands/11-enterprise-scale/compliance-enterprise.md",
+    "output": "/home/daytona/workspace/docs/reference/compliance-enterprise.mdx",
+    "title": "Compliance Enterprise - Enterprise Compliance Automation and Auditing"
+  },
+  {
+    "source": "/home/daytona/workspace/source/.claude/commands/11-enterprise-scale/governance.md",
+    "output": "/home/daytona/workspace/docs/reference/governance.mdx",
+    "title": "Governance - Enterprise Governance and Policy Enforcement"
+  },
+  {
+    "source": "/home/daytona/workspace/source/.claude/commands/11-enterprise-scale/knowledge-org.md",
+    "output": "/home/daytona/workspace/docs/reference/knowledge-org.mdx",
+    "title": "Knowledge Org - Organizational Knowledge Management System"
+  },
+  {
+    "source": "/home/daytona/workspace/source/.claude/commands/11-enterprise-scale/multi-repo.md",
+    "output": "/home/daytona/workspace/docs/reference/multi-repo.mdx",
+    "title": "Multi Repo - Multi-Repository Coordination and Management"
+  },
+  {
+    "source": "/home/daytona/workspace/source/.claude/commands/11-enterprise-scale/resource-manage.md",
+    "output": "/home/daytona/workspace/docs/reference/resource-manage.mdx",
+    "title": "Resource Manage - Resource Management and Capacity Planning"
+  },
+  {
+    "source": "/home/daytona/workspace/source/.claude/commands/11-enterprise-scale/scale-optimize.md",
+    "output": "/home/daytona/workspace/docs/reference/scale-optimize.mdx",
+    "title": "Scale Optimize - Performance Optimization at Enterprise Scale"
+  },
+  {
+    "source": "/home/daytona/workspace/source/.claude/commands/11-enterprise-scale/team-coordinate.md",
+    "output": "/home/daytona/workspace/docs/reference/team-coordinate.mdx",
+    "title": "Team Coordinate - Advanced Team Coordination and Communication"
+  }
+]

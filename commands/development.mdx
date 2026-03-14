@@ -1,0 +1,283 @@
+---
+title: "Phase 02: Development"
+description: "Core development workflow commands for building and maintaining code"
+---
+
+The Development phase provides essential commands for daily coding activities including backups, debugging, migrations, optimization, and refactoring.
+
+## Commands in This Phase
+
+<CardGroup cols={2}>
+  <Card title="/backup" icon="floppy-disk" href="/commands/backup">
+    Comprehensive backup solution for code, databases, and configurations
+  </Card>
+  
+  <Card title="/debug-session" icon="bug" href="/commands/debug-session">
+    Advanced debugging and troubleshooting for Claude Code issues
+  </Card>
+  
+  <Card title="/migrate" icon="arrows-turn-right" href="/commands/migrate">
+    Intelligent migration system for databases, APIs, and infrastructure
+  </Card>
+  
+  <Card title="/optimize" icon="gauge-high" href="/commands/optimize">
+    Comprehensive optimization for performance, security, and maintainability
+  </Card>
+  
+  <Card title="/refactor" icon="code-compare" href="/commands/refactor">
+    Safe multi-file refactoring with automated testing and rollback
+  </Card>
+</CardGroup>
+
+## Overview
+
+Phase 02 commands are your daily development toolkit, providing safety nets, debugging assistance, and code quality improvements for active development work.
+
+### Key Capabilities
+
+**Backup & Recovery**
+- Automatic detection of critical project assets
+- Multiple backup strategies (full, incremental, differential)
+- Cloud and local storage options
+- Verification and restore testing
+- Retention policy management
+
+**Debugging & Troubleshooting**
+- Session state analysis and diagnostics
+- Performance profiling and bottleneck identification
+- Configuration validation
+- MCP server connectivity troubleshooting
+- Automated fix suggestions
+
+**Database & API Migration**
+- Schema version control
+- Zero-downtime migration strategies
+- Automatic rollback on failure
+- Multi-database support
+- API versioning and compatibility
+
+**Performance Optimization**
+- CPU, memory, I/O optimization
+- Database query optimization
+- Bundle size reduction
+- Frontend performance improvements
+- Automated load testing
+
+**Safe Refactoring**
+- Multi-file refactoring with safety checks
+- Incremental changes with continuous testing
+- Automatic test updates
+- Rollback capabilities
+- Pattern detection and modernization
+
+## Use Cases
+
+### Pre-Deployment Backup
+
+```bash
+/backup full s3
+```
+
+Create a comprehensive backup before major deployments with cloud storage for disaster recovery.
+
+### Debug Performance Issues
+
+```bash
+/debug-session performance current-session detailed
+```
+
+Diagnose slow response times and identify bottlenecks in your Claude Code session.
+
+### Database Schema Migration
+
+```bash
+/migrate database up latest
+```
+
+Apply the latest database migrations with automatic rollback on failure.
+
+### Optimize Application Performance
+
+```bash
+/optimize performance
+```
+
+Comprehensive performance analysis and optimization across the full stack.
+
+### Modernize Legacy Code
+
+```bash
+/refactor "utils.js" "modernize"
+```
+
+Safely refactor legacy JavaScript to modern ES2024 with automated testing.
+
+## Example Workflows
+
+### Safe Feature Development
+
+1. **Backup**: `/backup incremental local`
+2. **Implement**: Make code changes
+3. **Optimize**: `/optimize performance`
+4. **Refactor**: `/refactor "feature/*" "architecture"`
+5. **Test**: Verify all tests pass
+
+### Production Issue Response
+
+1. **Debug**: `/debug-session connection production critical`
+2. **Analyze**: Identify root cause
+3. **Backup**: `/backup snapshot git`
+4. **Fix**: Apply hotfix
+5. **Optimize**: `/optimize performance`
+
+### Legacy Code Modernization
+
+1. **Backup**: `/backup full cloud`
+2. **Analyze**: `/analyze-project`
+3. **Refactor**: `/refactor "src/*" "modernize"`
+4. **Migrate**: `/migrate api up latest`
+5. **Optimize**: `/optimize maintainability`
+
+## Backup Strategies
+
+### Full Backup
+
+Complete project snapshot including:
+- All source code and version control
+- Database schemas and data
+- Configuration files and secrets
+- Dependencies and lock files
+- Build artifacts and outputs
+
+### Incremental Backup
+
+Only changed files since last backup:
+- Faster backup times
+- Reduced storage requirements
+- Suitable for frequent backups
+- Easy restoration of recent changes
+
+### Differential Backup
+
+Changes since last full backup:
+- Balance between full and incremental
+- Simpler restoration than incremental
+- Good for weekly schedules
+- Reduced backup windows
+
+## Debugging Categories
+
+### Connection Issues
+
+- Network connectivity problems
+- MCP server connection failures
+- API authentication issues
+- Proxy and firewall configuration
+
+### Performance Problems
+
+- Slow response times
+- High memory usage
+- Context window exhaustion
+- Tool execution delays
+
+### Configuration Issues
+
+- Invalid configuration files
+- Missing environment variables
+- Permission problems
+- Version compatibility
+
+## Migration Types
+
+### Database Migrations
+
+- Schema version control with up/down migrations
+- Data transformation scripts
+- Transaction safety with automatic rollback
+- Support for PostgreSQL, MySQL, MongoDB, SQLite
+
+### API Migrations
+
+- Endpoint versioning strategies
+- Breaking change detection
+- Client compatibility checking
+- Gradual rollout with canary releases
+
+### Infrastructure Migrations
+
+- Blue-green deployment strategies
+- Configuration migrations
+- Service mesh updates
+- Cloud provider migrations
+
+## Optimization Targets
+
+### Performance
+
+- End-to-end profiling strategy
+- Database query optimization
+- Client-side bundle reduction
+- Caching strategies
+- Load testing integration
+
+### Security
+
+- Vulnerability fixes
+- Hardening measures
+- Security architecture improvements
+- Compliance enhancements
+
+### Maintainability
+
+- Code quality improvements
+- Technical debt reduction
+- Documentation updates
+- Testing coverage
+
+### Cost
+
+- Cloud resource optimization
+- Database efficiency
+- CDN and caching optimization
+- Serverless cost reduction
+
+## Refactoring Types
+
+### Code Modernization
+
+- Upgrade to modern syntax (ES2024, Python 3.12)
+- Framework version migrations
+- Replace deprecated APIs
+- Performance optimization
+
+### Architecture Improvements
+
+- Apply design patterns
+- Improve separation of concerns
+- Reduce coupling between components
+- Break down monolithic structures
+
+### Technical Debt Reduction
+
+- Remove dead code and unused imports
+- Eliminate code duplication
+- Simplify complex methods
+- Externalize hardcoded values
+
+## Related Phases
+
+- **Phase 00: Initial Workflow** - Analyze before optimizing
+- **Phase 03: Security** - Security-focused optimization
+- **Phase 04: Testing** - Test after refactoring
+- **Phase 05: Deployment** - Deploy optimized code
+
+## Best Practices
+
+1. **Backup Before Changes**: Always backup before major refactoring or migrations
+2. **Test Continuously**: Run tests after each refactoring step
+3. **Incremental Optimization**: Make small, measurable improvements
+4. **Monitor Performance**: Track metrics before and after optimization
+5. **Document Changes**: Keep clear records of migrations and refactorings
+6. **Use Version Control**: Commit frequently during refactoring
+7. **Plan Rollbacks**: Always have a rollback strategy for migrations

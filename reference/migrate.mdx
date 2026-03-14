@@ -1,0 +1,57 @@
+---
+title: "Migrate"
+description: "Intelligent migration system for databases, APIs, and infrastructure changes with automatic rollback capabilities and zero-downtime strategies."
+---
+
+# Migrate
+
+Intelligent migration system for databases, APIs, and infrastructure changes with automatic rollback capabilities and zero-downtime strategies.
+
+## Usage
+
+```bash
+/migrate [type] [direction] [target]
+```
+
+## Features
+
+#
+
+## Parameters
+
+<ParamField path="type" type="string">
+  database, api, infrastructure, data (default: database)
+</ParamField>
+
+<ParamField path="direction" type="string">
+  up, down, status, validate (default: up)
+</ParamField>
+
+<ParamField path="target" type="string">
+  specific version or "latest" (default: latest)
+</ParamField>
+
+## Examples
+
+<CodeGroup>
+
+```bash Basic Usage
+/migrate
+/migrate database up latest
+/migrate api down v2.0
+/migrate infrastructure status
+/migrate data validate
+```
+
+</CodeGroup>
+
+<Warning>
+Mechanisms
+
+- Pre-migration validation
+- Backup before migration
+- Health checks during migration
+- Automatic rollback on failure
+- Migration history tracking
+</Warning>
+

@@ -1,0 +1,334 @@
+---
+title: "Phase 03: Security"
+description: "Comprehensive security audit, compliance, hardening, and incident response"
+---
+
+The Security phase provides enterprise-grade security commands for auditing, compliance automation, system hardening, and incident response.
+
+## Commands in This Phase
+
+<CardGroup cols={2}>
+  <Card title="/audit-security" icon="shield-halved" href="/commands/audit-security">
+    Comprehensive security and quality analysis with OWASP Top 10 scanning
+  </Card>
+  
+  <Card title="/comply" icon="file-contract" href="/commands/comply">
+    Automated compliance monitoring and security hardening for regulatory frameworks
+  </Card>
+  
+  <Card title="/harden" icon="shield" href="/commands/harden">
+    End-to-end security hardening with defense-in-depth strategies
+  </Card>
+  
+  <Card title="/incident-response" icon="bell" href="/commands/incident-response">
+    Structured incident response workflows for production issues and system failures
+  </Card>
+</CardGroup>
+
+## Overview
+
+Phase 03 commands provide comprehensive security coverage from initial auditing through compliance automation, system hardening, and emergency incident response.
+
+### Key Capabilities
+
+**Security Auditing**
+- OWASP Top 10 vulnerability scanning
+- Code quality assessment
+- Performance bottleneck identification
+- Compliance gap analysis
+- Dependency security review
+- License health and compatibility
+
+**Compliance Automation**
+- Evidence collection for SOC2, GDPR, HIPAA, PCI-DSS
+- Continuous controls monitoring
+- Automated policy document generation
+- Real-time compliance drift detection
+- Audit trail generation
+
+**System Hardening**
+- Application security implementation
+- Infrastructure security configuration
+- Network security and access controls
+- Container and cloud hardening
+- Security monitoring setup
+
+**Incident Response**
+- Automated incident detection and classification
+- Structured response workflows
+- Real-time monitoring and status tracking
+- Root cause analysis
+- Post-incident review and improvement
+
+## Use Cases
+
+### Production Readiness Audit
+
+```bash
+/audit-security full-codebase paranoid
+```
+
+Comprehensive security review before production deployment with maximum thoroughness.
+
+### SOC2 Compliance Preparation
+
+```bash
+/comply soc2 audit-ready
+```
+
+Complete SOC2 compliance automation with evidence collection and continuous monitoring.
+
+### Enterprise Security Hardening
+
+```bash
+/harden enterprise
+```
+
+Business-grade security implementation across application, infrastructure, and compliance.
+
+### Critical Production Outage
+
+```bash
+/incident-response critical outage production
+```
+
+Immediate response protocol for complete service outages with automated diagnostics.
+
+## Example Workflows
+
+### Pre-Production Security Review
+
+1. **Audit**: `/audit-security full-codebase thorough`
+2. **Compliance**: `/comply soc2 basic`
+3. **Harden**: `/harden enterprise`
+4. **Validate**: Re-run audit to verify improvements
+5. **Document**: Generate security documentation
+
+### Security Incident Handling
+
+1. **Detect**: Automated alerts trigger incident
+2. **Respond**: `/incident-response high security production`
+3. **Contain**: Isolate affected systems
+4. **Investigate**: Root cause analysis
+5. **Remediate**: Apply fixes and harden
+6. **Review**: Post-incident analysis
+
+### Compliance Audit Preparation
+
+1. **Gap Analysis**: `/comply hipaa thorough`
+2. **Evidence Collection**: Automated artifact gathering
+3. **Policy Generation**: Create required documentation
+4. **Continuous Monitoring**: Real-time compliance tracking
+5. **Audit Support**: Integration with audit portals
+
+## Security Audit Levels
+
+### Surface Level
+
+Quick security scan covering:
+- Critical vulnerabilities only
+- High-risk dependencies
+- Common misconfigurations
+- Basic OWASP issues
+
+**Duration**: 15-30 minutes
+**Use Case**: Rapid feedback during development
+
+### Thorough Level
+
+Comprehensive analysis including:
+- Full OWASP Top 10 coverage
+- Dependency vulnerability analysis
+- Code quality assessment
+- Security best practices review
+- Performance bottleneck identification
+
+**Duration**: 1-2 hours
+**Use Case**: Pre-release security validation
+
+### Paranoid Level
+
+Maximum security scrutiny with:
+- Deep code analysis
+- Advanced threat modeling
+- Cryptographic review
+- Complete dependency audit
+- Compliance verification
+- Penetration testing preparation
+
+**Duration**: 3-5 hours
+**Use Case**: High-security environments, regulated industries
+
+## Compliance Frameworks
+
+### SOC 2
+
+Service Organization Control 2:
+- Trust Services Criteria (Security, Availability, Confidentiality)
+- Evidence collection automation
+- Continuous controls monitoring
+- Audit report preparation
+
+### GDPR
+
+General Data Protection Regulation:
+- Data protection impact assessments
+- Consent management
+- Data breach notification procedures
+- Right to erasure implementation
+
+### HIPAA
+
+Health Insurance Portability and Accountability Act:
+- PHI protection measures
+- Access controls and audit logs
+- Encryption requirements
+- Breach notification procedures
+
+### PCI DSS
+
+Payment Card Industry Data Security Standard:
+- Cardholder data protection
+- Secure network architecture
+- Vulnerability management
+- Access control measures
+
+### ISO 27001
+
+Information Security Management:
+- ISMS implementation
+- Risk assessment and treatment
+- Security controls framework
+- Continuous improvement
+
+## Hardening Levels
+
+### Basic Hardening
+
+Essential security measures:
+- Input validation
+- Basic authentication
+- HTTPS enforcement
+- Environment variable security
+- Common vulnerability fixes
+
+**Timeline**: 1-2 weeks
+**Suitable For**: Small teams, development environments
+
+### Enterprise Hardening
+
+Comprehensive business security:
+- Advanced authentication (MFA, SSO)
+- Role-based access control
+- API security (rate limiting, validation)
+- Infrastructure hardening
+- Security monitoring and alerting
+
+**Timeline**: 3-6 weeks
+**Suitable For**: Business-critical applications
+
+### Paranoid Hardening
+
+Maximum security configuration:
+- Defense-in-depth architecture
+- Advanced threat detection
+- Comprehensive encryption
+- Zero-trust networking
+- Continuous security validation
+
+**Timeline**: 6-10 weeks
+**Suitable For**: High-risk environments, financial services
+
+### Compliance Hardening
+
+Audit-ready security:
+- Framework-specific controls (SOC2, HIPAA, etc.)
+- Evidence collection automation
+- Audit trail generation
+- Compliance reporting
+- Regular compliance validation
+
+**Timeline**: 4-8 weeks (varies by framework)
+**Suitable For**: Regulated industries
+
+## Incident Severity Levels
+
+### Critical (SEV-1)
+
+- **Impact**: Complete service outage or critical functionality unavailable
+- **Response Time**: Immediate (within 15 minutes)
+- **Communication**: Real-time updates every 30 minutes
+- **Escalation**: Automatic to leadership
+
+### High (SEV-2)
+
+- **Impact**: Major functionality degraded or limited outage
+- **Response Time**: Within 1 hour
+- **Communication**: Updates every 2 hours
+- **Escalation**: Team lead and on-call engineer
+
+### Medium (SEV-3)
+
+- **Impact**: Minor functionality issues or performance degradation
+- **Response Time**: Within 4 hours (business hours)
+- **Communication**: Daily updates until resolved
+- **Escalation**: Assigned team member
+
+### Low (SEV-4)
+
+- **Impact**: Cosmetic issues or non-critical functionality
+- **Response Time**: Within 5 business days
+- **Communication**: Weekly updates in team meetings
+- **Escalation**: Normal prioritization
+
+## Incident Types
+
+### System Outage
+
+Complete or partial service unavailability:
+- Immediate triage and assessment
+- Emergency response procedures
+- Rollback and recovery strategies
+- Communication plan activation
+
+### Security Incident
+
+Security breach or compromise:
+- System isolation and evidence preservation
+- Forensic data collection
+- Scope assessment and containment
+- Legal and regulatory notification
+
+### Performance Degradation
+
+Slow response times or reduced capacity:
+- Performance monitoring and profiling
+- Resource scaling and optimization
+- Bottleneck identification
+- Gradual remediation
+
+### Data Incident
+
+Data loss, corruption, or exposure:
+- Backup restoration procedures
+- Data integrity verification
+- Impact assessment
+- Compliance notification
+
+## Related Phases
+
+- **Phase 00: Initial Workflow** - Identify security gaps early
+- **Phase 02: Development** - Optimize for security
+- **Phase 04: Testing** - Security testing integration
+- **Phase 06: Collaboration** - Security monitoring dashboards
+
+## Best Practices
+
+1. **Regular Audits**: Schedule security audits quarterly or before major releases
+2. **Compliance First**: Build compliance into development workflow
+3. **Defense in Depth**: Implement multiple layers of security
+4. **Incident Preparedness**: Practice incident response procedures
+5. **Continuous Monitoring**: Set up automated security monitoring
+6. **Document Everything**: Maintain audit trails and security documentation
+7. **Team Training**: Regular security awareness training
+8. **Proactive Hardening**: Harden systems before they're compromised

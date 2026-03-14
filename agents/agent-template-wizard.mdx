@@ -1,0 +1,462 @@
+---
+title: "Agent Template Wizard"
+description: "Specialized wizard for creating perfectly compliant agents from templates with proper structure and conventions"
+icon: "wand-magic-sparkles"
+---
+
+The Agent Template Wizard specializes in creating production-ready agents using the SUBAGENT_TEMPLATE.md template. This wizard ensures proper formatting, validates frontmatter, enforces naming conventions, and guarantees template compliance.
+
+## When to Use This Agent
+
+The Agent Template Wizard is ideal for:
+
+<CardGroup cols={2}>
+  <Card title="New Agent Creation" icon="plus">
+    Creating custom agents with proper structure
+  </Card>
+  <Card title="Template Compliance" icon="check">
+    Ensuring all placeholders are properly filled
+  </Card>
+  <Card title="Convention Enforcement" icon="gavel">
+    Following naming and categorization standards
+  </Card>
+  <Card title="Directory Management" icon="folder">
+    Placing agents in correct project/global locations
+  </Card>
+</CardGroup>
+
+## Example Usage
+
+<CodeGroup>
+```bash Create Performance Agent
+user: "Create a new agent for Python performance optimization"
+
+agent: "I'll help you create a new Python performance optimization agent using the template wizard to ensure all placeholders are properly filled and conventions are followed.
+
+Let me start by analyzing the template..."
+```
+
+```bash Create Security Agent
+user: "We need an agent that can audit smart contracts for security vulnerabilities"
+
+agent: "I'll use the template wizard to create a blockchain security auditor agent with proper categorization and all required fields.
+
+Let me set this up..."
+```
+</CodeGroup>
+
+## Directory Rules
+
+<Warning>
+**IMPORTANT**: Agent placement follows specific directory rules:
+
+- **Project-specific agents**: `./[project]/.claude/agents/[category]/`
+- **Global system agents**: `~/.claude/agents/[category]/` (only when explicitly requested)
+- **Default behavior**: Create agents locally in current working directory
+</Warning>
+
+## Core Capabilities
+
+### 1. Template Analysis
+
+Read and understand template structure:
+
+<AccordionGroup>
+  <Accordion title="Template Location">
+    The wizard reads from `~/.claude/templates/SUBAGENT_TEMPLATE.md` to understand:
+    - Required frontmatter fields
+    - Placeholder naming conventions
+    - Example structure requirements
+    - Section organization
+  </Accordion>
+  
+  <Accordion title="Placeholder Identification">
+    All placeholders that must be filled:
+    - `{AGENT_NAME}` - Kebab-case identifier
+    - `{PRIMARY_USE_CASE}` - Clear, specific purpose
+    - `{SPECIFIC_CAPABILITIES}` - 3-5 concrete capabilities
+    - `{EXAMPLE_CONTEXT_1/2}` - Realistic usage scenarios
+    - `{EXAMPLE_USER_REQUEST_1/2}` - Natural user requests
+    - `{EXAMPLE_ASSISTANT_RESPONSE_1/2}` - Appropriate responses
+    - `{EXAMPLE_COMMENTARY_1/2}` - Why agent was selected
+    - `{AGENT_COLOR}` - Approved color from convention
+    - `{DOMAIN_EXPERT_TITLE}` - Professional title
+  </Accordion>
+</AccordionGroup>
+
+### 2. Information Gathering
+
+Collect requirements for agent creation:
+
+<Steps>
+  <Step title="Determine Purpose">
+    Understand the agent's primary domain and responsibilities
+  </Step>
+  <Step title="Identify Capabilities">
+    List 3-5 specific, concrete capabilities the agent provides
+  </Step>
+  <Step title="Choose Category">
+    Select appropriate category: language, framework, domain, or tooling
+  </Step>
+  <Step title="Select Color">
+    Pick color based on category conventions (blue, yellow, green, red)
+  </Step>
+</Steps>
+
+### 3. Placeholder Replacement
+
+Systematically fill all template placeholders:
+
+<Tabs>
+  <Tab title="Agent Name">
+    ```markdown
+    # {AGENT_NAME} → python-performance-optimizer
+    
+    Rules:
+    - Kebab-case format (lowercase with hyphens)
+    - Descriptive and specific
+    - Matches filename without .md extension
+    - No underscores, spaces, or capitals
+    
+    Examples:
+    ✓ python-performance-optimizer
+    ✓ blockchain-security-auditor
+    ✓ fastapi-async-expert
+    ✗ Python_Optimizer (wrong case/underscore)
+    ✗ perf-opt (too vague)
+    ```
+  </Tab>
+  
+  <Tab title="Capabilities">
+    ```markdown
+    # {SPECIFIC_CAPABILITIES}
+    
+    Format: 3-5 concrete, actionable capabilities
+    
+    Example for Python Performance Agent:
+    - Profile Python code with cProfile and memory_profiler
+    - Optimize algorithmic complexity from O(n²) to O(n log n)
+    - Implement caching strategies with functools.lru_cache
+    - Parallelize CPU-bound tasks with multiprocessing
+    - Optimize memory usage with generators and iterators
+    ```
+  </Tab>
+  
+  <Tab title="Examples">
+    ```markdown
+    # Example Structure
+    
+    <example>
+    Context: {EXAMPLE_CONTEXT_1}
+    user: "{EXAMPLE_USER_REQUEST_1}"
+    assistant: "{EXAMPLE_ASSISTANT_RESPONSE_1}"
+    <commentary>{EXAMPLE_COMMENTARY_1}</commentary>
+    </example>
+    
+    Real Example:
+    <example>
+    Context: User needs to optimize slow Python code
+    user: "My data processing script takes 10 minutes to run"
+    assistant: "I'll profile your code to identify bottlenecks and implement optimizations using vectorization and parallel processing"
+    <commentary>This requires Python performance expertise with profiling and optimization techniques</commentary>
+    </example>
+    ```
+  </Tab>
+  
+  <Tab title="Color Selection">
+    ```markdown
+    # {AGENT_COLOR} - Category Conventions
+    
+    Language Experts:
+    - blue: General programming languages
+    - yellow: Systems languages (Rust, C++)
+    - cyan: Modern languages (Go, Kotlin)
+    
+    Framework Specialists:
+    - yellow: Web frameworks (FastAPI, Django)
+    - teal: Frontend frameworks (React, Vue)
+    
+    Domain Experts:
+    - green: Cross-domain (docs, performance)
+    - red: Real-time/critical systems
+    
+    Tooling:
+    - blue: Development tools and wizards
+    ```
+  </Tab>
+</Tabs>
+
+### 4. Naming Convention Enforcement
+
+Ensure proper naming:
+
+```bash
+# File naming rules
+✓ python-performance-optimizer.md
+✓ blockchain-security-auditor.md
+✓ react-component-architect.md
+
+✗ Python_Optimizer.md (wrong case/underscore)
+✗ performance_optimizer.md (underscore instead of hyphen)
+✗ PerfOpt.md (abbreviation, wrong case)
+
+# Frontmatter must match filename
+Filename: python-performance-optimizer.md
+Frontmatter: name: python-performance-optimizer
+```
+
+### 5. Category Placement
+
+Organize agents by category:
+
+<CardGroup cols={2}>
+  <Card title="Language Experts" icon="code">
+    `agents/languages/`
+    - python-pro.md
+    - rust-expert.md
+    - golang-pro.md
+    - javascript-expert.md
+  </Card>
+  <Card title="Framework Specialists" icon="layer-group">
+    `agents/frameworks/`
+    - fastapi-optimizer.md
+    - react-architect.md
+    - django-expert.md
+  </Card>
+  <Card title="Domain Experts" icon="brain">
+    `agents/domain/`
+    - documentation-writer.md
+    - performance-optimizer.md
+    - security-auditor.md
+  </Card>
+  <Card title="Tooling & Utilities" icon="wrench">
+    `agents/tooling/`
+    - agent-template-wizard.md
+    - test-generator.md
+  </Card>
+</CardGroup>
+
+### 6. Validation Checklist
+
+Pre-deployment validation:
+
+<AccordionGroup>
+  <Accordion title="Placeholder Check">
+    ```bash
+    # Verify no placeholders remain
+    grep -r '{[A-Z_]*}' agent-file.md
+    
+    # Should return nothing
+    # If placeholders found, fill them before proceeding
+    ```
+  </Accordion>
+  
+  <Accordion title="Frontmatter Validation">
+    ```yaml
+    ---
+    name: agent-name          # Required: matches filename
+    description: "..."         # Required: enables auto-invocation
+    color: blue               # Required: category color
+    tools: Read, Write        # Optional: required tools
+    model: sonnet            # Optional: preferred model
+    ---
+    ```
+  </Accordion>
+  
+  <Accordion title="Example Format">
+    ```markdown
+    # Verify examples use correct XML tags
+    <example>
+    Context: ...
+    user: "..."
+    assistant: "..."
+    <commentary>...</commentary>
+    </example>
+    
+    # NOT:
+    Example: (plain text)
+    User: ...
+    Agent: ...
+    ```
+  </Accordion>
+  
+  <Accordion title="Auto-Invocation">
+    ```markdown
+    # Description must enable auto-invocation
+    
+    ✓ "Use this agent when you need Python performance optimization"
+    ✓ "Specializes in React component architecture and state management"
+    
+    ✗ "Python agent" (too vague)
+    ✗ "Helps with stuff" (not descriptive)
+    ```
+  </Accordion>
+</AccordionGroup>
+
+### 7. Tool Access Verification
+
+Specify required tools:
+
+```yaml
+---
+tools: Read, Write, Bash, Grep
+---
+
+# Default tools (always available):
+- Read: File reading
+- Write: File writing
+- Bash: Command execution
+- Grep: Text search
+
+# Additional tools (justify need):
+- WebFetch: External documentation
+- Task: Complex multi-step operations
+- Glob: File pattern matching
+```
+
+## The 7-Step Creation Process
+
+<Steps>
+  <Step title="Template Analysis">
+    Read SUBAGENT_TEMPLATE.md and identify all placeholders
+  </Step>
+  <Step title="Information Gathering">
+    Determine purpose, capabilities, category, and color
+  </Step>
+  <Step title="Placeholder Replacement">
+    Fill all placeholders with specific, relevant content
+  </Step>
+  <Step title="Naming Convention">
+    Ensure kebab-case naming and frontmatter match
+  </Step>
+  <Step title="Category Placement">
+    Place agent in correct directory (local vs global)
+  </Step>
+  <Step title="Validation">
+    Run validation checklist to ensure compliance
+  </Step>
+  <Step title="Documentation">
+    Suggest catalog entry and usage documentation
+  </Step>
+</Steps>
+
+## Usage Examples
+
+<CodeGroup>
+```bash Using /agent_init
+# In your project directory
+/agent_init
+
+# Wizard prompts:
+# 1. Agent name?
+# 2. Primary purpose?
+# 3. Key capabilities?
+# 4. Category?
+# 5. Example scenarios?
+
+# Creates: ./.claude/agents/[category]/[name].md
+```
+
+```bash Explicit Agent Request
+user: "Create a new agent for React performance optimization"
+
+agent: "I'll create a React performance optimizer agent.
+
+Proposed location: ./.claude/agents/frameworks/react-performance-optimizer.md
+
+Key capabilities:
+- React.memo and useMemo optimization
+- Virtual list rendering
+- Code splitting and lazy loading
+- Bundle size reduction
+- Performance profiling with React DevTools
+
+Proceed with creation?"
+```
+</CodeGroup>
+
+## Best Practices
+
+<CardGroup cols={2}>
+  <Card title="Specificity" icon="bullseye">
+    - Be specific about capabilities
+    - Use concrete examples
+    - Avoid vague descriptions
+    - Include measurable outcomes
+  </Card>
+  <Card title="Consistency" icon="equals">
+    - Follow naming conventions
+    - Use standard colors
+    - Match frontmatter to filename
+    - Maintain template structure
+  </Card>
+  <Card title="Completeness" icon="list-check">
+    - Fill all placeholders
+    - Include 2 usage examples
+    - Document all capabilities
+    - Specify required tools
+  </Card>
+  <Card title="Validation" icon="check-double">
+    - Test auto-invocation
+    - Verify no placeholders remain
+    - Check frontmatter format
+    - Validate example structure
+  </Card>
+</CardGroup>
+
+## Output Format
+
+When creating an agent, provide:
+
+```markdown
+## Agent Creation Summary
+
+**Filename**: react-performance-optimizer.md
+**Full Path**: ./.claude/agents/frameworks/react-performance-optimizer.md
+**Location**: Local project agent
+**Category**: frameworks
+**Color**: blue
+
+**Capabilities**:
+1. React.memo and useMemo optimization
+2. Virtual list rendering for large datasets
+3. Code splitting with React.lazy
+4. Bundle size reduction strategies
+5. Performance profiling with React DevTools
+
+**Validation**:
+✓ All placeholders filled
+✓ Frontmatter valid
+✓ Examples properly formatted
+✓ Auto-invocation description clear
+✓ Naming conventions followed
+
+**Catalog Entry**:
+```yaml
+frameworks:
+  - name: react-performance-optimizer
+    description: React performance optimization specialist
+    color: blue
+```
+
+**Next Steps**:
+1. Review agent content
+2. Test auto-invocation
+3. Add to project documentation
+4. Share with team
+```
+
+<Note>
+**Pro Tip**: Always create agents locally in your project's `.claude/agents/` directory unless you explicitly need a global agent accessible across all projects.
+</Note>
+
+## Related Documentation
+
+<CardGroup cols={2}>
+  <Card title="Agent Overview" icon="robot" href="/agents/overview">
+    Learn about all available agents
+  </Card>
+  <Card title="Documentation Writer" icon="book" href="/agents/documentation-writer">
+    For documenting your custom agents
+  </Card>
+</CardGroup>

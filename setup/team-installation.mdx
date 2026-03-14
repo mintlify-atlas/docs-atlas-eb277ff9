@@ -1,0 +1,507 @@
+---
+title: Team Installation
+description: Configure ccprompts for automatic team-wide installation and consistent development environments
+---
+
+Team installation allows you to configure ccprompts to be automatically installed for all team members who use your project. This ensures everyone has access to the same commands and agents without manual setup.
+
+## How Team Installation Works
+
+When you configure ccprompts in your project's `.claude/settings.json`, team members who **trust the repository folder** will automatically get the plugin installed when they open the project in Claude Code.
+
+<Note>
+Team members must explicitly trust the repository folder for automatic plugin installation. This is a security feature to prevent malicious plugins from being installed without consent.
+</Note>
+
+## Quick Setup
+
+<Steps>
+  <Step title="Create .claude directory">
+    In your project root, create the Claude Code configuration directory:
+    
+    ```bash
+    mkdir -p .claude
+    ```
+  </Step>
+
+  <Step title="Create settings.json">
+    Create or edit `.claude/settings.json` in your project:
+    
+    ```bash
+    touch .claude/settings.json
+    ```
+  </Step>
+
+  <Step title="Add ccprompts configuration">
+    Add the following configuration to `.claude/settings.json`:
+    
+    ```json
+    {
+      "pluginMarketplaces": [
+        "ursisterbtw/ccprompts"
+      ],
+      "plugins": [
+        "ccprompts@ursisterbtw"
+      ]
+    }
+    ```
+  </Step>
+
+  <Step title="Commit to version control">
+    ```bash
+    git add .claude/settings.json
+    git commit -m "feat: add ccprompts team configuration"
+    git push
+    ```
+  </Step>
+</Steps>
+
+## Complete Configuration Example
+
+For a comprehensive team setup with permissions and environment variables:
+
+```json .claude/settings.json
+{
+  "pluginMarketplaces": [
+    "ursisterbtw/ccprompts"
+  ],
+  "plugins": [
+    "ccprompts@ursisterbtw"
+  ],
+  "permissions": {
+    "allow": [
+      "Bash(git:*)",
+      "Bash(npm:*)",
+      "Bash(pip:*)",
+      "Bash(cargo:*)",
+      "Read",
+      "Write",
+      "Edit",
+      "Glob",
+      "Grep"
+    ],
+    "deny": [
+      "Bash(rm -rf:*)",
+      "Bash(sudo:*)"
+    ],
+    "defaultMode": "acceptEdits"
+  },
+  "env": {
+    "CLAUDE_CODE_PROJECT_TYPE": "command-ecosystem",
+    "CLAUDE_CODE_ENABLE_MCP": "1"
+  }
+}
+```
+
+<Warning>
+Be careful with permissions! The configuration above denies dangerous operations like `rm -rf` and `sudo` for team safety.
+</Warning>
+
+## Team Member Onboarding
+
+When a new team member joins:
+
+<Steps>
+  <Step title="Clone the repository">
+    ```bash
+    git clone https://github.com/your-org/your-project.git
+    cd your-project
+    ```
+  </Step>
+
+  <Step title="Open in Claude Code">
+    ```bash
+    claude
+    ```
+    
+    Or open the folder in Claude Code.
+  </Step>
+
+  <Step title="Trust the repository folder">
+    Claude Code will prompt to trust the folder. Click "Trust" or run:
+    
+    ```bash
+    # In Claude Code
+    Trust this folder
+    ```
+    
+    <Note>
+    This step is **required** for automatic plugin installation.
+    </Note>
+  </Step>
+
+  <Step title="Restart Claude Code">
+    Close and reopen Claude Code to complete plugin installation.
+  </Step>
+
+  <Step title="Verify installation">
+    ```bash
+    /help
+    ```
+    
+    Team member should see ccprompts commands available.
+  </Step>
+</Steps>
+
+## Permissions Configuration
+
+### Recommended Team Permissions
+
+The following permissions balance functionality with safety:
+
+<CodeGroup>
+  ```json Allowed Operations
+  {
+    "permissions": {
+      "allow": [
+        "Bash(git:*)",      // Git operations
+        "Bash(npm:*)",      // Node.js package management
+        "Bash(pip:*)",      // Python package management
+        "Bash(cargo:*)",    // Rust package management
+        "Read",             // File reading
+        "Write",            // File writing
+        "Edit",             // File editing
+        "MultiEdit",        // Multiple file edits
+        "Glob",             // File pattern matching
+        "Grep",             // Content search
+        "LS"                // Directory listing
+      ]
+    }
+  }
+  ```
+
+  ```json Denied Operations
+  {
+    "permissions": {
+      "deny": [
+        "Bash(rm -rf:*)",   // Prevent recursive deletion
+        "Bash(sudo:*)",     // Prevent elevated privileges
+        "Bash(chmod:*)",    // Prevent permission changes (optional)
+        "Bash(chown:*)"     // Prevent ownership changes (optional)
+      ]
+    }
+  }
+  ```
+</CodeGroup>
+
+### Permission Modes
+
+Set the default permission mode for your team:
+
+```json
+{
+  "permissions": {
+    "defaultMode": "acceptEdits"
+  }
+}
+```
+
+Options:
+- `"acceptEdits"` - Automatically accept file edits (recommended for trusted teams)
+- `"prompt"` - Prompt for each operation (more secure, less convenient)
+- `"deny"` - Deny operations by default (most secure)
+
+## Environment Variables
+
+### Project-Specific Variables
+
+Set environment variables for your team's workflow:
+
+```json
+{
+  "env": {
+    "CLAUDE_CODE_PROJECT_TYPE": "web-application",
+    "CLAUDE_CODE_ENABLE_MCP": "1",
+    "NODE_ENV": "development",
+    "PROJECT_PHASE": "development"
+  }
+}
+```
+
+### Common Use Cases
+
+<AccordionGroup>
+  <Accordion title="Web Application">
+    ```json
+    {
+      "env": {
+        "CLAUDE_CODE_PROJECT_TYPE": "web-application",
+        "NODE_ENV": "development",
+        "ENABLE_TYPESCRIPT": "1"
+      }
+    }
+    ```
+  </Accordion>
+
+  <Accordion title="Python Backend">
+    ```json
+    {
+      "env": {
+        "CLAUDE_CODE_PROJECT_TYPE": "python-backend",
+        "PYTHON_ENV": "development",
+        "ENABLE_FASTAPI": "1"
+      }
+    }
+    ```
+  </Accordion>
+
+  <Accordion title="Rust Systems">
+    ```json
+    {
+      "env": {
+        "CLAUDE_CODE_PROJECT_TYPE": "rust-systems",
+        "CARGO_ENV": "development",
+        "ENABLE_CARGO_CLIPPY": "1"
+      }
+    }
+    ```
+  </Accordion>
+
+  <Accordion title="Microservices">
+    ```json
+    {
+      "env": {
+        "CLAUDE_CODE_PROJECT_TYPE": "microservices",
+        "ENABLE_DOCKER": "1",
+        "ENABLE_K8S": "1"
+      }
+    }
+    ```
+  </Accordion>
+</AccordionGroup>
+
+## Multiple Plugins Configuration
+
+You can configure ccprompts alongside other Claude Code plugins:
+
+```json
+{
+  "pluginMarketplaces": [
+    "ursisterbtw/ccprompts",
+    "other-org/other-plugin"
+  ],
+  "plugins": [
+    "ccprompts@ursisterbtw",
+    "other-plugin@other-org"
+  ]
+}
+```
+
+## Project-Specific Command Overrides
+
+You can override or extend ccprompts commands with project-specific versions:
+
+<Steps>
+  <Step title="Create custom commands directory">
+    ```bash
+    mkdir -p .claude/commands/custom
+    ```
+  </Step>
+
+  <Step title="Add project-specific commands">
+    Create custom command files in `.claude/commands/custom/`.
+  </Step>
+
+  <Step title="Commit to repository">
+    ```bash
+    git add .claude/commands/
+    git commit -m "feat: add project-specific commands"
+    ```
+  </Step>
+</Steps>
+
+Custom commands take precedence over plugin commands with the same name.
+
+## CI/CD Integration
+
+For CI/CD pipelines, you can verify ccprompts configuration:
+
+```yaml GitHub Actions
+name: Verify ccprompts Config
+
+on: [pull_request]
+
+jobs:
+  verify-config:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Check settings.json exists
+        run: |
+          if [ ! -f .claude/settings.json ]; then
+            echo "Error: .claude/settings.json not found"
+            exit 1
+          fi
+      
+      - name: Validate JSON syntax
+        run: |
+          jq empty .claude/settings.json
+      
+      - name: Verify ccprompts is configured
+        run: |
+          if ! jq -e '.plugins[] | select(. == "ccprompts@ursisterbtw")' .claude/settings.json > /dev/null; then
+            echo "Error: ccprompts not configured"
+            exit 1
+          fi
+```
+
+## Team Best Practices
+
+<CardGroup cols={2}>
+  <Card title="Version Control" icon="code-branch">
+    Always commit `.claude/settings.json` to version control for team consistency.
+  </Card>
+  
+  <Card title="Documentation" icon="book">
+    Document which ccprompts commands your team uses most frequently.
+  </Card>
+  
+  <Card title="Permissions Review" icon="shield">
+    Regularly review and update permissions based on team needs.
+  </Card>
+  
+  <Card title="Onboarding Guide" icon="users">
+    Create an onboarding document explaining the trust requirement.
+  </Card>
+</CardGroup>
+
+### Communication
+
+When adding ccprompts to your team project:
+
+1. **Announce the addition** - Notify team members about the new plugin
+2. **Explain trust requirement** - Make it clear they need to trust the folder
+3. **Document key commands** - Highlight the most useful commands for your project
+4. **Provide examples** - Show how to use ccprompts for common tasks
+5. **Offer support** - Be available to help with initial setup
+
+## Troubleshooting Team Installation
+
+### Plugin Not Auto-Installing
+
+<Steps>
+  <Step title="Verify settings.json">
+    ```bash
+    cat .claude/settings.json
+    ```
+    
+    Ensure the file is valid JSON and contains the correct configuration.
+  </Step>
+
+  <Step title="Check folder trust status">
+    Team member must trust the repository folder. In Claude Code:
+    
+    ```bash
+    # Check trust status
+    /workspace trust status
+    ```
+  </Step>
+
+  <Step title="Verify marketplace accessibility">
+    ```bash
+    # In Claude Code
+    /plugin marketplace list
+    ```
+    
+    Should show `ursisterbtw/ccprompts`.
+  </Step>
+
+  <Step title="Manual installation fallback">
+    If auto-install fails, use manual installation:
+    
+    ```bash
+    /plugin marketplace add ursisterbtw/ccprompts
+    /plugin install ccprompts@ursisterbtw
+    ```
+  </Step>
+</Steps>
+
+### Permission Conflicts
+
+If team members encounter permission errors:
+
+1. Review the `permissions.allow` and `permissions.deny` arrays
+2. Ensure necessary permissions are allowed
+3. Check for conflicts with user's global Claude Code settings
+4. Test with minimal permissions and expand as needed
+
+### Environment Variable Issues
+
+If environment variables aren't working:
+
+1. Verify syntax in `settings.json`
+2. Check for conflicts with system environment variables
+3. Ensure variable names follow conventions (uppercase, underscores)
+4. Test variables with a simple echo command
+
+## Security Considerations
+
+<Warning>
+**Important Security Notes:**
+
+- Only add ccprompts to trusted team repositories
+- Review permissions before committing settings.json
+- Educate team members about the trust requirement
+- Regularly audit plugin permissions and access
+- Use the deny list to prevent dangerous operations
+</Warning>
+
+### Recommended Security Practices
+
+1. **Principle of Least Privilege** - Only grant necessary permissions
+2. **Deny Dangerous Operations** - Always deny `rm -rf`, `sudo`, etc.
+3. **Regular Audits** - Review permissions quarterly
+4. **Team Training** - Ensure everyone understands the trust model
+5. **Version Control** - Track all changes to settings.json
+
+## Updating Team Configuration
+
+When updating ccprompts configuration for your team:
+
+<Steps>
+  <Step title="Test changes locally">
+    ```bash
+    # Test the new configuration in a separate branch
+    git checkout -b update-ccprompts-config
+    # Edit .claude/settings.json
+    # Test in Claude Code
+    ```
+  </Step>
+
+  <Step title="Document changes">
+    Create a clear commit message explaining what changed:
+    
+    ```bash
+    git commit -m "feat: update ccprompts permissions to allow docker commands"
+    ```
+  </Step>
+
+  <Step title="Notify team">
+    Inform team members about the changes and why they were made.
+  </Step>
+
+  <Step title="Monitor for issues">
+    Watch for any problems after team members pull the changes.
+  </Step>
+</Steps>
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Command Reference" icon="terminal" href="/commands/overview">
+    Explore the 70+ commands available in ccprompts
+  </Card>
+  
+  <Card title="Agent Guide" icon="robot" href="/agents/overview">
+    Learn about the 10 specialized AI agents
+  </Card>
+  
+  <Card title="Safety System" icon="shield" href="/advanced/safety-system">
+    Understand the Dagger-based safety features
+  </Card>
+  
+  <Card title="Best Practices" icon="star" href="/guides/best-practices">
+    Learn team workflows and optimization tips
+  </Card>
+</CardGroup>

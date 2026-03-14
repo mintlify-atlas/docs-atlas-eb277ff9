@@ -1,0 +1,42 @@
+---
+title: "Troubleshoot"
+description: "Provides systematic debugging assistance and troubleshooting guidance for software development issues. Uses intelligent analysis to identify problems, guide res"
+---
+
+# Troubleshoot
+
+Provides systematic debugging assistance and troubleshooting guidance for software development issues. Uses intelligent analysis to identify problems, guide resolution steps, and build team debugging capabilities.
+
+## Usage
+
+```bash
+/troubleshoot [issue-type] [context] [urgency]
+```
+
+## Parameters
+
+<ParamField path="**issue-type**" type="string">
+  `error` | `performance` | `behavior` | `environment` | `security` | `deployment` | `integration`
+</ParamField>
+
+<ParamField path="**context**" type="string">
+  `development` | `staging` | `production` | `testing` | `ci-cd`
+</ParamField>
+
+<ParamField path="**urgency**" type="string">
+  `low` | `medium` | `high` | `critical`
+</ParamField>
+
+## Examples
+
+<CodeGroup>
+
+```bash Basic Usage
+/troubleshoot error production critical
+/troubleshoot performance development medium
+/troubleshoot behavior staging high
+/troubleshoot environment development low
+```
+
+</CodeGroup>
+

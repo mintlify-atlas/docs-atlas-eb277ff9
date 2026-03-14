@@ -1,0 +1,294 @@
+---
+title: "Rust Expert Agent"
+description: "Specialized agent for Rust programming with expertise in ownership, lifetimes, unsafe code, and systems programming"
+icon: "rust"
+---
+
+The Rust Expert agent provides deep expertise in Rust programming, focusing on ownership systems, lifetime management, concurrent programming, and performance optimization. This agent is automatically invoked when dealing with Rust-specific challenges.
+
+## When to Use This Agent
+
+The Rust Expert agent is ideal for:
+
+<CardGroup cols={2}>
+  <Card title="Ownership & Borrowing" icon="link">
+    Lifetime errors, borrow checker issues, and move semantics
+  </Card>
+  <Card title="Concurrent Programming" icon="arrows-split-up-and-left">
+    Thread safety, Arc/Mutex patterns, and async/await
+  </Card>
+  <Card title="Unsafe Code" icon="triangle-exclamation">
+    FFI, raw pointers, and safe abstraction design
+  </Card>
+  <Card title="Performance Optimization" icon="gauge-high">
+    Zero-cost abstractions, SIMD, and memory layout
+  </Card>
+</CardGroup>
+
+## Example Usage
+
+<CodeGroup>
+```bash Lifetime Issues
+user: "I'm getting lifetime errors when trying to return a reference from a function"
+
+agent: "I'll help you understand lifetime annotations and fix your ownership issues.
+
+The error occurs because Rust can't determine how long the returned reference
+should live. Here's how to fix it..."
+```
+
+```bash Concurrent Code
+user: "How do I share data between threads safely in Rust?"
+
+agent: "I'll show you safe concurrent patterns using Arc, Mutex, and channels.
+
+For shared state across threads, use Arc&lt;Mutex&lt;T&gt;&gt;:
+
+use std::sync::{Arc, Mutex};
+use std::thread;
+
+let counter = Arc::new(Mutex::new(0));
+let mut handles = vec![];
+
+for _ in 0..10 {
+    let counter = Arc::clone(&counter);
+    let handle = thread::spawn(move || {
+        let mut num = counter.lock().unwrap();
+        *num += 1;
+    });
+    handles.push(handle);
+}
+```
+</CodeGroup>
+
+## Core Capabilities
+
+### 1. Master Ownership and Borrowing
+
+Navigate Rust's ownership system effectively:
+
+<AccordionGroup>
+  <Accordion title="Ownership Rules & Move Semantics">
+    - Understanding ownership transfer
+    - Copy vs. Move traits
+    - Ownership in function calls and returns
+    - Preventing use-after-move errors
+  </Accordion>
+  
+  <Accordion title="Borrowing & References">
+    - Immutable and mutable references
+    - Reference rules and constraints
+    - Preventing data races at compile time
+    - Reference lifetimes
+  </Accordion>
+  
+  <Accordion title="Lifetime Annotations & Elision">
+    - Explicit lifetime parameters
+    - Lifetime elision rules
+    - Generic lifetime bounds
+    - 'static lifetime usage
+  </Accordion>
+  
+  <Accordion title="Smart Pointers">
+    - Box&lt;T&gt; for heap allocation
+    - Rc&lt;T&gt; for reference counting
+    - Arc&lt;T&gt; for atomic reference counting
+    - RefCell&lt;T&gt; for interior mutability
+    - Cow for zero-copy patterns
+  </Accordion>
+</AccordionGroup>
+
+### 2. Design Safe Concurrent Systems
+
+Implement thread-safe concurrent code:
+
+- **Send and Sync traits** - Understanding thread safety guarantees
+- **Mutex and RwLock** - Synchronization primitives
+- **Atomic types** - Lock-free operations
+- **Channels** - Message passing between threads
+- **Async/await** - Asynchronous programming patterns
+- **Actor patterns** - Message-driven concurrency
+
+### 3. Optimize Performance
+
+Leverage Rust's performance features:
+
+- **Zero-cost abstractions** - High-level code with no runtime overhead
+- **SIMD vectorization** - Data-parallel operations
+- **Memory layout** - Struct packing and alignment
+- **Allocation strategies** - Minimizing heap allocations
+- **Const evaluation** - Compile-time computation
+- **Profile-guided optimization** - Data-driven optimizations
+
+### 4. Handle Unsafe Code Safely
+
+Work with unsafe Rust when necessary:
+
+- **Raw pointers** - Direct memory access
+- **FFI** - C interoperability
+- **Unsafe trait implementations** - Custom unsafe traits
+- **Memory manipulation** - Direct memory operations
+- **UB avoidance** - Preventing undefined behavior
+- **Safe abstraction design** - Wrapping unsafe code safely
+
+### 5. Leverage Advanced Features
+
+Use Rust's advanced type system:
+
+- **Trait system** - Traits, associated types, and bounds
+- **Generic programming** - Type parameters and constraints
+- **Macro programming** - Declarative and procedural macros
+- **Const generics** - Compile-time array sizes
+- **Pattern matching** - Exhaustive matching guarantees
+- **Type state** - Compile-time state machines
+
+### 6. Build Robust Systems
+
+Create reliable Rust applications:
+
+- **Error handling** - Result&lt;T, E&gt; and Option&lt;T&gt; patterns
+- **Custom error types** - Domain-specific errors
+- **Panic handling** - Recovery strategies
+- **RAII** - Resource management
+- **Testing strategies** - Unit, integration, and doc tests
+- **Documentation** - Inline examples and rustdoc
+
+### 7. Work with the Ecosystem
+
+Navigate the Rust ecosystem:
+
+- **Cargo workspaces** - Multi-crate projects
+- **Dependency selection** - Choosing the right crates
+- **Feature flags** - Conditional compilation
+- **Build scripts** - Custom build processes
+- **Cross-compilation** - Multi-platform builds
+- **Publishing crates** - Sharing code on crates.io
+
+## The 7-Step Methodology
+
+Every Rust solution follows this approach:
+
+<Steps>
+  <Step title="Analyze Ownership Requirements">
+    Understand data ownership, lifetimes, and borrowing needs
+  </Step>
+  <Step title="Identify Memory Patterns">
+    Choose appropriate smart pointers and ownership strategies
+  </Step>
+  <Step title="Design Safe Implementations">
+    Create memory-safe code using Rust's type system
+  </Step>
+  <Step title="Optimize Performance">
+    Apply zero-cost abstractions and performance patterns
+  </Step>
+  <Step title="Evaluate Concurrency Needs">
+    Design thread-safe concurrent systems when needed
+  </Step>
+  <Step title="Implement Testing">
+    Create comprehensive test suites with benchmarks
+  </Step>
+  <Step title="Measure and Profile">
+    Benchmark performance and validate optimizations
+  </Step>
+</Steps>
+
+## Common Patterns
+
+<Tabs>
+  <Tab title="Ownership">
+    ```rust
+    // Transfer ownership
+    fn process(data: String) -> String {
+        // data is moved here
+        data.to_uppercase()
+    }
+    
+    // Borrow with lifetime
+    fn first_word<'a>(s: &'a str) -> &'a str {
+        s.split_whitespace().next().unwrap_or("")
+    }
+    
+    // Multiple lifetimes
+    fn longest<'a>(x: &'a str, y: &'a str) -> &'a str {
+        if x.len() > y.len() { x } else { y }
+    }
+    ```
+  </Tab>
+  
+  <Tab title="Concurrency">
+    ```rust
+    use std::sync::{Arc, Mutex};
+    use std::thread;
+    
+    // Shared state with Arc<Mutex<T>>
+    let data = Arc::new(Mutex::new(vec![]));
+    let mut handles = vec![];
+    
+    for i in 0..10 {
+        let data = Arc::clone(&data);
+        let handle = thread::spawn(move || {
+            let mut v = data.lock().unwrap();
+            v.push(i);
+        });
+        handles.push(handle);
+    }
+    
+    for handle in handles {
+        handle.join().unwrap();
+    }
+    
+    // Channel-based communication
+    use std::sync::mpsc;
+    let (tx, rx) = mpsc::channel();
+    
+    thread::spawn(move || {
+        tx.send("Hello from thread").unwrap();
+    });
+    
+    println!("{}", rx.recv().unwrap());
+    ```
+  </Tab>
+  
+  <Tab title="Error Handling">
+    ```rust
+    use std::fs::File;
+    use std::io::{self, Read};
+    
+    // Using Result<T, E>
+    fn read_file(path: &str) -> io::Result<String> {
+        let mut file = File::open(path)?;
+        let mut contents = String::new();
+        file.read_to_string(&mut contents)?;
+        Ok(contents)
+    }
+    
+    // Custom error types
+    #[derive(Debug)]
+    enum AppError {
+        Io(io::Error),
+        Parse(std::num::ParseIntError),
+    }
+    
+    impl From<io::Error> for AppError {
+        fn from(err: io::Error) -> Self {
+            AppError::Io(err)
+        }
+    }
+    ```
+  </Tab>
+</Tabs>
+
+<Note>
+**Best Practice**: Always prefer safe Rust code. Only use `unsafe` when absolutely necessary and wrap it in safe abstractions.
+</Note>
+
+## Related Agents
+
+<CardGroup cols={2}>
+  <Card title="Systems Architect" icon="diagram-project" href="/agents/systems-architect">
+    For real-time systems and deterministic design
+  </Card>
+  <Card title="Performance Optimizer" icon="bolt" href="/agents/performance-optimizer">
+    For system-wide performance analysis
+  </Card>
+</CardGroup>

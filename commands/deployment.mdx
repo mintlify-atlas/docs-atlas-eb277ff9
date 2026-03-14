@@ -1,0 +1,392 @@
+---
+title: "Phase 05: Deployment"
+description: "CI/CD pipelines, deployment automation, and Git workflow management"
+---
+
+The Deployment phase provides comprehensive commands for setting up CI/CD pipelines, managing deployments, configuring Git workflows, and establishing pre-commit quality gates.
+
+## Commands in This Phase
+
+<CardGroup cols={2}>
+  <Card title="/deploy" icon="rocket" href="/commands/deploy">
+    Sophisticated deployment strategies with Infrastructure as Code
+  </Card>
+  
+  <Card title="/git" icon="code-branch" href="/commands/git">
+    Advanced Git workflow automation and repository management
+  </Card>
+  
+  <Card title="/pre-commit" icon="shield-check" href="/commands/pre-commit">
+    Comprehensive pre-commit checks and quality gates
+  </Card>
+  
+  <Card title="/setup-ci" icon="gear" href="/commands/setup-ci">
+    Complete CI/CD pipeline setup across multiple platforms
+  </Card>
+</CardGroup>
+
+## Overview
+
+Phase 05 commands establish production-ready deployment workflows with automated testing, quality gates, and sophisticated deployment strategies.
+
+### Key Capabilities
+
+**Deployment Automation**
+- Multi-stage pipeline creation with quality gates
+- Infrastructure as Code (Terraform, Kubernetes)
+- Advanced deployment strategies (blue-green, canary)
+- Monitoring and observability integration
+- Zero-downtime deployments
+
+**Git Workflow Management**
+- Advanced workflow automation with hooks
+- Repository optimization and cleanup
+- Branch strategy implementation
+- Commit message standardization
+- Repository analytics and health monitoring
+
+**Pre-Commit Quality Gates**
+- Automated code quality checks
+- Security vulnerability scanning
+- Test execution and coverage verification
+- Documentation consistency
+- Performance impact assessment
+
+**CI/CD Pipeline Setup**
+- Multi-platform support (GitHub Actions, GitLab CI, Jenkins)
+- Security integration (SAST, DAST, dependency scanning)
+- Environment promotion workflows
+- Automated testing and deployment
+- Compliance and audit automation
+
+## Use Cases
+
+### Production Blue-Green Deployment
+
+```bash
+/deploy prod blue-green
+```
+
+Zero-downtime production deployment with automatic rollback on failure.
+
+### Enterprise Git Workflow
+
+```bash
+/git setup-flow enterprise
+```
+
+Implement Git Flow with automated hooks, branch protection, and commit standards.
+
+### Strict Pre-Commit Validation
+
+```bash
+/pre-commit staged strict
+```
+
+Enforce comprehensive quality gates before allowing commits.
+
+### GitHub Actions CI/CD
+
+```bash
+/setup-ci github-actions nodejs
+```
+
+Complete CI/CD pipeline for Node.js projects with testing, security, and deployment.
+
+## Example Workflows
+
+### Complete Deployment Pipeline
+
+1. **Git Setup**: `/git setup-flow enterprise`
+2. **Pre-Commit**: `/pre-commit staged strict`
+3. **CI/CD**: `/setup-ci github-actions full-stack`
+4. **Deploy**: `/deploy prod blue-green`
+5. **Monitor**: Verify deployment health
+
+### Repository Migration
+
+1. **Backup**: `/backup full cloud`
+2. **Cleanup**: `/git cleanup advanced`
+3. **Migration**: `/git migration advanced`
+4. **Workflow**: `/git setup-flow enterprise`
+5. **Automation**: `/git automation enterprise`
+
+### Quality Gate Implementation
+
+1. **Configure**: `/pre-commit full-project enterprise`
+2. **Test**: Run pre-commit on existing code
+3. **Refine**: Adjust thresholds and rules
+4. **Deploy**: Set up Git hooks
+5. **Train**: Team onboarding
+
+## Deployment Strategies
+
+### Blue-Green Deployment
+
+Zero-downtime deployments:
+- Maintain two identical production environments
+- Deploy to inactive environment
+- Switch traffic after validation
+- Instant rollback capability
+
+**Best For**: Critical applications requiring zero downtime
+
+### Canary Deployment
+
+Gradual rollout with monitoring:
+- Deploy to small subset of servers
+- Monitor metrics and errors
+- Gradually increase traffic
+- Automatic rollback on issues
+
+**Best For**: Risk-averse deployments, feature validation
+
+### Rolling Deployment
+
+Incremental server updates:
+- Update servers one at a time
+- Maintain service availability
+- Gradual traffic migration
+- Progressive validation
+
+**Best For**: Standard production updates
+
+### A/B Deployment
+
+Feature testing with user segments:
+- Deploy multiple versions simultaneously
+- Route users to different versions
+- Collect metrics and feedback
+- Data-driven rollout decisions
+
+**Best For**: Feature testing, optimization experiments
+
+## Git Workflow Strategies
+
+### Git Flow
+
+Structured branch strategy:
+- Main and develop branches
+- Feature branches from develop
+- Release branches for production
+- Hotfix branches for urgent fixes
+
+**Best For**: Scheduled releases, larger teams
+
+### GitHub Flow
+
+Simplified workflow:
+- Main branch always deployable
+- Feature branches from main
+- Pull requests for review
+- Deploy from main
+
+**Best For**: Continuous deployment, smaller teams
+
+### GitLab Flow
+
+Environment-based workflow:
+- Production branch
+- Pre-production branches
+- Feature branches
+- Environment-specific deployments
+
+**Best For**: Multiple environments, staged deployments
+
+## Pre-Commit Strictness Levels
+
+### Basic Level
+
+Essential quality checks:
+- Code formatting (Prettier, Black)
+- Basic linting (critical errors only)
+- Compile verification
+- Modified file tests
+
+**Duration**: 2-5 minutes
+**Gate Policy**: Block on critical errors only
+
+### Standard Level
+
+Comprehensive quality gates:
+- Full linting with standard rules
+- Type checking (TypeScript, mypy)
+- 80% test coverage on changes
+- Security scan (medium+ vulnerabilities)
+- Documentation validation
+
+**Duration**: 8-15 minutes
+**Gate Policy**: Block on quality thresholds
+
+### Strict Level
+
+Rigorous quality enforcement:
+- All linting rules enforced
+- Complexity analysis (< 10 cyclomatic)
+- 90% test coverage
+- All vulnerabilities addressed
+- Performance regression checks
+- Comprehensive documentation
+
+**Duration**: 15-30 minutes
+**Gate Policy**: Block on any violations
+
+### Enterprise Level
+
+Maximum quality assurance:
+- Full security suite (SAST, DAST)
+- Compliance validation (SOC2, GDPR)
+- Performance benchmarking
+- Accessibility testing (WCAG 2.1)
+- License auditing
+- Architecture compliance
+
+**Duration**: 30-60 minutes
+**Gate Policy**: Block on enterprise standard violations
+
+## CI/CD Platform Support
+
+### GitHub Actions
+
+Native GitHub integration:
+- Workflow YAML configuration
+- Matrix builds across versions
+- Reusable workflows
+- Secret management
+- Environment protection rules
+
+### GitLab CI
+
+Powerful pipeline features:
+- Multi-stage pipelines
+- Dependency caching
+- Container registry integration
+- Auto DevOps capabilities
+- Review apps
+
+### Jenkins
+
+Flexible automation server:
+- Groovy pipeline scripts
+- Plugin ecosystem
+- Distributed builds
+- Custom integrations
+- Blue Ocean UI
+
+### Azure DevOps
+
+Microsoft ecosystem integration:
+- YAML pipelines
+- Artifact management
+- Test management
+- Release management
+- Board integration
+
+## Infrastructure as Code
+
+### Terraform
+
+Cloud-agnostic infrastructure:
+- Declarative configuration
+- State management
+- Multi-cloud support
+- Module reusability
+- Plan and apply workflow
+
+### Kubernetes
+
+Container orchestration:
+- Declarative deployments
+- Service discovery
+- Auto-scaling
+- Rolling updates
+- Health monitoring
+
+### Helm
+
+Kubernetes package management:
+- Chart templates
+- Value overrides
+- Release management
+- Rollback capabilities
+- Chart repositories
+
+## Deployment Monitoring
+
+### Health Checks
+
+Verify deployment success:
+- Liveness probes
+- Readiness checks
+- Startup validation
+- Dependency health
+
+### Performance Monitoring
+
+Track deployment impact:
+- Response time metrics
+- Error rate monitoring
+- Resource utilization
+- User experience metrics
+
+### Rollback Triggers
+
+Automatic rollback conditions:
+- Error rate thresholds
+- Performance degradation
+- Health check failures
+- Custom metric violations
+
+## Security Integration
+
+### Static Analysis (SAST)
+
+Code security scanning:
+- Vulnerability detection
+- Code quality analysis
+- Best practice validation
+- Custom rule enforcement
+
+### Dynamic Analysis (DAST)
+
+Runtime security testing:
+- Application scanning
+- Penetration testing
+- API security validation
+- Configuration testing
+
+### Dependency Scanning
+
+Third-party security:
+- Known vulnerability detection
+- License compliance
+- Outdated package identification
+- Automated updates
+
+### Container Scanning
+
+Image security analysis:
+- Base image vulnerabilities
+- Layer analysis
+- Malware detection
+- Configuration validation
+
+## Related Phases
+
+- **Phase 02: Development** - Develop features to deploy
+- **Phase 03: Security** - Security scanning in CI/CD
+- **Phase 04: Testing** - Automated testing in pipelines
+- **Phase 06: Collaboration** - Monitor deployments with team
+
+## Best Practices
+
+1. **Automate Everything**: Minimize manual deployment steps
+2. **Test Before Deploy**: Comprehensive testing in CI/CD
+3. **Monitor Deployments**: Track metrics and set alerts
+4. **Plan Rollbacks**: Always have rollback procedures
+5. **Use IaC**: Version control infrastructure
+6. **Quality Gates**: Enforce standards with pre-commit hooks
+7. **Progressive Deployment**: Use canary or blue-green strategies
+8. **Document Processes**: Maintain runbooks and procedures
+9. **Regular Audits**: Review and optimize pipelines
+10. **Team Training**: Ensure team understands deployment workflows

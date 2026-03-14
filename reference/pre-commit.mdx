@@ -1,0 +1,46 @@
+---
+title: "Pre-Commit"
+description: "Comprehensive pre-commit automation system: 1. Automated code quality checks and linting 2. Security vulnerability scanning and validation 3. Test execution and"
+---
+
+# Pre-Commit
+
+Comprehensive pre-commit automation system: 1. Automated code quality checks and linting 2. Security vulnerability scanning and validation 3. Test execution and coverage verification 4. Documentation consistency and completeness 5. Dependency audit and license compliance 6. Performance impact assessment and optimization
+
+## Usage
+
+```bash
+/pre-commit [scope] [strictness]
+```
+
+## Parameters
+
+<ParamField path="scope" type="string">
+  staged, all-changes, full-project, affected-files
+</ParamField>
+
+<ParamField path="strictness" type="string">
+  basic, standard, strict, enterprise
+</ParamField>
+
+## Examples
+
+<CodeGroup>
+
+```bash Basic Usage
+/pre-commit
+/pre-commit staged strict
+/pre-commit all-changes standard
+/pre-commit full-project enterprise
+```
+
+</CodeGroup>
+
+## Related Commands
+
+- `/test` - Run comprehensive test suites
+- `/audit-security` - Detailed security analysis
+- `/optimize` - Performance optimization workflows
+- `/document` - Documentation generation and updates
+- `/deploy` - Deployment readiness validation
+

@@ -1,0 +1,51 @@
+---
+icon: "rocket"
+title: "Incident-Response"
+description: "Comprehensive incident response management system: 1. Automated incident detection and classification 2. Structured response workflows and communication"
+---
+
+# Incident-Response
+
+Comprehensive incident response management system: 1. Automated incident detection and classification 2. Structured response workflows and communication 3. Real-time monitoring and status tracking 4. Root cause analysis and resolution documentation 5. Post-incident review and improvement planning 6. Integration with monitoring and alerting systems
+
+## Usage
+
+```bash
+/incident-response [severity] [type] [environment]
+```
+
+## Parameters
+
+<ParamField path="severity" type="string">
+  critical, high, medium, low
+</ParamField>
+
+<ParamField path="type" type="string">
+  outage, security, performance, data, integration
+</ParamField>
+
+<ParamField path="environment" type="string">
+  production, staging, development, all
+</ParamField>
+
+## Examples
+
+<CodeGroup>
+
+```bash Basic Usage
+/incident-response critical outage production
+/incident-response high security production
+/incident-response medium performance staging
+/incident-response low data development
+```
+
+</CodeGroup>
+
+## Related Commands
+
+- `/monitor` - Set up comprehensive monitoring and alerting
+- `/debug-session` - Detailed system debugging and analysis
+- `/health-check` - Proactive system health assessment
+- `/deploy` - Safe deployment procedures with rollback capability
+- `/audit-security` - Security incident investigation and response
+

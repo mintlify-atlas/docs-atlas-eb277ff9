@@ -1,0 +1,53 @@
+---
+title: "MCP Extend - Custom MCP Server Development and Extension"
+description: "/mcp-extend [action] [server-type] [capabilities] [parameters]"
+---
+
+# MCP Extend - Custom MCP Server Development and Extension
+
+No description available
+
+## Usage
+
+```bash
+/mcp-extend [action] [server-type] [capabilities] [parameters]
+```
+
+## Examples
+
+<CodeGroup>
+
+```bash Basic Usage
+# Create custom server
+/mcp-extend create custom --capabilities=code-analysis,metrics
+# Extend filesystem server
+/mcp-extend extend filesystem --add=encryption,compression
+# Modify existing server
+```
+
+</CodeGroup>
+
+<Warning>
+and Validation
+
+25. **Server Validation and Testing**
+
+    ```bash
+    # Validate server functionality
+    - Test MCP protocol compliance
+    - Validate tool functionality and responses
+    - Test error handling and recovery
+    - Verify security and performance requirements
+    ```
+
+26. **Rollback and Recovery**
+
+    ```bash
+    # Implement rollback and recovery
+    - Create server configuration backups
+    - Implement rollback to previous versions
+    - Handle server failures and corruption
+    - Maintain deployment audit trails
+    ```
+</Warning>
+

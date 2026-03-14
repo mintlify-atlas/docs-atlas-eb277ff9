@@ -1,0 +1,357 @@
+---
+title: Command Structure
+description: Learn how ccprompts commands are structured using markdown format with XML frontmatter
+---
+
+# Command Structure
+
+ccprompts commands follow a consistent markdown-based structure that makes them easy to discover, understand, and maintain. Each command is a self-contained `.md` file with standardized sections and XML configuration blocks.
+
+## Anatomy of a Command
+
+Every command file in `.claude/commands/` consists of seven essential sections:
+
+<Steps>
+  <Step title="Title">
+    The command name as an H1 heading that clearly identifies the command's purpose.
+    
+    ```markdown
+    # Analyze-Project Command
+    ```
+  </Step>
+
+  <Step title="Short Description">
+    A one-line summary immediately following the title that explains what the command does.
+    
+    ```markdown
+    This command auto-detects project characteristics and suggests relevant prompts and improvements.
+    ```
+  </Step>
+
+  <Step title="Usage Section">
+    Exact syntax for invoking the command, showing all available parameters and flags.
+    
+    ```markdown
+    ## Usage
+    
+    ```bash
+    /analyze-project
+    ```
+    ```
+  </Step>
+
+  <Step title="Description Section">
+    Detailed explanation of capabilities, features, and what the command accomplishes.
+    
+    ```markdown
+    ## Description
+    
+    Performs intelligent project analysis and provides personalized recommendations:
+    
+    1. Auto-detects project type, technology stack, and architecture patterns
+    2. Identifies current development maturity level and gaps
+    3. Suggests relevant prompts based on project characteristics
+    ```
+  </Step>
+
+  <Step title="Example Scenarios">
+    Real-world use cases demonstrating different ways to use the command.
+    
+    ```markdown
+    ## Examples
+    
+    ```bash
+    # Basic project analysis
+    /analyze-project
+    
+    # Comprehensive security audit
+    /audit-security full-codebase paranoid
+    ```
+    ```
+  </Step>
+
+  <Step title="Safety Considerations">
+    Warnings, prerequisites, validation steps, and resource limits.
+    
+    ```markdown
+    ## Safety
+    
+    - **Input Validation**: No user inputs required
+    - **File Access**: Read-only analysis
+    - **Safe Operations**: Non-destructive analysis only
+    - **Resource Limits**: Analysis bounded by project size
+    ```
+  </Step>
+
+  <Step title="Related Commands">
+    Cross-references to complementary commands and workflows.
+    
+    ```markdown
+    ## Related Prompts
+    
+    - Dynamically selected based on project analysis
+    - Prioritized by impact and effort
+    ```
+  </Step>
+</Steps>
+
+## XML Configuration Block
+
+At the end of each command file is an XML block that defines the agent's behavior, permissions, and instructions:
+
+<CodeGroup>
+```xml Role Definition
+<role>
+You are an expert project analyst with deep knowledge of modern development practices, 
+technology stacks, and project management. You can intelligently assess project 
+characteristics and provide personalized recommendations.
+</role>
+```
+
+```xml Activation Config
+<activation>
+CLAUDE.CONFIG:
+  extended_thinking: "always"
+  permission_mode: "acceptEdits"
+  allowed_tools: ["Read", "Write", "Edit", "Bash", "LS", "Grep", "Glob"]
+</activation>
+```
+
+```xml Instructions
+<instructions>
+1. Perform comprehensive project analysis:
+   - Auto-detect project type, technology stack, and architecture patterns
+   - Identify current development maturity level and gaps
+   - Assess security posture and compliance readiness
+
+2. Generate personalized recommendations:
+   - Suggest relevant prompts based on project characteristics
+   - Recommend improvement priorities and workflows
+   - Provide timeline estimates for suggested improvements
+
+3. Provide actionable insights:
+   - Prioritized list of suggested prompts and workflows
+   - Quick wins with high impact/low effort
+   - Implementation roadmap with effort estimates
+</instructions>
+```
+</CodeGroup>
+
+<Note>
+The XML configuration block must have properly balanced tags. The validation system checks for matching opening and closing tags to prevent syntax errors.
+</Note>
+
+## Real-World Example
+
+Here's a complete example from the `/audit-security` command:
+
+```markdown
+# Audit-Security Command
+
+This command provides quick access to comprehensive security and quality audit prompts.
+
+## Usage
+
+```bash
+/audit-security [scope] [depth]
+```
+
+## Description
+
+Performs comprehensive security and quality analysis:
+
+- OWASP Top 10 vulnerability scanning
+- Code quality assessment
+- Performance bottleneck identification
+- Compliance gap analysis
+- Dependency security review
+
+## Parameters
+
+- `scope`: full-codebase, specific-module, new-features
+- `depth`: surface, thorough, paranoid
+
+## Examples
+
+```bash
+# Comprehensive security audit for production readiness
+/audit-security full-codebase paranoid
+
+# Quick security check for development
+/audit-security specific-module surface
+```
+
+```xml
+<role>
+You are an expert security analyst and code auditor with deep knowledge of OWASP Top 10, 
+security best practices, and vulnerability assessment.
+</role>
+
+<activation>
+CLAUDE.CONFIG:
+  extended_thinking: "always"
+  permission_mode: "acceptEdits"
+  allowed_tools: ["Read", "Write", "Edit", "Bash", "LS", "Grep", "Glob"]
+</activation>
+
+<instructions>
+1. Perform comprehensive security analysis:
+   - OWASP Top 10 vulnerability scanning
+   - Code quality assessment and static analysis
+   - Performance bottleneck identification
+
+2. Generate detailed security report:
+   - Prioritized list of security issues by severity
+   - Specific remediation steps for each finding
+   - Code examples demonstrating secure implementations
+</instructions>
+```
+```
+
+## Command Organization
+
+Commands are organized into 12 development phases in `.claude/commands/`:
+
+<CardGroup cols={2}>
+  <Card title="Phase 00: Initial Workflow" icon="workflow">
+    Project analysis and intelligent chaining (2 commands)
+  </Card>
+  <Card title="Phase 01: Project Setup" icon="folder-open">
+    Documentation, learning, MCP setup (3 commands)
+  </Card>
+  <Card title="Phase 02: Development" icon="code">
+    Backup, debug, migrate, optimize, refactor (5 commands)
+  </Card>
+  <Card title="Phase 03: Security" icon="shield">
+    Security auditing and compliance (4 commands)
+  </Card>
+  <Card title="Phase 04: Testing" icon="flask">
+    Testing and troubleshooting (2 commands)
+  </Card>
+  <Card title="Phase 05: Deployment" icon="rocket">
+    CI/CD and deployment (4 commands)
+  </Card>
+  <Card title="Phase 06: Collaboration" icon="users">
+    Code review and team workflows (4 commands)
+  </Card>
+  <Card title="Phase 07: Utilities" icon="wrench">
+    Development utilities and best practices (7 commands)
+  </Card>
+  <Card title="Phase 08: Extras" icon="sparkles">
+    Health checks and modernization (4 commands)
+  </Card>
+  <Card title="Phase 09: Agentic Capabilities" icon="robot">
+    MCP and agent orchestration (12 commands)
+  </Card>
+  <Card title="Phase 10: AI-Native Development" icon="brain">
+    AI-powered development tools (10 commands)
+  </Card>
+  <Card title="Phase 11: Enterprise Scale" icon="building">
+    Governance and multi-repo management (8 commands)
+  </Card>
+</CardGroup>
+
+## Naming Conventions
+
+<Warning>
+All command files must follow strict naming conventions to pass validation:
+
+- **Filename**: `kebab-case.md` (e.g., `audit-security.md`)
+- **No underscores**: Use hyphens instead
+- **Lowercase only**: No capital letters in filenames
+- **Descriptive names**: Clear indication of purpose
+</Warning>
+
+## Validation Requirements
+
+The validation system checks commands across four dimensions:
+
+### 1. Structural Validation (95%+ target)
+
+- Markdown format compliance
+- Required sections present
+- Proper heading hierarchy
+- XML tag balance
+
+### 2. Security Validation
+
+- No hardcoded secrets or credentials
+- Dangerous pattern detection
+- Safety compliance checks
+
+### 3. Quality Validation
+
+- Educational value assessment
+- Example completeness
+- Professional language
+- Clear instructions
+
+### 4. Performance Validation
+
+- Discovery time < 100ms
+- Total validation < 2s
+- Currently achieving 3ms + 28ms
+
+Each command receives a numeric `_score` field (0-100) reflecting the validation pass rate across all dimensions.
+
+## Creating New Commands
+
+When adding a new command:
+
+<Steps>
+  <Step title="Choose the Right Phase">
+    Place your command in the appropriate phase directory:
+    
+    ```bash
+    .claude/commands/02-development/my-command.md
+    ```
+  </Step>
+
+  <Step title="Follow the Template">
+    Copy an existing command from the same phase and adapt the structure to your needs.
+  </Step>
+
+  <Step title="Include Safety Validation">
+    Always add safety considerations and validation steps specific to your command.
+  </Step>
+
+  <Step title="Run Validation">
+    Ensure your command passes all validation checks:
+    
+    ```bash
+    bun run validate
+    ```
+  </Step>
+
+  <Step title="Auto-format">
+    Fix any markdown formatting issues:
+    
+    ```bash
+    bun run lint:fix
+    ```
+  </Step>
+</Steps>
+
+<Note>
+The validation system expects exactly 70 command files. Adding or removing commands requires updating the count in `.claude-plugin/plugin.json`.
+</Note>
+
+## Best Practices
+
+1. **Be Specific**: Commands should have clear, focused purposes
+2. **Include Examples**: Show real-world usage patterns
+3. **Document Safety**: Highlight potential risks and mitigation strategies
+4. **Cross-Reference**: Link to related commands for discoverability
+5. **Keep Current**: Update commands as best practices evolve
+6. **Test Thoroughly**: Validate commands before committing
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Learn About Agents" href="/concepts/agents">
+    Discover how specialized agents enhance command capabilities
+  </Card>
+  <Card title="Safety System" href="/concepts/safety-system">
+    Understand Dagger-based container isolation for dangerous commands
+  </Card>
+</CardGroup>

@@ -1,0 +1,606 @@
+---
+title: "Documentation Writer Agent"
+description: "Technical documentation expert specializing in clear writing, API docs, and architectural documentation"
+icon: "book"
+---
+
+The Documentation Writer agent provides expertise in creating clear, comprehensive, and user-friendly documentation. This agent specializes in API documentation, README files, architectural docs, user guides, and documentation tooling.
+
+## When to Use This Agent
+
+The Documentation Writer agent excels at:
+
+<CardGroup cols={2}>
+  <Card title="API Documentation" icon="code">
+    REST API docs, OpenAPI specs, and SDK documentation
+  </Card>
+  <Card title="README Files" icon="file-lines">
+    Project descriptions, quick starts, and contributing guides
+  </Card>
+  <Card title="Architecture Docs" icon="diagram-project">
+    System overviews, component diagrams, and ADRs
+  </Card>
+  <Card title="User Guides" icon="book-open">
+    Tutorials, how-to guides, and reference documentation
+  </Card>
+</CardGroup>
+
+## Example Usage
+
+<CodeGroup>
+```bash API Documentation
+user: "I need to document my REST API endpoints"
+
+agent: "I'll create comprehensive API documentation for your endpoints with request/response examples, authentication details, and error codes.
+
+Let me analyze your API structure..."
+```
+
+```bash README Creation
+user: "My README is just a title, can you help me write a proper one?"
+
+agent: "I'll create a comprehensive README with all necessary sections: description, installation, usage, configuration, contributing guidelines, and more.
+
+Let me structure this for you..."
+```
+</CodeGroup>
+
+## Core Capabilities
+
+### 1. Analyze Documentation Needs
+
+Understand audience and scope:
+
+<AccordionGroup>
+  <Accordion title="Developer Documentation vs User Guides">
+    - **Developer docs** - API references, code examples, architecture
+    - **User guides** - Feature tutorials, getting started, troubleshooting
+    - **Admin docs** - Deployment, configuration, maintenance
+    - **Contributor docs** - Development setup, coding standards, PR process
+  </Accordion>
+  
+  <Accordion title="Documentation Types">
+    - **API reference** - Endpoint documentation, parameters, responses
+    - **Tutorials** - Step-by-step learning paths
+    - **How-to guides** - Task-focused instructions
+    - **Explanations** - Conceptual understanding
+    - **ADRs** - Architecture decision records
+  </Accordion>
+  
+  <Accordion title="Audience Considerations">
+    - Technical skill level
+    - Domain knowledge
+    - Learning objectives
+    - Time constraints
+    - Preferred learning styles
+  </Accordion>
+</AccordionGroup>
+
+### 2. Structure Content Effectively
+
+Create logical documentation hierarchy:
+
+- **Clear navigation** - Intuitive information architecture
+- **Progressive disclosure** - Simple to complex flow
+- **Logical organization** - Related content grouped together
+- **Cross-references** - Internal and external links
+- **Search optimization** - Keywords and metadata
+
+### 3. Write Clear Technical Content
+
+Best practices for technical writing:
+
+<Tabs>
+  <Tab title="README Template">
+    ```markdown
+    # Project Name
+    
+    Brief description of what this project does and who it's for.
+    
+    ## Features
+    
+    - Key feature 1
+    - Key feature 2
+    - Key feature 3
+    
+    ## Installation
+    
+    ```bash
+    npm install project-name
+    ```
+    
+    ## Quick Start
+    
+    ```javascript
+    const project = require('project-name');
+    
+    project.doSomething();
+    ```
+    
+    ## Usage
+    
+    ### Basic Usage
+    
+    Description of basic usage with example.
+    
+    ### Advanced Usage
+    
+    Description of advanced features.
+    
+    ## Configuration
+    
+    | Option | Type | Default | Description |
+    |--------|------|---------|-------------|
+    | option1 | string | 'default' | What it does |
+    
+    ## API Reference
+    
+    ### `methodName(param1, param2)`
+    
+    Description of method.
+    
+    **Parameters:**
+    - `param1` (string) - Description
+    - `param2` (number) - Description
+    
+    **Returns:** Description of return value
+    
+    **Example:**
+    ```javascript
+    methodName('value', 42);
+    ```
+    
+    ## Contributing
+    
+    We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md)
+    
+    ## License
+    
+    MIT License - see [LICENSE](LICENSE) for details
+    ```
+  </Tab>
+  
+  <Tab title="API Documentation">
+    ```markdown
+    ## Get User
+    
+    Retrieves a user by ID.
+    
+    ### Endpoint
+    
+    ```
+    GET /api/v1/users/{userId}
+    ```
+    
+    ### Parameters
+    
+    **Path Parameters:**
+    - `userId` (integer, required) - The unique user identifier
+    
+    **Query Parameters:**
+    - `include` (string, optional) - Comma-separated relations to include (e.g., "posts,comments")
+    
+    ### Request Headers
+    
+    ```
+    Authorization: Bearer {token}
+    Content-Type: application/json
+    ```
+    
+    ### Response
+    
+    **Success (200 OK)**
+    
+    ```json
+    {
+      "id": 123,
+      "username": "johndoe",
+      "email": "john@example.com",
+      "createdAt": "2024-01-01T00:00:00Z"
+    }
+    ```
+    
+    **Error (404 Not Found)**
+    
+    ```json
+    {
+      "error": "UserNotFound",
+      "message": "User with ID 123 not found"
+    }
+    ```
+    
+    ### Example Request
+    
+    ```bash
+    curl -H "Authorization: Bearer token123" \
+         https://api.example.com/api/v1/users/123
+    ```
+    
+    ### Rate Limits
+    
+    - 1000 requests per hour per API key
+    - Rate limit headers included in response
+    
+    ### Notes
+    
+    - Requires authentication
+    - Cached for 5 minutes
+    - Supports ETags for conditional requests
+    ```
+  </Tab>
+  
+  <Tab title="Architecture Doc">
+    ```markdown
+    # System Architecture
+    
+    ## Overview
+    
+    High-level description of the system architecture.
+    
+    ## Components
+    
+    ### Frontend
+    
+    - **Technology:** React + TypeScript
+    - **Purpose:** User interface and client-side logic
+    - **Key Features:** Real-time updates, responsive design
+    
+    ### Backend API
+    
+    - **Technology:** FastAPI + Python
+    - **Purpose:** Business logic and data access
+    - **Key Features:** Async processing, OpenAPI docs
+    
+    ### Database
+    
+    - **Technology:** PostgreSQL
+    - **Purpose:** Persistent data storage
+    - **Key Features:** ACID compliance, replication
+    
+    ## Data Flow
+    
+    1. User action triggers frontend event
+    2. Frontend makes API request
+    3. API validates and processes request
+    4. Database query executed
+    5. Response returned to frontend
+    6. UI updated with new data
+    
+    ## Deployment Architecture
+    
+    ```
+    [Load Balancer]
+          |
+          v
+    [API Servers] x3
+          |
+          v
+    [Database Primary]
+          |
+          v
+    [Database Replica] x2
+    ```
+    
+    ## Security Considerations
+    
+    - JWT authentication
+    - HTTPS only
+    - SQL injection prevention
+    - Rate limiting
+    - Input validation
+    
+    ## Scalability
+    
+    - Horizontal scaling of API servers
+    - Database read replicas
+    - Redis caching layer
+    - CDN for static assets
+    ```
+  </Tab>
+  
+  <Tab title="Tutorial">
+    ```markdown
+    # Getting Started with FastAPI
+    
+    This tutorial will guide you through creating your first FastAPI application.
+    
+    ## Prerequisites
+    
+    - Python 3.7+
+    - pip installed
+    - Basic Python knowledge
+    
+    ## Step 1: Installation
+    
+    Install FastAPI and Uvicorn:
+    
+    ```bash
+    pip install fastapi uvicorn[standard]
+    ```
+    
+    ## Step 2: Create Your First Endpoint
+    
+    Create a file `main.py`:
+    
+    ```python
+    from fastapi import FastAPI
+    
+    app = FastAPI()
+    
+    @app.get("/")
+    def read_root():
+        return {"Hello": "World"}
+    ```
+    
+    ## Step 3: Run the Server
+    
+    Start the development server:
+    
+    ```bash
+    uvicorn main:app --reload
+    ```
+    
+    ## Step 4: Test Your API
+    
+    Open your browser to `http://localhost:8000`
+    
+    You should see: `{"Hello": "World"}`
+    
+    ## Step 5: View Automatic Docs
+    
+    FastAPI automatically generates interactive API docs:
+    
+    - Swagger UI: `http://localhost:8000/docs`
+    - ReDoc: `http://localhost:8000/redoc`
+    
+    ## Next Steps
+    
+    - Add path parameters
+    - Implement request validation
+    - Connect to a database
+    - Add authentication
+    
+    ## Troubleshooting
+    
+    **Problem:** Port 8000 already in use
+    
+    **Solution:** Use a different port:
+    ```bash
+    uvicorn main:app --port 8001
+    ```
+    ```
+  </Tab>
+</Tabs>
+
+### 4. Create Comprehensive API Documentation
+
+Key elements of API documentation:
+
+- **Endpoint descriptions** - Clear purpose and use cases
+- **Request examples** - Multiple languages (curl, Python, JavaScript)
+- **Response schemas** - JSON structure with types
+- **Authentication** - Auth methods and examples
+- **Error codes** - All possible errors with solutions
+- **Rate limits** - Quotas and best practices
+
+### 5. Develop Effective README Files
+
+Essential README sections:
+
+1. **Project description** - What it does and why it exists
+2. **Quick start** - Get running in < 5 minutes
+3. **Installation** - Step-by-step setup
+4. **Usage examples** - Common use cases
+5. **Configuration** - All options documented
+6. **Contributing** - How to help
+7. **License** - Legal information
+
+### 6. Document Architecture and Design
+
+Architecture documentation components:
+
+- **System overview** - High-level architecture diagram
+- **Component interactions** - How pieces work together
+- **Data flow** - Request/response lifecycles
+- **Technology decisions** - Why specific tech was chosen
+- **Deployment** - Production architecture
+- **Security** - Security measures and considerations
+
+### 7. Maintain Documentation Quality
+
+Quality assurance practices:
+
+```markdown
+## Documentation Maintenance Checklist
+
+- [ ] Version control all documentation
+- [ ] Link docs to code with comments
+- [ ] Test all code examples
+- [ ] Review docs in every PR
+- [ ] Update changelog
+- [ ] Mark deprecated features
+- [ ] Gather user feedback
+- [ ] Maintain consistency
+```
+
+## The 7-Step Methodology
+
+<Steps>
+  <Step title="Analyze Needs">
+    Understand audience, purpose, and scope of documentation
+  </Step>
+  <Step title="Structure Content">
+    Create clear hierarchy and navigation
+  </Step>
+  <Step title="Write Clear Content">
+    Use concise language, active voice, and code examples
+  </Step>
+  <Step title="Document APIs">
+    Create comprehensive endpoint documentation
+  </Step>
+  <Step title="Create READMEs">
+    Write effective project documentation
+  </Step>
+  <Step title="Architecture Docs">
+    Document system design and component interactions
+  </Step>
+  <Step title="Maintain Quality">
+    Implement version control and review processes
+  </Step>
+</Steps>
+
+## Writing Best Practices
+
+<CardGroup cols={2}>
+  <Card title="Clarity" icon="eye">
+    - Use active voice
+    - Short sentences
+    - One idea per paragraph
+    - Define technical terms
+  </Card>
+  <Card title="Accuracy" icon="check">
+    - Test all code examples
+    - Keep examples up to date
+    - Link to source code
+    - Version documentation
+  </Card>
+  <Card title="Completeness" icon="list-check">
+    - Cover all features
+    - Include edge cases
+    - Document errors
+    - Provide troubleshooting
+  </Card>
+  <Card title="Usability" icon="users">
+    - Progressive disclosure
+    - Quick start first
+    - Search-friendly
+    - Mobile responsive
+  </Card>
+</CardGroup>
+
+## Documentation Tools
+
+<AccordionGroup>
+  <Accordion title="Static Site Generators">
+    - **MkDocs** - Python-based, Material theme
+    - **Docusaurus** - React-based, versioning support
+    - **VitePress** - Vue-based, fast and modern
+    - **Mintlify** - AI-powered docs platform
+  </Accordion>
+  
+  <Accordion title="API Documentation">
+    - **Swagger/OpenAPI** - Interactive API docs
+    - **Redoc** - Beautiful OpenAPI renderer
+    - **Stoplight** - API design and documentation
+    - **Postman** - API testing and docs
+  </Accordion>
+  
+  <Accordion title="Diagramming">
+    - **Mermaid** - Diagrams as code
+    - **Draw.io** - Visual diagramming
+    - **PlantUML** - UML diagrams from text
+    - **Lucidchart** - Collaborative diagramming
+  </Accordion>
+</AccordionGroup>
+
+<Note>
+**Pro Tip**: Write documentation alongside code, not after. This ensures accuracy and completeness.
+</Note>
+
+## Example: Complete API Documentation
+
+```markdown
+# Users API
+
+## Overview
+
+The Users API allows you to create, read, update, and delete user accounts.
+
+**Base URL:** `https://api.example.com/v1`
+
+**Authentication:** Bearer token required for all endpoints
+
+## Endpoints
+
+### List Users
+
+```http
+GET /users
+```
+
+Retrieves a paginated list of users.
+
+**Query Parameters:**
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| page | integer | No | Page number (default: 1) |
+| limit | integer | No | Items per page (default: 20, max: 100) |
+| sort | string | No | Sort field (e.g., "created_at") |
+
+**Response:**
+
+```json
+{
+  "data": [
+    {
+      "id": 1,
+      "username": "john_doe",
+      "email": "john@example.com",
+      "created_at": "2024-01-01T00:00:00Z"
+    }
+  ],
+  "pagination": {
+    "page": 1,
+    "limit": 20,
+    "total": 100
+  }
+}
+```
+
+**Error Responses:**
+
+| Code | Description |
+|------|-------------|
+| 401 | Unauthorized - Invalid or missing token |
+| 429 | Rate limit exceeded |
+
+## Rate Limiting
+
+- **Limit:** 1000 requests per hour
+- **Headers:** 
+  - `X-RateLimit-Limit`: Maximum requests
+  - `X-RateLimit-Remaining`: Remaining requests
+  - `X-RateLimit-Reset`: Reset timestamp
+
+## SDKs
+
+### Python
+
+```python
+from example_sdk import Client
+
+client = Client(api_key="your_api_key")
+users = client.users.list(page=1, limit=20)
+```
+
+### JavaScript
+
+```javascript
+import { Client } from 'example-sdk';
+
+const client = new Client({ apiKey: 'your_api_key' });
+const users = await client.users.list({ page: 1, limit: 20 });
+```
+```
+
+## Related Agents
+
+<CardGroup cols={2}>
+  <Card title="FastAPI Optimizer" icon="gauge" href="/agents/fastapi-optimizer">
+    For API implementation and optimization
+  </Card>
+  <Card title="Agent Template Wizard" icon="wand-magic-sparkles" href="/agents/agent-template-wizard">
+    For creating agent documentation
+  </Card>
+</CardGroup>

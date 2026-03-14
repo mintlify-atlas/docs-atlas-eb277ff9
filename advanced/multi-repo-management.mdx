@@ -1,0 +1,909 @@
+---
+title: Multi-Repository Management
+description: Coordinate development across multiple repositories at enterprise scale
+---
+
+The `/multi-repo` command provides sophisticated multi-repository coordination and management capabilities for enterprise-scale development environments with multiple teams, services, and dependencies.
+
+## Understanding Multi-Repo Strategies
+
+Modern software development often involves managing multiple repositories. Understanding the trade-offs between different strategies is crucial.
+
+### Repository Strategies
+
+<Tabs>
+  <Tab title="Monorepo">
+    **Single repository containing multiple projects**
+    
+    **Advantages:**
+    - Atomic cross-project changes
+    - Simplified dependency management
+    - Unified tooling and CI/CD
+    - Single source of truth
+    - Easy code sharing
+    
+    **Challenges:**
+    - Large repository size
+    - Complex build systems
+    - Access control complexity
+    - Steep learning curve
+    
+    **Best for:**
+    - Tightly coupled services
+    - Shared code bases
+    - Fast-moving teams
+    - Internal tools
+    
+    **Example:**
+    ```
+    company-monorepo/
+    ├── packages/
+    │   ├── api/
+    │   ├── web-app/
+    │   ├── mobile-app/
+    │   └── shared-lib/
+    ├── tools/
+    └── docs/
+    ```
+  </Tab>
+  
+  <Tab title="Polyrepo">
+    **Multiple independent repositories**
+    
+    **Advantages:**
+    - Independent versioning
+    - Clear ownership boundaries
+    - Smaller, focused repos
+    - Simpler access control
+    - Technology diversity
+    
+    **Challenges:**
+    - Dependency coordination
+    - Cross-repo changes complex
+    - Tooling duplication
+    - Version management overhead
+    
+    **Best for:**
+    - Microservices
+    - Independent teams
+    - Third-party libraries
+    - Open source projects
+    
+    **Example:**
+    ```
+    company-api/          (separate repo)
+    company-web-app/      (separate repo)
+    company-mobile-app/   (separate repo)
+    company-shared-lib/   (separate repo)
+    ```
+  </Tab>
+  
+  <Tab title="Hybrid">
+    **Mix of monorepo and polyrepo approaches**
+    
+    **Advantages:**
+    - Flexibility
+    - Best of both worlds
+    - Gradual migration path
+    - Team autonomy
+    
+    **Challenges:**
+    - Complexity
+    - Inconsistent tooling
+    - Coordination overhead
+    
+    **Best for:**
+    - Organizations in transition
+    - Mixed ownership models
+    - Varying coupling levels
+    
+    **Example:**
+    ```
+    core-monorepo/        (critical shared code)
+    service-a/            (independent service)
+    service-b/            (independent service)
+    external-integrations/ (separate concerns)
+    ```
+  </Tab>
+  
+  <Tab title="Federated">
+    **Distributed repositories with coordination layer**
+    
+    **Advantages:**
+    - Team independence
+    - Geographic distribution
+    - Technology freedom
+    - Scalability
+    
+    **Challenges:**
+    - Coordination complexity
+    - Tooling overhead
+    - Discovery challenges
+    
+    **Best for:**
+    - Global organizations
+    - Acquisitions/mergers
+    - Platform ecosystems
+    
+    **Example:**
+    ```
+    region-us/repos/      (US team repos)
+    region-eu/repos/      (EU team repos)
+    region-apac/repos/    (APAC team repos)
+    platform-core/        (shared platform)
+    ```
+  </Tab>
+</Tabs>
+
+## Multi-Repo Command Usage
+
+The `/multi-repo` command provides comprehensive repository coordination:
+
+```bash
+/multi-repo [action] [scope] [strategy] [parameters]
+```
+
+### Actions
+
+<CardGroup cols={2}>
+  <Card title="coordinate" icon="diagram-project">
+    Coordinate changes across repositories
+    ```bash
+    /multi-repo coordinate organization polyrepo
+    ```
+  </Card>
+  
+  <Card title="sync" icon="arrows-rotate">
+    Synchronize repository states
+    ```bash
+    /multi-repo sync team hybrid --branch-strategy=gitflow
+    ```
+  </Card>
+  
+  <Card title="migrate" icon="truck">
+    Migrate between repository strategies
+    ```bash
+    /multi-repo migrate project monorepo --preserve-history
+    ```
+  </Card>
+  
+  <Card title="analyze" icon="magnifying-glass-chart">
+    Analyze repository landscape
+    ```bash
+    /multi-repo analyze organization --dependencies
+    ```
+  </Card>
+  
+  <Card title="govern" icon="gavel">
+    Apply governance policies
+    ```bash
+    /multi-repo govern organization --compliance=soc2
+    ```
+  </Card>
+  
+  <Card title="optimize" icon="gauge-high">
+    Optimize repository performance
+    ```bash
+    /multi-repo optimize team --build-performance
+    ```
+  </Card>
+</CardGroup>
+
+### Scope Levels
+
+<Steps>
+  <Step title="Organization">
+    Entire organization's repositories
+    ```bash
+    /multi-repo analyze organization
+    ```
+    - All repositories across all teams
+    - Enterprise-wide governance
+    - Cross-team coordination
+  </Step>
+  
+  <Step title="Team">
+    Team-level repositories
+    ```bash
+    /multi-repo coordinate team polyrepo
+    ```
+    - Team-owned repositories
+    - Team-specific policies
+    - Intra-team coordination
+  </Step>
+  
+  <Step title="Project">
+    Project-specific repositories
+    ```bash
+    /multi-repo sync project
+    ```
+    - Related repositories for a project
+    - Project lifecycle management
+    - Feature coordination
+  </Step>
+  
+  <Step title="Service">
+    Service-oriented repositories
+    ```bash
+    /multi-repo govern service --api-compliance
+    ```
+    - Microservice repositories
+    - Service contracts
+    - API versioning
+  </Step>
+</Steps>
+
+## Repository Landscape Analysis
+
+### Analyzing Your Multi-Repo Environment
+
+<CodeGroup>
+```bash Basic Analysis
+/multi-repo analyze organization
+```
+
+```bash Detailed Analysis
+/multi-repo analyze organization --dependencies --metrics --health
+```
+
+```bash Team-Specific
+/multi-repo analyze team backend-services --ownership
+```
+</CodeGroup>
+
+### Analysis Output
+
+```yaml
+Repository Landscape Analysis:
+
+Total Repositories: 47
+├── Services: 23
+├── Libraries: 12
+├── Tools: 8
+└── Documentation: 4
+
+Repository Sizes:
+├── Small (<100MB): 32 repos
+├── Medium (100MB-1GB): 12 repos
+└── Large (>1GB): 3 repos
+
+Team Ownership:
+├── Backend Team: 15 repos
+├── Frontend Team: 12 repos
+├── DevOps Team: 8 repos
+├── Mobile Team: 7 repos
+└── Shared: 5 repos
+
+Activity Levels:
+├── High (daily commits): 18 repos
+├── Medium (weekly commits): 21 repos
+└── Low (monthly commits): 8 repos
+
+Dependency Graph:
+├── Direct Dependencies: 67 cross-repo dependencies
+├── Shared Libraries: 8 common dependencies
+├── API Dependencies: 34 service-to-service dependencies
+└── Circular Dependencies: 2 (⚠️ requires attention)
+
+Health Metrics:
+├── Passing CI: 43/47 (91%)
+├── Up-to-date Dependencies: 38/47 (81%)
+├── Security Vulnerabilities: 12 medium, 3 high
+├── Test Coverage: Average 78%
+└── Documentation: 89% complete
+```
+
+## Cross-Repository Coordination
+
+### Coordinating Related Changes
+
+When changes span multiple repositories:
+
+<Steps>
+  <Step title="Identify Dependencies">
+    ```bash
+    /multi-repo coordinate organization --analyze-impact
+    ```
+    
+    **Output:**
+    ```
+    Impact Analysis:
+    
+    Primary Repository: api-gateway
+    Change Type: Breaking API change
+    
+    Affected Repositories:
+    ├── web-app (direct consumer)
+    ├── mobile-app (direct consumer)
+    ├── analytics-service (indirect via web-app)
+    └── notification-service (direct consumer)
+    
+    Coordination Strategy:
+    1. Update API contract in api-gateway
+    2. Update clients: web-app, mobile-app, notification-service
+    3. Deploy in order: gateway → services → clients
+    4. Validate integration tests
+    ```
+  </Step>
+  
+  <Step title="Create Coordination Branch">
+    ```bash
+    /multi-repo coordinate project api-upgrade --create-branches
+    ```
+    
+    Creates coordinated branches across affected repos:
+    ```
+    Created branches:
+    ✓ api-gateway: feature/api-v2
+    ✓ web-app: feature/api-v2-client
+    ✓ mobile-app: feature/api-v2-client
+    ✓ notification-service: feature/api-v2-client
+    ```
+  </Step>
+  
+  <Step title="Synchronize Changes">
+    ```bash
+    /multi-repo sync project api-upgrade --atomic
+    ```
+    
+    Ensures all changes are synchronized:
+    ```
+    Synchronization Status:
+    ✓ All repositories on feature/api-v2 branches
+    ✓ Changes committed and pushed
+    ✓ Integration tests passing
+    ✓ Ready for coordinated merge
+    ```
+  </Step>
+  
+  <Step title="Coordinated Deployment">
+    ```bash
+    /multi-repo deploy project api-upgrade --order=dependency
+    ```
+    
+    Deploys in dependency order:
+    ```
+    Deployment Order:
+    1. api-gateway (no dependencies)
+    2. notification-service (depends on gateway)
+    3. web-app (depends on gateway)
+    4. mobile-app (depends on gateway)
+    
+    ✓ All deployments successful
+    ✓ Integration validated
+    ```
+  </Step>
+</Steps>
+
+### Dependency Management
+
+<Accordion title="Shared Library Updates">
+  **Scenario:** Update a shared library across all consuming repositories
+  
+  ```bash
+  /multi-repo coordinate organization --update-dependency @company/shared-lib@2.0.0
+  ```
+  
+  **Process:**
+  1. Identify all repositories using `@company/shared-lib`
+  2. Create update branches in each repository
+  3. Update dependency and run tests
+  4. Create PRs with compatibility reports
+  5. Coordinate review and merge
+  
+  **Output:**
+  ```
+  Dependency Update: @company/shared-lib 1.5.0 → 2.0.0
+  
+  Affected Repositories: 23
+  ├── Compatible (no changes needed): 15
+  ├── Breaking changes (code updates needed): 6
+  └── Testing required: 2
+  
+  Created Pull Requests:
+  ├── api-gateway: #234 (breaking changes)
+  ├── web-app: #456 (breaking changes)
+  ├── data-processor: #789 (testing needed)
+  └── ... (6 total)
+  ```
+</Accordion>
+
+<Accordion title="Version Pinning Strategy">
+  **Maintain consistent versions across repositories:**
+  
+  ```yaml
+  # .multi-repo/dependency-policy.yml
+  version_strategy: semver
+  
+  shared_dependencies:
+    "@company/shared-lib":
+      strategy: exact_version  # All repos use exact version
+      version: "2.0.0"
+      
+    "@company/ui-components":
+      strategy: minor_range    # Allow minor updates
+      version: "^3.5.0"
+      
+    "react":
+      strategy: major_range    # Allow within major version
+      version: "~18.2.0"
+  ```
+  
+  Enforce policy:
+  ```bash
+  /multi-repo govern organization --enforce-dependency-policy
+  ```
+</Accordion>
+
+## Repository Migration Strategies
+
+### Polyrepo to Monorepo Migration
+
+<Steps>
+  <Step title="Assess Migration Feasibility">
+    ```bash
+    /multi-repo migrate project monorepo --assess
+    ```
+    
+    **Assessment:**
+    ```
+    Migration Feasibility: High
+    
+    Source Repositories: 5
+    ├── api-service (450MB)
+    ├── web-app (320MB)
+    ├── shared-lib (80MB)
+    ├── mobile-app (890MB)
+    └── worker-service (210MB)
+    
+    Combined Size: 1.95GB
+    Total Commits: 12,430
+    Total Contributors: 47
+    
+    Challenges:
+    ├── Large mobile-app repository (Git LFS needed)
+    ├── Different CI/CD configurations
+    └── Varying dependency versions
+    
+    Recommendations:
+    ├── Use Git LFS for mobile assets
+    ├── Standardize on Nx/Turborepo
+    ├── Align dependency versions first
+    └── Preserve full Git history
+    ```
+  </Step>
+  
+  <Step title="Prepare Migration">
+    ```bash
+    /multi-repo migrate project monorepo --prepare
+    ```
+    
+    **Preparation tasks:**
+    - ✓ Align dependency versions
+    - ✓ Standardize CI/CD configuration
+    - ✓ Create monorepo structure
+    - ✓ Set up build orchestration
+    - ✓ Configure Git LFS
+    - ✓ Backup all repositories
+  </Step>
+  
+  <Step title="Execute Migration">
+    ```bash
+    /multi-repo migrate project monorepo --execute --preserve-history
+    ```
+    
+    **Migration process:**
+    ```
+    Migrating to monorepo...
+    
+    Step 1: Creating monorepo structure
+    ✓ packages/api-service
+    ✓ packages/web-app
+    ✓ packages/shared-lib
+    ✓ packages/mobile-app
+    ✓ packages/worker-service
+    
+    Step 2: Merging Git histories
+    ✓ api-service: 3,245 commits preserved
+    ✓ web-app: 2,890 commits preserved
+    ✓ shared-lib: 1,456 commits preserved
+    ✓ mobile-app: 4,123 commits preserved
+    ✓ worker-service: 716 commits preserved
+    
+    Step 3: Setting up tooling
+    ✓ Nx workspace configured
+    ✓ Shared dependencies hoisted
+    ✓ Build cache enabled
+    ✓ CI/CD workflows updated
+    
+    Migration complete!
+    ```
+  </Step>
+  
+  <Step title="Validate Migration">
+    ```bash
+    /multi-repo migrate project monorepo --validate
+    ```
+    
+    **Validation:**
+    ```
+    Validation Results:
+    ✓ All Git history preserved
+    ✓ All files migrated
+    ✓ Build system functional
+    ✓ Tests passing (98% → 97% coverage)
+    ✓ CI/CD pipelines operational
+    ✓ Team access configured
+    
+    Performance Improvements:
+    ├── Build time: 45m → 12m (73% faster)
+    ├── Dependency installation: 8m → 2m (75% faster)
+    └── CI pipeline: 35m → 15m (57% faster)
+    ```
+  </Step>
+</Steps>
+
+## Enterprise Governance
+
+### Implementing Repository Governance
+
+<Tabs>
+  <Tab title="Access Control">
+    **Role-Based Access Control (RBAC):**
+    
+    ```bash
+    /multi-repo govern organization --implement-rbac
+    ```
+    
+    ```yaml
+    # .multi-repo/rbac-policy.yml
+    roles:
+      admin:
+        permissions: [read, write, admin, delete]
+        applies_to: all_repositories
+        
+      developer:
+        permissions: [read, write]
+        applies_to:
+          - owned_repositories
+          - team_repositories
+        restrictions:
+          - no_main_branch_push
+          - require_pr_approval
+          
+      contractor:
+        permissions: [read, write]
+        applies_to: [assigned_repositories]
+        restrictions:
+          - no_secrets_access
+          - no_production_deploy
+          - time_limited_access
+    
+    teams:
+      backend:
+        repos: [api-*, *-service]
+        role: developer
+        
+      frontend:
+        repos: [web-*, mobile-*]
+        role: developer
+    ```
+  </Tab>
+  
+  <Tab title="Compliance">
+    **SOC2/GDPR/HIPAA Compliance:**
+    
+    ```bash
+    /multi-repo govern organization --compliance soc2 --audit
+    ```
+    
+    **Compliance requirements:**
+    ```yaml
+    compliance:
+      framework: soc2
+      
+      requirements:
+        - mandatory_code_review: true
+        - branch_protection: enforced
+        - signed_commits: required
+        - audit_logging: enabled
+        - vulnerability_scanning: continuous
+        - secrets_management: required
+        - access_reviews: quarterly
+        
+      policies:
+        - no_direct_main_push
+        - require_2_approvals
+        - require_ci_pass
+        - require_security_scan
+        - require_dependency_audit
+    ```
+    
+    **Audit report:**
+    ```
+    SOC2 Compliance Audit:
+    
+    ✓ Branch Protection: 47/47 repos (100%)
+    ✓ Required Reviews: 47/47 repos (100%)
+    ✓ Signed Commits: 43/47 repos (91%)
+    ✗ Vulnerability Scanning: 42/47 repos (89%)
+    ✗ Secret Scanning: 40/47 repos (85%)
+    
+    Non-Compliant Repositories: 7
+    ├── legacy-service-1 (missing: signed commits, vuln scan)
+    ├── prototype-app (missing: secret scan)
+    └── ... (5 more)
+    
+    Remediation Plan Generated
+    ```
+  </Tab>
+  
+  <Tab title="Quality Standards">
+    **Code quality and testing standards:**
+    
+    ```bash
+    /multi-repo govern organization --quality-standards
+    ```
+    
+    ```yaml
+    quality_standards:
+      testing:
+        min_coverage: 80%
+        require_unit_tests: true
+        require_integration_tests: true
+        
+      code_quality:
+        max_complexity: 10
+        max_file_length: 500
+        linting: enforced
+        
+      documentation:
+        readme_required: true
+        api_docs_required: true
+        changelog_required: true
+        
+      dependencies:
+        audit_frequency: weekly
+        auto_update_minor: true
+        security_patches: immediate
+    ```
+    
+    **Enforcement:**
+    ```
+    Quality Standards Report:
+    
+    Test Coverage:
+    ├── Above 80%: 38 repos (81%)
+    ├── 60-80%: 7 repos (15%)
+    └── Below 60%: 2 repos (4%) ⚠️
+    
+    Code Quality:
+    ├── Passing linting: 45 repos (96%)
+    ├── Documentation complete: 42 repos (89%)
+    └── Dependency audits current: 47 repos (100%)
+    ```
+  </Tab>
+  
+  <Tab title="Security">
+    **Security policies and enforcement:**
+    
+    ```bash
+    /multi-repo govern organization --security-policy
+    ```
+    
+    ```yaml
+    security_policy:
+      secret_scanning:
+        enabled: true
+        block_commits: true
+        
+      vulnerability_scanning:
+        schedule: daily
+        auto_fix: minor_patches
+        alert_severity: medium
+        
+      dependency_management:
+        allowed_licenses: [MIT, Apache-2.0, BSD-3-Clause]
+        blocked_packages: [known-malware-list]
+        require_sca: true
+        
+      access_control:
+        mfa_required: true
+        ssh_keys: required
+        token_expiration: 90_days
+    ```
+  </Tab>
+</Tabs>
+
+## Automation and Tooling
+
+### Cross-Repository Automation
+
+<Accordion title="Dependency Update Automation">
+  **Automatic dependency updates across repositories:**
+  
+  ```bash
+  /multi-repo automate organization --dependency-updates
+  ```
+  
+  **Automation workflow:**
+  1. Daily scan for dependency updates
+  2. Create update branches in affected repos
+  3. Run test suites automatically
+  4. Create PRs with compatibility reports
+  5. Auto-merge if tests pass (for minor/patch)
+  6. Notify team for major updates
+  
+  **Configuration:**
+  ```yaml
+  automation:
+    dependency_updates:
+      schedule: daily
+      auto_merge:
+        patch: true
+        minor: true
+        major: false
+      require_tests: true
+      notify_on: [major_update, test_failure]
+  ```
+</Accordion>
+
+<Accordion title="CI/CD Synchronization">
+  **Sync CI/CD configurations:**
+  
+  ```bash
+  /multi-repo sync organization --ci-config
+  ```
+  
+  **Synchronizes:**
+  - GitHub Actions workflows
+  - Build configurations
+  - Deployment pipelines
+  - Test configurations
+  - Environment variables (non-secret)
+  
+  **Template:**
+  ```yaml
+  # .multi-repo/ci-template.yml
+  name: CI Pipeline
+  
+  on: [push, pull_request]
+  
+  jobs:
+    test:
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v3
+        - name: Setup
+          run: {{ setup_command }}
+        - name: Test
+          run: {{ test_command }}
+        - name: Coverage
+          run: {{ coverage_command }}
+  ```
+</Accordion>
+
+<Accordion title="Repository Health Monitoring">
+  **Continuous health monitoring:**
+  
+  ```bash
+  /multi-repo monitor organization --dashboard
+  ```
+  
+  **Dashboard:**
+  ```
+  Repository Health Dashboard
+  
+  Build Status:           Activity:
+  ✓ Passing: 43          ↑ High: 18 repos
+  ⚠ Failing: 3           → Medium: 21 repos
+  ○ No CI: 1             ↓ Low: 8 repos
+  
+  Security:              Dependencies:
+  ✓ No vulns: 35         ✓ Up-to-date: 38
+  ⚠ Medium: 9            ⚠ Updates: 7
+  ✗ High: 3              ✗ Outdated: 2
+  
+  Test Coverage:         Documentation:
+  ██████████ 89%        ██████████ 92%
+  
+  Recent Alerts:
+  ⚠ api-gateway: 2 high-severity vulnerabilities
+  ⚠ web-app: Test coverage below 80%
+  ℹ mobile-app: 15 outdated dependencies
+  ```
+</Accordion>
+
+## Best Practices
+
+### Repository Organization
+
+<CardGroup cols={2}>
+  <Card title="Clear Ownership" icon="user-check">
+    **Define ownership boundaries:**
+    - Each repository has a clear owner
+    - CODEOWNERS file maintained
+    - Responsibility matrix documented
+    - Escalation paths defined
+  </Card>
+  
+  <Card title="Consistent Structure" icon="folder-tree">
+    **Standardize repository structure:**
+    - Common directory layout
+    - Standard configuration files
+    - Consistent naming conventions
+    - Shared documentation templates
+  </Card>
+  
+  <Card title="Documentation" icon="book">
+    **Maintain comprehensive docs:**
+    - README with setup instructions
+    - Architecture documentation
+    - API documentation
+    - Runbooks and guides
+  </Card>
+  
+  <Card title="Automation" icon="robot">
+    **Automate repetitive tasks:**
+    - Dependency updates
+    - Security scanning
+    - Code quality checks
+    - Release processes
+  </Card>
+</CardGroup>
+
+### Coordination Strategies
+
+<Steps>
+  <Step title="Plan Ahead">
+    Coordinate breaking changes well in advance
+    - Document breaking changes early
+    - Communicate with affected teams
+    - Plan migration timeline
+    - Provide migration guides
+  </Step>
+  
+  <Step title="Version Carefully">
+    Use semantic versioning consistently
+    - Major: Breaking changes
+    - Minor: New features (backward compatible)
+    - Patch: Bug fixes
+    - Communicate version impacts
+  </Step>
+  
+  <Step title="Test Thoroughly">
+    Validate cross-repository changes
+    - Integration test suites
+    - Contract testing
+    - End-to-end validation
+    - Staging environment testing
+  </Step>
+  
+  <Step title="Monitor Continuously">
+    Track repository health and dependencies
+    - Automated health checks
+    - Dependency graphs
+    - Security scanning
+    - Performance metrics
+  </Step>
+</Steps>
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Workflow Automation" href="/advanced/workflow-automation" icon="diagram-project">
+    Automate multi-repo workflows
+  </Card>
+  
+  <Card title="Creating Commands" href="/advanced/creating-commands" icon="terminal">
+    Create custom multi-repo commands
+  </Card>
+  
+  <Card title="MCP Integration" href="/advanced/mcp-integration" icon="plug">
+    Integrate repositories with MCP servers
+  </Card>
+  
+  <Card title="Enterprise Commands" href="/commands/enterprise" icon="building">
+    Browse enterprise-scale commands
+  </Card>
+</CardGroup>

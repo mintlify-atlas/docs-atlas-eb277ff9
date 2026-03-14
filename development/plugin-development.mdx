@@ -1,0 +1,438 @@
+---
+title: Plugin Development
+description: Plugin manifest, marketplace validation, and distribution
+---
+
+ccprompts is distributed as a Claude Code plugin. This guide covers plugin configuration, validation, and distribution.
+
+## Plugin Structure
+
+The plugin structure follows Claude Code plugin conventions:
+
+```
+ccprompts/
+├── .claude/
+│   ├── commands/          # 70+ slash commands
+│   │   ├── 00-initial-workflow/
+│   │   ├── 01-project-setup/
+│   │   ├── 02-development/
+│   │   └── ... (12 phases total)
+│   ├── agents/            # 10 specialized agents
+│   └── settings.json      # Claude Code configuration
+├── .claude-plugin/
+│   ├── plugin.json        # Plugin manifest
+│   └── marketplace.json   # Marketplace configuration (optional)
+├── commands -> .claude/commands/  # Symlink
+├── agents -> .claude/agents/      # Symlink
+└── package.json
+```
+
+## Plugin Manifest
+
+The plugin manifest (`.claude-plugin/plugin.json`) defines plugin metadata:
+
+```json .claude-plugin/plugin.json
+{
+  "name": "ccprompts",
+  "version": "0.2.0",
+  "description": "70+ Claude Code slash commands across 12 development phases with Dagger-based safety system, multi-dimensional validation, and specialized agents",
+  "author": {
+    "name": "Claude Code Community",
+    "url": "https://github.com/ursisterbtw/ccprompts"
+  },
+  "repository": "https://github.com/ursisterbtw/ccprompts.git",
+  "license": "MIT",
+  "keywords": [
+    "claude",
+    "claude-code",
+    "ai",
+    "development",
+    "automation",
+    "commands",
+    "workflow",
+    "security",
+    "testing",
+    "deployment",
+    "collaboration",
+    "enterprise",
+    "dagger",
+    "mcp",
+    "agents"
+  ],
+  "agents": [
+    "./.claude/agents/rust-expert.md",
+    "./.claude/agents/python-pro.md",
+    "./.claude/agents/golang-pro.md",
+    "./.claude/agents/javascript-expert.md",
+    "./.claude/agents/bash-shell-scripting.md",
+    "./.claude/agents/fastapi-optimizer.md",
+    "./.claude/agents/documentation-writer.md",
+    "./.claude/agents/performance-optimizer.md",
+    "./.claude/agents/systems-architect.md",
+    "./.claude/agents/agent-template-wizard.md"
+  ]
+}
+```
+
+### Required Fields
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `name` | string | Plugin name (must be "ccprompts") |
+| `version` | string | Semantic version (e.g., "0.2.0") |
+| `description` | string | Brief plugin description |
+| `author` | object | Author name and URL |
+| `repository` | string | GitHub repository URL |
+| `license` | string | License type (e.g., "MIT") |
+| `keywords` | array | Search keywords |
+| `agents` | array | Paths to agent files |
+
+## Validating Plugin Structure
+
+### Plugin Validation Command
+
+```bash
+# Validate plugin manifest and structure
+bun run validate:plugin
+```
+
+### What Gets Validated
+
+<Steps>
+  <Step title="Plugin Manifest">
+    Validates `.claude-plugin/plugin.json`:
+
+    - All required fields present
+    - Valid semantic versioning
+    - Name matches "ccprompts"
+    - Repository URL is valid
+  </Step>
+
+  <Step title="Marketplace Config">
+    Validates `.claude-plugin/marketplace.json` (optional):
+
+    - Plugins array exists
+    - ccprompts plugin included
+    - Valid configuration structure
+  </Step>
+
+  <Step title="Directory Symlinks">
+    Validates symlinks at project root:
+
+    - `commands/` → `.claude/commands/`
+    - `agents/` → `.claude/agents/`
+    - Symlinks tracked in git
+  </Step>
+
+  <Step title="Commands Structure">
+    Validates command organization:
+
+    - All 12 phase directories present
+    - Command files in `.claude/commands/`
+    - Phase counts match manifest
+  </Step>
+
+  <Step title="Agents Structure">
+    Validates agent files:
+
+    - Agent files in `.claude/agents/`
+    - All agents listed in manifest exist
+  </Step>
+
+  <Step title="Documentation">
+    Validates required docs:
+
+    - README.md
+    - PLUGIN.md
+    - CLAUDE.md
+  </Step>
+</Steps>
+
+### Validation Output
+
+<CodeGroup>
+```bash Success
+╔════════════════════════════════════════════╗
+║   CC Prompts Plugin Structure Validator    ║
+╚════════════════════════════════════════════╝
+
+ℹ Validating package.json...
+✓ package.json validation passed
+ℹ Validating plugin manifest...
+✓ Plugin manifest is valid
+ℹ Validating marketplace configuration...
+✓ Marketplace configuration is valid
+ℹ Validating directory symlinks...
+✓ commands/ symlink is valid
+✓ agents/ symlink is valid
+ℹ Validating commands structure...
+✓ Found 70 command files in .claude/commands/
+✓ All 12 phase directories are present
+ℹ Validating agents structure...
+✓ Found 10 agent files in .claude/agents/
+ℹ Validating documentation...
+✓ Main README found
+✓ Plugin installation guide found
+✓ Claude Code configuration found
+
+════════════════ Summary ═══════════════
+✓ Successes: 15
+⚠ Warnings:  0
+✗ Errors:    0
+
+✓ Plugin structure is valid and ready for distribution!
+```
+
+```bash Errors
+✗ Plugin manifest (.claude-plugin/plugin.json) not found
+✗ commands/ symlink not found at project root
+✗ Expected 70 commands, found 69
+
+════════════════ Summary ═══════════════
+✓ Successes: 8
+⚠ Warnings:  2
+✗ Errors:    3
+
+✗ Plugin structure has errors that need to be fixed
+```
+</CodeGroup>
+
+## Creating Symlinks
+
+Symlinks allow Claude Code to discover commands and agents:
+
+<CodeGroup>
+```bash Unix/Linux/macOS
+# Create symlinks
+ln -s .claude/commands commands
+ln -s .claude/agents agents
+
+# Track in git
+git add commands agents
+```
+
+```bash Windows (PowerShell as Admin)
+# Create symlinks
+New-Item -ItemType SymbolicLink -Path commands -Target .claude\commands
+New-Item -ItemType SymbolicLink -Path agents -Target .claude\agents
+
+# Track in git
+git add commands agents
+```
+
+```bash Windows (Command Prompt as Admin)
+# Create symlinks
+mklink /D commands .claude\commands
+mklink /D agents .claude\agents
+
+# Track in git
+git add commands agents
+```
+</CodeGroup>
+
+<Warning>
+  On Windows, creating symlinks requires administrator privileges or Developer Mode enabled.
+</Warning>
+
+## Marketplace Configuration
+
+Optional marketplace configuration for testing:
+
+```json .claude-plugin/marketplace.json
+{
+  "plugins": [
+    {
+      "name": "ccprompts",
+      "displayName": "CC Prompts",
+      "description": "70+ Claude Code slash commands",
+      "author": "ursisterbtw",
+      "repository": "https://github.com/ursisterbtw/ccprompts",
+      "version": "0.2.0"
+    }
+  ]
+}
+```
+
+<Note>
+  The marketplace configuration is optional and primarily used for local testing.
+</Note>
+
+## Distribution
+
+### GitHub Distribution
+
+<Steps>
+  <Step title="Ensure Validation Passes">
+    ```bash
+    bun run validate:plugin
+    bun run ci
+    ```
+  </Step>
+
+  <Step title="Commit and Tag">
+    ```bash
+    git add .
+    git commit -m "feat: configure as Claude Code plugin"
+    git tag v0.2.0
+    git push origin main --tags
+    ```
+  </Step>
+
+  <Step title="Create GitHub Release">
+    Create a release on GitHub with the version tag
+  </Step>
+</Steps>
+
+### Team Installation
+
+Add to project `.claude/settings.json` for automatic team-wide installation:
+
+```json .claude/settings.json
+{
+  "pluginMarketplaces": ["ursisterbtw/ccprompts"],
+  "plugins": ["ccprompts@ursisterbtw"]
+}
+```
+
+### Local Testing
+
+Test the plugin locally before distribution:
+
+```bash
+# Test plugin installation script
+./scripts/test-plugin-local.sh
+```
+
+## Updating the Plugin
+
+### Version Bump
+
+<Steps>
+  <Step title="Update Version">
+    Update version in both files:
+
+    - `package.json` → `"version": "0.3.0"`
+    - `.claude-plugin/plugin.json` → `"version": "0.3.0"`
+  </Step>
+
+  <Step title="Update Command Counts">
+    If adding/removing commands, update phase counts in `.claude-plugin/plugin.json`
+  </Step>
+
+  <Step title="Validate">
+    ```bash
+    bun run validate:plugin
+    bun run ci
+    ```
+  </Step>
+
+  <Step title="Commit and Release">
+    ```bash
+    git add package.json .claude-plugin/plugin.json
+    git commit -m "chore: bump version to 0.3.0"
+    git tag v0.3.0
+    git push origin main --tags
+    ```
+  </Step>
+</Steps>
+
+### Semantic Versioning
+
+Follow semantic versioning (semver):
+
+- **Major** (1.0.0): Breaking changes
+- **Minor** (0.2.0): New features, backward compatible
+- **Patch** (0.2.1): Bug fixes, backward compatible
+
+## Phase Organization
+
+The 12 phases organize commands by development workflow:
+
+| Phase | Directory | Description | Count |
+|-------|-----------|-------------|-------|
+| 00 | `00-initial-workflow` | Project analysis & intelligent chaining | 2 |
+| 01 | `01-project-setup` | Documentation, learning, MCP setup | 3 |
+| 02 | `02-development` | Backup, debug, migrate, optimize, refactor | 5 |
+| 03 | `03-security` | Security auditing & compliance | 4 |
+| 04 | `04-testing` | Testing & troubleshooting | 2 |
+| 05 | `05-deployment` | CI/CD & deployment | 4 |
+| 06 | `06-collaboration` | Code review & team workflows | 4 |
+| 07 | `07-utilities` | Development utilities & best practices | 7 |
+| 08 | `08-extras` | Health checks & modernization | 4 |
+| 09 | `09-agentic-capabilities` | MCP & agent orchestration | 12 |
+| 10 | `10-ai-native-development` | AI-powered development tools | 10 |
+| 11 | `11-enterprise-scale` | Governance & multi-repo | 8 |
+
+<Note>
+  Total: 70+ commands across 12 phases
+</Note>
+
+## Agent Organization
+
+The 10 specialized agents provide domain expertise:
+
+- **rust-expert** - Ownership, lifetimes, systems programming
+- **python-pro** - Modern Python, decorators, async patterns
+- **golang-pro** - Goroutines, channels, concurrent systems
+- **javascript-expert** - ES6+, async/await, DOM optimization
+- **bash-shell-scripting** - Shell automation, DevOps scripts
+- **fastapi-optimizer** - Async patterns, performance tuning
+- **documentation-writer** - Technical writing, API docs
+- **performance-optimizer** - System-wide performance analysis
+- **systems-architect** - Architecture patterns, scalability
+- **agent-template-wizard** - Creates new agents from template
+
+## Troubleshooting
+
+### Symlink Not Tracked in Git
+
+**Problem:** Git doesn't track the symlinks
+
+**Solution:**
+
+```bash
+# Ensure symlinks are tracked
+git add commands agents
+git commit -m "chore: add symlinks for plugin structure"
+```
+
+### Plugin Validation Fails
+
+**Problem:** `bun run validate:plugin` reports errors
+
+**Check:**
+
+<Steps>
+  <Step title="Verify Files Exist">
+    ```bash
+    ls -la .claude-plugin/plugin.json
+    ls -la commands agents
+    ```
+  </Step>
+
+  <Step title="Check Required Fields">
+    Ensure all required fields in `plugin.json`:
+    - name, version, description, author, repository, license, keywords, agents
+  </Step>
+
+  <Step title="Verify Command Count">
+    ```bash
+    find .claude/commands -name "*.md" | wc -l
+    # Should match expected count (70)
+    ```
+  </Step>
+</Steps>
+
+### Marketplace Configuration Invalid
+
+**Problem:** Marketplace config validation fails
+
+**Solution:**
+
+```bash
+# Marketplace config is optional - can be removed if not needed
+rm .claude-plugin/marketplace.json
+
+# Re-run validation
+bun run validate:plugin
+```

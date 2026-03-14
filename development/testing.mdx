@@ -1,0 +1,323 @@
+---
+title: Testing
+description: Running tests and validation for ccprompts
+---
+
+The ccprompts project uses Jest for unit testing and custom validation scripts for comprehensive quality assurance.
+
+## Test Commands
+
+### Core Test Commands
+
+<CodeGroup>
+```bash Full Test Suite
+# Run Jest tests + validate all 70+ commands
+bun run test
+```
+
+```bash Jest Only
+# Run Jest tests only
+bun run test:jest
+```
+
+```bash Validation Only
+# Run command validation only
+bun run test:validate
+```
+
+```bash Full CI Pipeline
+# Full pipeline: validate + lint + link-check
+bun run ci
+```
+</CodeGroup>
+
+## Running Specific Tests
+
+You can run specific test files or test patterns:
+
+<CodeGroup>
+```bash Single Test File
+# Run a specific test file
+bun run test:jest -- tests/validators/file-utils.test.js
+```
+
+```bash Test Name Pattern
+# Run tests matching a specific name
+bun run test:jest -- --testNamePattern="validation"
+```
+
+```bash Test Path Pattern
+# Run tests matching a path pattern
+bun run test:jest -- --testPathPattern="validators"
+```
+</CodeGroup>
+
+## Test Structure
+
+Tests are organized by validator component:
+
+```
+tests/
+├── validators/
+│   ├── file-utils.test.js
+│   ├── structure-validator.test.js
+│   ├── security-validator.test.js
+│   └── quality-scorer.test.js
+├── validation.test.js
+├── safety-validation.test.js
+├── integration.test.js
+└── command-structure.test.js
+```
+
+<Note>
+  Each test file mirrors its corresponding `scripts/validators/` module name.
+</Note>
+
+## Validation System
+
+The validation system checks commands across four dimensions:
+
+### 1. Structural Validation
+
+Validates markdown format, frontmatter, and section completeness:
+
+```bash
+# Full validation (includes structural checks)
+bun run validate
+```
+
+**Checks:**
+- Markdown syntax validity
+- Required sections (Usage, Description, Examples)
+- Proper heading hierarchy
+- Code block formatting
+- Line endings (LF not CRLF)
+
+### 2. Security Validation
+
+Detects hardcoded secrets and dangerous patterns:
+
+```bash
+# Security-focused validation only
+bun run security-scan
+```
+
+**Checks:**
+- Hardcoded passwords, API keys, tokens
+- Dangerous eval() usage
+- Potential XSS via innerHTML
+- Template injection patterns
+
+### 3. Quality Scoring
+
+Assesses educational value and example completeness:
+
+**Scoring criteria:**
+- Minimum content length (500+ characters)
+- Presence of examples section
+- Clear instructions
+- Security considerations documented
+- Output requirements specified
+- Professional language (no TODO/FIXME)
+
+### 4. Performance Metrics
+
+Tracks validation speed and resource usage:
+
+**Targets:**
+- Discovery: &lt;100ms
+- Total validation: &lt;2000ms
+- Currently achieving: ~3ms discovery + ~28ms validation
+
+## Command Count Validation
+
+The validation system expects exactly 70 command files:
+
+```bash
+# Set expected count (required for CI)
+EXPECTED_COMMAND_COUNT=70 node scripts/validate-commands.js
+
+# Or use the npm script
+bun run validate
+```
+
+<Warning>
+  If the command count doesn't match, validation fails. Update `.claude-plugin/plugin.json` when adding/removing commands.
+</Warning>
+
+## Environment Requirements
+
+### Node.js Version
+
+<CodeGroup>
+```bash Check Version
+# Node.js >=18.0.0 <23.0.0 required
+node --version
+```
+
+```bash Use Correct Version
+# With nvm
+nvm use 22
+
+# With mise
+mise use node@22
+```
+</CodeGroup>
+
+<Warning>
+  Jest tests fail on Node.js 24+ due to dependency compatibility issues. Use Node.js 22.x LTS.
+</Warning>
+
+### Bun Version
+
+The project pins Bun version 1.1.34:
+
+```bash
+# Check Bun version
+bun --version
+
+# Should output: 1.1.34
+```
+
+Version is pinned in:
+- `package.json` → `"packageManager": "bun@1.1.34"`
+- `.bun-version` file
+
+## CI Configuration
+
+Example GitHub Actions setup:
+
+```yaml .github/workflows/test.yml
+name: Test
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: 1.1.34
+      
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+      
+      - name: Run tests
+        run: bun run test
+      
+      - name: Run CI pipeline
+        run: bun run ci
+```
+
+## Test Coverage
+
+Jest is configured to collect coverage from:
+
+- `scripts/**/*.js` - Validation scripts
+- `src/**/*.ts` - TypeScript source files
+
+Setup files:
+- `tests/setup.js` - Jest setup
+- `tests/jest-env-setup.js` - Environment configuration
+
+## Pre-Commit Validation
+
+Run quick validation before committing:
+
+```bash
+# Pre-commit validation
+bun run precommit
+```
+
+This runs the core validation to catch issues early.
+
+## Troubleshooting Tests
+
+### Jest Fails on Node 24+
+
+**Problem:** Jest tests fail with module errors on Node.js 24+
+
+**Solution:** Use Node.js 22.x LTS:
+
+```bash
+node --version  # Should be v22.x.x
+nvm use 22      # If using nvm
+mise use node@22  # If using mise
+```
+
+### Command Count Mismatch
+
+**Problem:** "Expected 70 commands, found X"
+
+**Solution:**
+
+<Steps>
+  <Step title="Count actual files">
+    ```bash
+    find .claude/commands -name "*.md" | wc -l
+    ```
+  </Step>
+
+  <Step title="Update plugin.json">
+    Update phase counts in `.claude-plugin/plugin.json` if needed
+  </Step>
+
+  <Step title="Re-run validation">
+    ```bash
+    bun run validate
+    ```
+  </Step>
+</Steps>
+
+### Validation Performance Issues
+
+**Problem:** Validation takes too long
+
+**Check:**
+
+```bash
+# Validation should complete in <2s total
+bun run validate
+
+# Check performance metrics in output:
+# Discovery target: <100ms
+# Validation target: <2000ms
+```
+
+## Writing New Tests
+
+When adding new functionality, write corresponding tests:
+
+<CodeGroup>
+```javascript Example Test Structure
+// tests/validators/my-validator.test.js
+const MyValidator = require('../../scripts/validators/my-validator');
+
+describe('MyValidator', () => {
+    let validator;
+
+    beforeEach(() => {
+        validator = new MyValidator();
+    });
+
+    describe('validateSomething', () => {
+        it('should pass valid input', () => {
+            const result = validator.validateSomething('valid');
+            expect(result).toBe(true);
+        });
+
+        it('should reject invalid input', () => {
+            const result = validator.validateSomething('invalid');
+            expect(result).toBe(false);
+        });
+    });
+});
+```
+</CodeGroup>
+
+<Note>
+  Follow existing test patterns in `tests/validators/` for consistency.
+</Note>

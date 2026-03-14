@@ -1,0 +1,44 @@
+---
+icon: "flask"
+title: "Test"
+description: "This command provides comprehensive test generation and automation with coverage analysis."
+---
+
+# Test
+
+No description available
+
+## Usage
+
+```bash
+/test [focus] [type]
+```
+
+## Examples
+
+<CodeGroup>
+
+```bash Basic Usage
+# Generate missing unit tests
+/test "missing coverage" "unit"
+# Create integration tests for API
+/test "api/users" "integration"
+# Add end-to-end user journey tests
+```
+
+</CodeGroup>
+
+<Warning>
+- **Input Validation**: Focus and type parameters validated against project structure
+- **File Access**: Read-write access to test files with backup creation
+- **Safe Operations**: Non-destructive test generation and execution
+- **Resource Limits**: Testing bounded by project size with configurable timeouts
+</Warning>
+
+## Related Commands
+
+- `/refactor` - Refactor code based on test insights
+- `/audit-security` - Add security tests to test suite
+- `/optimize` - Performance testing for optimizations
+- `/document` - Document test coverage and procedures
+

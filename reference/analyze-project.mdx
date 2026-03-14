@@ -1,0 +1,49 @@
+---
+title: "Analyze-Project"
+description: "Performs intelligent project analysis and provides personalized recommendations: 1. Auto-detects project type, technology stack, and architecture patterns"
+---
+
+# Analyze-Project
+
+Performs intelligent project analysis and provides personalized recommendations: 1. Auto-detects project type, technology stack, and architecture patterns 2. Identifies current development maturity level and gaps 3. Suggests relevant prompts based on project characteristics 4. Recommends improvement priorities and workflows 5. Provides timeline estimates for suggested improvements 6. Creates a personalized development roadmap
+
+## Usage
+
+```bash
+/analyze-project
+```
+
+## Examples
+
+<CodeGroup>
+
+```bash Basic Usage
+# Basic project analysis
+/analyze-project
+# Example output for a TypeScript web app:
+# Project Type: React TypeScript Web Application
+# Maturity Level: Early Development
+```
+
+</CodeGroup>
+
+## Use Cases
+
+- **Project Onboarding**: Understand inherited or new codebases
+- **Health Assessment**: Regular project health checks
+- **Improvement Planning**: Data-driven development roadmap creation
+- **Team Guidance**: Context-aware recommendations for development teams
+
+<Warning>
+- **Input Validation**: No user inputs required; operates on current directory structure
+- **File Access**: Read-only analysis of project files and configuration
+- **Safe Operations**: Non-destructive analysis only; no file modifications
+- **Resource Limits**: Analysis bounded by project size; automatically handles timeout scenarios
+</Warning>
+
+## Related Commands
+
+- Dynamically selected based on project analysis
+- Prioritized by impact and effort
+- Customized for detected technology stack
+

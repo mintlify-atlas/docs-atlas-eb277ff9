@@ -1,0 +1,303 @@
+---
+title: Prerequisites
+description: System requirements and recommended dependencies for ccprompts
+---
+
+## System Requirements
+
+### Node.js
+
+ccprompts requires Node.js version 18.0.0 or higher (but below 23.0.0).
+
+<Steps>
+  <Step title="Check your Node.js version">
+    ```bash
+    node --version
+    ```
+    
+    You should see `v18.x.x` or higher (but below `v23.0.0`).
+  </Step>
+
+  <Step title="Install or upgrade Node.js if needed">
+    <CodeGroup>
+      ```bash Linux (nvm)
+      # Install nvm
+      curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
+      
+      # Install Node.js 18
+      nvm install 18
+      nvm use 18
+      ```
+
+      ```bash macOS (Homebrew)
+      brew install node@18
+      ```
+
+      ```powershell Windows
+      # Download from nodejs.org or use winget
+      winget install OpenJS.NodeJS.LTS
+      ```
+    </CodeGroup>
+  </Step>
+</Steps>
+
+### Bun (Optional but Recommended)
+
+Bun is used for package management and running validation scripts in the ccprompts repository.
+
+<Note>
+Bun is only required if you're installing from the repository directly or contributing to development. Plugin installation does not require Bun.
+</Note>
+
+<Steps>
+  <Step title="Install Bun">
+    <CodeGroup>
+      ```bash Linux/macOS
+      curl -fsSL https://bun.sh/install | bash
+      ```
+
+      ```powershell Windows (WSL)
+      # Use WSL (Windows Subsystem for Linux)
+      curl -fsSL https://bun.sh/install | bash
+      ```
+
+      ```powershell Windows (Native)
+      # Download from bun.sh or use scoop
+      scoop install bun
+      ```
+    </CodeGroup>
+  </Step>
+
+  <Step title="Verify installation">
+    ```bash
+    bun --version
+    ```
+    
+    The project uses Bun version `1.1.34` as specified in `package.json`.
+  </Step>
+
+  <Step title="Add to PATH (if needed)">
+    ```bash
+    # Add to ~/.bashrc, ~/.zshrc, or equivalent
+    export PATH="$HOME/.bun/bin:$PATH"
+    ```
+  </Step>
+</Steps>
+
+## Recommended Dependencies
+
+### Dagger CLI
+
+Dagger enables containerized command execution for safety and isolation. While not strictly required, it's **highly recommended** for safe execution of potentially dangerous commands.
+
+<Warning>
+Without Dagger, many safety features won't be available. Commands that require container isolation may fail or run with reduced safety guarantees.
+</Warning>
+
+<Steps>
+  <Step title="Install Dagger">
+    <CodeGroup>
+      ```bash Linux
+      curl -fsSL https://dl.dagger.io/dagger/install.sh | BIN_DIR=$HOME/.local/bin sh
+      ```
+
+      ```bash macOS (Homebrew)
+      brew install dagger/tap/dagger
+      ```
+
+      ```powershell Windows
+      winget install Dagger.Cli
+      ```
+    </CodeGroup>
+  </Step>
+
+  <Step title="Verify Dagger installation">
+    ```bash
+    dagger version
+    ```
+  </Step>
+
+  <Step title="Test Dagger functionality">
+    ```bash
+    # Test basic Dagger operation
+    dagger query <<EOF
+    {
+      container {
+        from(address: "alpine:latest") {
+          withExec(args: ["echo", "Dagger is working!"]) {
+            stdout
+          }
+        }
+      }
+    }
+    EOF
+    ```
+  </Step>
+</Steps>
+
+### Claude Code
+
+ccprompts is a plugin for Claude Code, Anthropic's AI-powered development environment.
+
+<Note>
+You must have Claude Code installed and configured before installing ccprompts.
+</Note>
+
+<Steps>
+  <Step title="Install Claude Code">
+    Visit [claude.ai/code](https://claude.ai/code) for installation instructions.
+  </Step>
+
+  <Step title="Verify Claude Code installation">
+    ```bash
+    claude --version
+    ```
+  </Step>
+
+  <Step title="Ensure Claude Code is running">
+    ```bash
+    claude
+    ```
+    
+    This should start the Claude Code interface.
+  </Step>
+</Steps>
+
+## Development Dependencies
+
+<Note>
+These are only required if you're contributing to ccprompts development or running tests.
+</Note>
+
+### Git
+
+Required for cloning the repository and version control.
+
+```bash
+# Verify Git is installed
+git --version
+```
+
+### Jest (via Bun)
+
+Testing framework included in the project's dev dependencies.
+
+```bash
+# Install project dependencies (includes Jest)
+bun install
+```
+
+### Markdownlint
+
+For validating markdown documentation.
+
+```bash
+# Already included in devDependencies
+# Run linting with:
+bun run lint
+```
+
+## Platform-Specific Notes
+
+### Linux
+
+- Ensure `curl` is installed for downloading dependencies
+- You may need to add `~/.local/bin` to your PATH for Dagger
+- Some commands may require elevated permissions
+
+### macOS
+
+- Homebrew is recommended for installing Node.js and Dagger
+- Ensure Xcode Command Line Tools are installed: `xcode-select --install`
+- M1/M2 Macs: All dependencies have ARM64 support
+
+### Windows
+
+- WSL2 is recommended for the best experience
+- PowerShell or Command Prompt can be used with limitations
+- Ensure Windows Terminal is updated for better output formatting
+- Some symlink operations may require administrator privileges
+
+## Verifying Your Setup
+
+Once you've installed the prerequisites, verify everything is working:
+
+<Steps>
+  <Step title="Check Node.js">
+    ```bash
+    node --version
+    # Expected: v18.x.x or v20.x.x or v22.x.x
+    ```
+  </Step>
+
+  <Step title="Check Bun (if using repository installation)">
+    ```bash
+    bun --version
+    # Expected: 1.1.34 or compatible
+    ```
+  </Step>
+
+  <Step title="Check Dagger (recommended)">
+    ```bash
+    dagger version
+    # Expected: Version information
+    ```
+  </Step>
+
+  <Step title="Check Claude Code">
+    ```bash
+    claude --version
+    # Expected: Claude Code version information
+    ```
+  </Step>
+</Steps>
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Plugin Installation" icon="plug" href="/setup/plugin-installation">
+    Install ccprompts via the Claude Code marketplace
+  </Card>
+  
+  <Card title="Repository Installation" icon="code" href="/setup/repository-installation">
+    Clone and install from source for development
+  </Card>
+</CardGroup>
+
+## Troubleshooting
+
+### Node.js version conflicts
+
+If you have multiple Node.js versions installed, use `nvm` (Node Version Manager) to switch between them:
+
+```bash
+nvm use 18
+```
+
+### Dagger installation issues
+
+If Dagger installation fails:
+
+1. Check your system's package manager is up to date
+2. Verify you have necessary permissions
+3. Try manual installation from [docs.dagger.io](https://docs.dagger.io)
+
+### Bun installation on Windows
+
+If Bun doesn't work on native Windows:
+
+1. Use WSL2 for the best experience
+2. Alternatively, use Node.js with npm instead of Bun
+3. Replace `bun install` with `npm install` and `bun run` with `npm run`
+
+### PATH issues
+
+If commands aren't found after installation:
+
+```bash
+# Add to your shell configuration file
+export PATH="$HOME/.bun/bin:$HOME/.local/bin:$PATH"
+
+# Reload your shell
+source ~/.bashrc  # or ~/.zshrc
+```

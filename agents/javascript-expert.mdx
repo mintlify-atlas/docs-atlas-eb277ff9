@@ -1,0 +1,418 @@
+---
+title: "JavaScript Expert Agent"
+description: "Elite JavaScript expert specializing in ES6+, async patterns, DOM optimization, and runtime performance"
+icon: "js"
+---
+
+The JavaScript Expert agent provides elite-level expertise in ECMAScript standards, browser APIs, Node.js ecosystem, and JavaScript engine internals. This agent specializes in modern JavaScript features, performance optimization, and cross-platform development.
+
+## When to Use This Agent
+
+The JavaScript Expert agent excels at:
+
+<CardGroup cols={2}>
+  <Card title="Modern ES6+ Features" icon="code">
+    Destructuring, async/await, Proxy, Reflect, and Symbol
+  </Card>
+  <Card title="Performance Optimization" icon="gauge-high">
+    Bundle optimization, lazy loading, and memory management
+  </Card>
+  <Card title="Async Programming" icon="arrows-spin">
+    Promises, async iterators, and reactive patterns
+  </Card>
+  <Card title="Cross-Platform" icon="laptop-code">
+    Browser, Node.js, Deno, and Bun compatibility
+  </Card>
+</CardGroup>
+
+## Example Usage
+
+<CodeGroup>
+```bash Performance Issues
+user: "My JavaScript app is slow when handling large datasets in the browser"
+
+agent: "I'll analyze your JavaScript performance bottlenecks and implement optimizations using Web Workers, virtual scrolling, and efficient data structures to handle large datasets without blocking the UI thread.
+
+Let's start with profiling..."
+```
+
+```bash Async Workflows
+user: "I need to chain multiple API calls with error handling and retries"
+
+agent: "I'll design an async/await solution with proper error boundaries, exponential backoff for retries, and AbortController for cancellation support.
+
+Here's the implementation..."
+```
+</CodeGroup>
+
+## Core Capabilities
+
+### 1. Code Analysis
+
+Analyze existing JavaScript code:
+
+<AccordionGroup>
+  <Accordion title="Performance Bottlenecks">
+    - Event loop blocking operations
+    - Memory leaks and retention
+    - Inefficient DOM manipulation
+    - Excessive reflows and repaints
+    - Bundle size optimization opportunities
+  </Accordion>
+  
+  <Accordion title="Anti-Patterns">
+    - Callback hell and promise chains
+    - Global scope pollution
+    - Prototype pollution vulnerabilities
+    - Missing error handling
+    - Synchronous blocking operations
+  </Accordion>
+  
+  <Accordion title="Modernization Opportunities">
+    - var to let/const migration
+    - Callback to Promise/async conversion
+    - Class syntax adoption
+    - Module system upgrades (CommonJS to ESM)
+    - Optional chaining and nullish coalescing
+  </Accordion>
+</AccordionGroup>
+
+### 2. Pattern Identification
+
+Implement optimal design patterns:
+
+- **Module pattern** - Encapsulation and privacy
+- **Revealing module** - Explicit public API
+- **Observer pattern** - Event-driven architecture
+- **Factory functions** - Object creation without classes
+- **Functional programming** - Immutability and pure functions
+
+### 3. Implementation Strategy
+
+<Tabs>
+  <Tab title="Modern Features">
+    ```javascript
+    // Destructuring and spread
+    const { name, age, ...rest } = user;
+    const merged = { ...defaults, ...options };
+    
+    // Optional chaining and nullish coalescing
+    const value = obj?.nested?.property ?? defaultValue;
+    
+    // Async/await with error handling
+    async function fetchData() {
+      try {
+        const response = await fetch(url);
+        const data = await response.json();
+        return data;
+      } catch (error) {
+        console.error('Fetch failed:', error);
+        throw error;
+      }
+    }
+    
+    // Proxy for reactive data
+    const reactive = new Proxy(target, {
+      get(target, property) {
+        console.log(`Getting ${property}`);
+        return target[property];
+      },
+      set(target, property, value) {
+        console.log(`Setting ${property} to ${value}`);
+        target[property] = value;
+        return true;
+      }
+    });
+    ```
+  </Tab>
+  
+  <Tab title="Performance Optimization">
+    ```javascript
+    // Lazy loading with dynamic imports
+    const loadModule = async () => {
+      const module = await import('./heavy-module.js');
+      return module.default;
+    };
+    
+    // Virtual scrolling for large lists
+    class VirtualScroller {
+      constructor(container, itemHeight, totalItems) {
+        this.container = container;
+        this.itemHeight = itemHeight;
+        this.totalItems = totalItems;
+        this.visibleItems = Math.ceil(container.clientHeight / itemHeight);
+      }
+      
+      render(scrollTop) {
+        const startIndex = Math.floor(scrollTop / this.itemHeight);
+        const endIndex = startIndex + this.visibleItems;
+        // Render only visible items
+        return this.items.slice(startIndex, endIndex);
+      }
+    }
+    
+    // Debouncing expensive operations
+    function debounce(func, wait) {
+      let timeout;
+      return function executedFunction(...args) {
+        const later = () => {
+          clearTimeout(timeout);
+          func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+      };
+    }
+    ```
+  </Tab>
+  
+  <Tab title="Memory Management">
+    ```javascript
+    // WeakMap for private data
+    const privateData = new WeakMap();
+    
+    class SecureClass {
+      constructor(secret) {
+        privateData.set(this, { secret });
+      }
+      
+      getSecret() {
+        return privateData.get(this).secret;
+      }
+    }
+    
+    // Proper cleanup to prevent leaks
+    class EventManager {
+      constructor() {
+        this.listeners = new Map();
+      }
+      
+      addEventListener(element, event, handler) {
+        element.addEventListener(event, handler);
+        if (!this.listeners.has(element)) {
+          this.listeners.set(element, []);
+        }
+        this.listeners.get(element).push({ event, handler });
+      }
+      
+      cleanup() {
+        for (const [element, handlers] of this.listeners) {
+          for (const { event, handler } of handlers) {
+            element.removeEventListener(event, handler);
+          }
+        }
+        this.listeners.clear();
+      }
+    }
+    ```
+  </Tab>
+  
+  <Tab title="Async Patterns">
+    ```javascript
+    // Promise.all with error handling
+    async function fetchMultiple(urls) {
+      const results = await Promise.allSettled(
+        urls.map(url => fetch(url).then(r => r.json()))
+      );
+      
+      return results.map((result, index) => {
+        if (result.status === 'fulfilled') {
+          return result.value;
+        } else {
+          console.error(`Failed to fetch ${urls[index]}:`, result.reason);
+          return null;
+        }
+      });
+    }
+    
+    // Async iterators
+    async function* dataStream() {
+      let page = 1;
+      while (true) {
+        const data = await fetchPage(page);
+        if (data.length === 0) break;
+        yield* data;
+        page++;
+      }
+    }
+    
+    // AbortController for cancellation
+    const controller = new AbortController();
+    const { signal } = controller;
+    
+    fetch(url, { signal })
+      .then(response => response.json())
+      .catch(err => {
+        if (err.name === 'AbortError') {
+          console.log('Fetch aborted');
+        }
+      });
+    
+    // Cancel after 5 seconds
+    setTimeout(() => controller.abort(), 5000);
+    ```
+  </Tab>
+</Tabs>
+
+### 4. Cross-Platform Development
+
+Ensure compatibility across environments:
+
+```javascript
+// Feature detection
+if ('IntersectionObserver' in window) {
+  // Use IntersectionObserver
+} else {
+  // Fallback implementation
+}
+
+// Polyfill loading
+if (!Array.prototype.flat) {
+  await import('core-js/features/array/flat');
+}
+
+// Environment-specific code
+const isBrowser = typeof window !== 'undefined';
+const isNode = typeof process !== 'undefined' && process.versions?.node;
+```
+
+### 5. Architecture Considerations
+
+Balance paradigms and patterns:
+
+- **Functional vs OOP** - Choose based on use case
+- **Immutability** - Use Object.freeze and spread operators
+- **Composition over inheritance** - Favor mixins and composition
+- **Module encapsulation** - ES modules for clean boundaries
+- **Dependency injection** - Testable and maintainable code
+
+### 6. Quality Assurance
+
+Implement robust error handling:
+
+```javascript
+// Custom error types
+class ValidationError extends Error {
+  constructor(message, field) {
+    super(message);
+    this.name = 'ValidationError';
+    this.field = field;
+  }
+}
+
+// Error boundaries for async code
+async function safeExecute(fn, fallback) {
+  try {
+    return await fn();
+  } catch (error) {
+    console.error('Error in safeExecute:', error);
+    return fallback;
+  }
+}
+
+// Type safety with JSDoc
+/**
+ * @param {string} name - User name
+ * @param {number} age - User age
+ * @returns {Promise<User>} User object
+ */
+async function createUser(name, age) {
+  return { name, age, createdAt: new Date() };
+}
+```
+
+### 7. Performance Measurement
+
+Validate optimizations:
+
+```javascript
+// Performance API
+performance.mark('start-operation');
+// ... perform operation
+performance.mark('end-operation');
+performance.measure('operation-duration', 'start-operation', 'end-operation');
+
+const measures = performance.getEntriesByType('measure');
+console.log('Duration:', measures[0].duration);
+
+// Chrome DevTools profiler
+console.profile('MyOperation');
+// ... code to profile
+console.profileEnd('MyOperation');
+
+// Memory usage
+if (performance.memory) {
+  console.log('Used JS heap:', performance.memory.usedJSHeapSize);
+  console.log('Total JS heap:', performance.memory.totalJSHeapSize);
+}
+```
+
+## The 7-Step Methodology
+
+<Steps>
+  <Step title="Code Analysis">
+    Analyze performance bottlenecks, memory leaks, and anti-patterns
+  </Step>
+  <Step title="Pattern Identification">
+    Identify optimal design patterns and modern features to use
+  </Step>
+  <Step title="Implementation Strategy">
+    Implement using ES6+, performance optimization, and memory management
+  </Step>
+  <Step title="Cross-Platform Development">
+    Ensure compatibility across browsers, Node.js, Deno, and Bun
+  </Step>
+  <Step title="Architecture Considerations">
+    Balance functional and OOP paradigms for maintainability
+  </Step>
+  <Step title="Quality Assurance">
+    Implement error handling, type safety, and defensive programming
+  </Step>
+  <Step title="Performance Measurement">
+    Use Performance API and profilers to validate optimizations
+  </Step>
+</Steps>
+
+## Best Practices
+
+<CardGroup cols={2}>
+  <Card title="Modern Syntax" icon="code">
+    - Use const/let over var
+    - Prefer arrow functions for callbacks
+    - Use template literals for strings
+    - Apply destructuring for clarity
+  </Card>
+  <Card title="Async Code" icon="arrows-spin">
+    - Use async/await over Promise chains
+    - Handle all promise rejections
+    - Implement proper cancellation
+    - Avoid blocking the event loop
+  </Card>
+  <Card title="Performance" icon="bolt">
+    - Debounce/throttle expensive operations
+    - Use virtual scrolling for large lists
+    - Implement code splitting and lazy loading
+    - Minimize DOM manipulation
+  </Card>
+  <Card title="Security" icon="shield">
+    - Sanitize user input
+    - Avoid eval() and Function constructor
+    - Prevent prototype pollution
+    - Use Content Security Policy
+  </Card>
+</CardGroup>
+
+<Warning>
+**Security Alert**: Always sanitize user input to prevent XSS attacks. Never use `eval()` or `innerHTML` with user-provided data.
+</Warning>
+
+## Related Agents
+
+<CardGroup cols={2}>
+  <Card title="Performance Optimizer" icon="bolt" href="/agents/performance-optimizer">
+    For system-wide performance analysis
+  </Card>
+  <Card title="Documentation Writer" icon="book" href="/agents/documentation-writer">
+    For API and technical documentation
+  </Card>
+</CardGroup>

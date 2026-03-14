@@ -1,0 +1,457 @@
+---
+title: "Safety Validation System"
+description: "Pattern detection, classification, and automated validation"
+---
+
+<Info>
+  The validation system analyzes all 70+ ccprompts commands for dangerous patterns and provides detailed safety reports.
+</Info>
+
+## Validation architecture
+
+The SafetyValidator class implements comprehensive command validation:
+
+```javascript
+class SafetyValidator {
+  constructor() {
+    this.projectRoot = path.resolve(__dirname, '..');
+    this.daggerModulePath = path.join(this.projectRoot, 'src');
+    this.safetyResults = {
+      totalCommands: 0,
+      safeCommands: 0,
+      dangerousCommands: 0,
+      validatedCommands: 0,
+      containerTests: 0,
+      errors: [],
+      warnings: [],
+      validationTime: 0
+    };
+  }
+}
+```
+
+## Pattern detection
+
+The validator extracts and analyzes code blocks from markdown commands:
+
+### Code block extraction
+
+```javascript
+extractCodeBlocks(content) {
+  const codeBlockRegex = /```(?:([\w+-]+))?\n([\s\S]*?)```/g;
+  const blocks = [];
+  let match;
+
+  while ((match = codeBlockRegex.exec(content)) !== null) {
+    blocks.push({
+      language: (match[1] || '').toLowerCase(),
+      content: (match[2] || '').trim()
+    });
+  }
+
+  return blocks;
+}
+```
+
+### Shell detection
+
+The system identifies shell-like code blocks:
+
+```javascript
+isShellLikeBlock(language, content) {
+  if (!content || content.length === 0) return false;
+
+  // Check explicit shell languages
+  const shellLanguages = new Set(['bash', 'sh', 'shell', 'zsh']);
+  if (shellLanguages.has((language || '').toLowerCase())) return true;
+
+  // Check shebang
+  const firstLine = content.split('\n').find(line => line.trim().length > 0) || '';
+  if (firstLine.startsWith('#!') && /bash|sh|zsh/.test(firstLine)) return true;
+
+  // Check shell indicators
+  const shellIndicators = [
+    /\b(git|npm|pnpm|yarn|node|npx|docker|dagger|bash|sh|curl|wget|chmod|chown|ls|cat|echo|grep|rg|sed|awk)\b/,
+    /&&|\|\||\|\s*grep|\|\s*rg/,
+    /^\s*[A-Za-z0-9_-]+\s+-[A-Za-z]/,
+    /^\s*export\s+\w+=/,
+    /^\s*set\s+-[a-z]/
+  ];
+  
+  return shellIndicators.some(rx => rx.test(content));
+}
+```
+
+## Pattern analysis
+
+The validator checks code blocks against all safety patterns:
+
+```javascript
+analyzeDangerousPatterns(content, filename) {
+  const findings = [];
+  const codeBlocks = this.extractCodeBlocks(content);
+
+  if (codeBlocks.length === 0) return findings;
+
+  const allPatterns = safetyPatterns.getAllPatterns();
+
+  codeBlocks.forEach((block, index) => {
+    const blockContent = typeof block === 'string' ? block : (block.content || '');
+    if (!blockContent.trim()) return;
+
+    const recordedSnippets = new Set();
+    
+    for (const { pattern, severity, message, skipIfIncludes } of allPatterns) {
+      const skipKeywords = (skipIfIncludes || []).filter(
+        keyword => keyword.toLowerCase() !== 'test'
+      );
+      
+      const flags = pattern.flags.includes('g') 
+        ? pattern.flags 
+        : `${pattern.flags}g`;
+
+      let regex = new RegExp(pattern.source, flags);
+      regex.lastIndex = 0;
+
+      const matchedSnippets = [];
+      let matchResult;
+
+      while ((matchResult = regex.exec(blockContent)) !== null) {
+        const matchedText = matchResult[0];
+
+        if (skipKeywords.length > 0 && 
+            skipKeywords.some(skip => 
+              matchedText.toLowerCase().includes(skip.toLowerCase())
+            )) {
+          continue;
+        }
+
+        matchedSnippets.push(matchedText);
+      }
+
+      if (matchedSnippets.length > 0) {
+        findings.push({
+          filename,
+          blockIndex: index,
+          pattern: pattern.source,
+          severity,
+          message,
+          matches: matchedSnippets.slice(0, 3),
+          codeSnippet: blockContent.substring(0, 100) + 
+                      (blockContent.length > 100 ? '...' : ''),
+          language: typeof block === 'string' ? undefined : block.language
+        });
+      }
+    }
+  });
+
+  return findings;
+}
+```
+
+## Heuristic patterns
+
+Additional heuristic patterns catch edge cases:
+
+```javascript
+HEURISTIC_PATTERNS: [
+  {
+    regex: /(?:rm|delete|remove).*\*\*/gi,
+    severity: 'medium',
+    message: 'Recursive wildcard operations'
+  },
+  {
+    regex: /system\s*\(|exec\s*\(/gi,
+    severity: 'high',
+    message: 'System command execution'
+  },
+  {
+    regex: /\/etc\/(passwd|shadow|sudoers)/gi,
+    severity: 'critical',
+    message: 'System file access'
+  }
+]
+```
+
+<Warning>
+  Heuristic patterns check for patterns that may not be caught by standard regex but indicate dangerous operations.
+</Warning>
+
+## Safety level determination
+
+Commands are classified into safety levels:
+
+```javascript
+determineSafetyLevel(command) {
+  const criticalPatterns = ['rm -rf', 'curl.*|.*bash', 'sudo'];
+  const highPatterns = ['chmod', 'docker.*--privileged', 'eval'];
+  const mediumPatterns = ['npm install -g', 'systemctl', 'wget'];
+
+  if (criticalPatterns.some(pattern => 
+    new RegExp(pattern, 'i').test(command)
+  )) {
+    return 'critical';
+  }
+  
+  if (highPatterns.some(pattern => 
+    new RegExp(pattern, 'i').test(command)
+  )) {
+    return 'high';
+  }
+  
+  if (mediumPatterns.some(pattern => 
+    new RegExp(pattern, 'i').test(command)
+  )) {
+    return 'medium';
+  }
+  
+  return 'low';
+}
+```
+
+## File validation
+
+The validator processes individual command files:
+
+```javascript
+async validateFile(filePath) {
+  const filename = path.relative(this.projectRoot, filePath);
+
+  try {
+    const content = fs.readFileSync(filePath, 'utf8');
+    this.safetyResults.totalCommands++;
+
+    const dangerousFindings = this.analyzeDangerousPatterns(content, filename);
+
+    if (dangerousFindings.length > 0) {
+      this.safetyResults.dangerousCommands++;
+
+      dangerousFindings.forEach(finding => {
+        const message = `${filename} [${finding.severity}]: ${finding.message} - "${finding.codeSnippet}"`;
+
+        if (finding.severity === 'critical' || finding.severity === 'high') {
+          this.safetyResults.errors.push(message);
+        } else {
+          this.safetyResults.warnings.push(message);
+        }
+      });
+
+      // Validate in container
+      const codeBlocks = this.extractCodeBlocks(content);
+      const findingIndexes = new Set(dangerousFindings.map(f => f.blockIndex));
+      
+      for (let i = 0; i < codeBlocks.length; i++) {
+        const block = codeBlocks[i];
+        const blockContent = typeof block === 'string' 
+          ? block 
+          : (block.content || '');
+        const blockLang = typeof block === 'string' 
+          ? '' 
+          : (block.language || '');
+          
+        if (!findingIndexes.has(i)) continue;
+        
+        if (this.isShellLikeBlock(blockLang, blockContent)) {
+          const validationResult = await this.validateCommandInContainer(
+            blockContent, 
+            filename
+          );
+
+          if (validationResult.containerValidated) {
+            this.safetyResults.validatedCommands++;
+          }
+        }
+      }
+    } else {
+      this.safetyResults.safeCommands++;
+    }
+  } catch (error) {
+    this.safetyResults.errors.push(
+      `${filename}: Failed to read file - ${error.message}`
+    );
+  }
+}
+```
+
+## Running validation
+
+Validate all commands:
+
+```bash
+bun run safety-validate
+```
+
+Output:
+```
+[SECURITY]  Starting Dagger safety validation...
+Found 70 command files to validate
+
+[SECURITY]  Safety Validation Report
+=========================
+[OK] Total commands analyzed: 70
+[OK] Safe commands: 45
+[WARNING]  Dangerous commands: 25
+[TEST] Container validated: 25
+[STATS] Safety rate: 64.3%
+[TIME] Validation time: 15234ms
+```
+
+## Validation report
+
+The validator generates comprehensive reports:
+
+```javascript
+generateReport() {
+  const successRate = this.safetyResults.totalCommands > 0
+    ? ((this.safetyResults.safeCommands / this.safetyResults.totalCommands) * 100).toFixed(1)
+    : 0;
+
+  const dangerRate = this.safetyResults.totalCommands > 0
+    ? ((this.safetyResults.dangerousCommands / this.safetyResults.totalCommands) * 100).toFixed(1)
+    : 0;
+
+  return {
+    summary: {
+      totalCommands: this.safetyResults.totalCommands,
+      safeCommands: this.safetyResults.safeCommands,
+      dangerousCommands: this.safetyResults.dangerousCommands,
+      validatedCommands: this.safetyResults.validatedCommands,
+      containerTests: this.safetyResults.containerTests,
+      successRate: `${successRate}%`,
+      dangerRate: `${dangerRate}%`,
+      validationTime: `${this.safetyResults.validationTime}ms`
+    },
+    errors: this.safetyResults.errors,
+    warnings: this.safetyResults.warnings,
+    daggerAvailable: this.checkDaggerAvailability()
+  };
+}
+```
+
+## Error and warning handling
+
+The system categorizes issues by severity:
+
+<Steps>
+<Step title="Critical and High errors">
+
+Findings with critical or high severity are logged as errors:
+
+```javascript
+if (finding.severity === 'critical' || finding.severity === 'high') {
+  this.safetyResults.errors.push(message);
+}
+```
+
+</Step>
+
+<Step title="Medium warnings">
+
+Medium-severity findings become warnings:
+
+```javascript
+else {
+  this.safetyResults.warnings.push(message);
+}
+```
+
+</Step>
+
+<Step title="Low-level info">
+
+Low-severity patterns are tracked but don't fail validation.
+
+</Step>
+</Steps>
+
+## CI/CD integration
+
+The validator exits with appropriate codes for CI:
+
+```javascript
+if (require.main === module) {
+  const validator = new SafetyValidator();
+
+  validator.validateAllCommands()
+    .then(report => {
+      const hasErrors = report.errors.length > 0;
+      const hasHighSeverityWarnings = report.warnings.some(w =>
+        w.includes('[critical]') || w.includes('[high]')
+      );
+
+      if (hasErrors || hasHighSeverityWarnings) {
+        process.exit(1);
+      }
+    })
+    .catch(error => {
+      console.error('Safety validation failed:', error);
+      process.exit(1);
+    });
+}
+```
+
+<Note>
+  Validation fails (exit code 1) if errors exist or warnings include critical/high severity patterns.
+</Note>
+
+## Custom pattern configuration
+
+Patterns are centralized in `scripts/config/safety-patterns.js`:
+
+```javascript
+module.exports = {
+  CRITICAL_PATTERNS: [...],
+  HIGH_RISK_PATTERNS: [...],
+  MEDIUM_RISK_PATTERNS: [...],
+  
+  getAllPatterns() {
+    return [
+      ...this.CRITICAL_PATTERNS,
+      ...this.HIGH_RISK_PATTERNS,
+      ...this.MEDIUM_RISK_PATTERNS
+    ];
+  },
+  
+  getPatternsBySeverity(severity) {
+    const severityMap = {
+      'critical': this.CRITICAL_PATTERNS,
+      'high': this.HIGH_RISK_PATTERNS,
+      'medium': this.MEDIUM_RISK_PATTERNS
+    };
+    return severityMap[severity] || [];
+  }
+};
+```
+
+Add custom patterns by editing this configuration file.
+
+## Validation metrics
+
+Key metrics tracked during validation:
+
+- **Total commands**: All markdown files analyzed
+- **Safe commands**: No dangerous patterns detected
+- **Dangerous commands**: One or more patterns found
+- **Validated commands**: Successfully tested in containers
+- **Container tests**: Total container executions
+- **Success rate**: Percentage of safe commands
+- **Danger rate**: Percentage with dangerous patterns
+- **Validation time**: Total milliseconds for all checks
+
+## Next steps
+
+<CardGroup cols={2}>
+
+<Card title="Safety Overview" icon="shield-halved" href="/safety/overview">
+  Review the complete safety architecture
+</Card>
+
+<Card title="Safe Execution" icon="terminal" href="/safety/safe-execution">
+  Execute commands with safety scripts
+</Card>
+
+<Card title="Dagger Containers" icon="container-storage" href="/safety/dagger-containers">
+  Understand container isolation
+</Card>
+
+</CardGroup>

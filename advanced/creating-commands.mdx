@@ -1,0 +1,590 @@
+---
+title: Creating Custom Commands
+description: Learn how to create custom slash commands for your ccprompts workflow
+---
+
+ccprompts allows you to extend the 70+ built-in commands with your own custom slash commands. This guide walks you through the process of creating, validating, and integrating custom commands into your workflow.
+
+## Command Structure
+
+All commands in ccprompts follow a standardized markdown structure that ensures consistency, quality, and automatic validation.
+
+### Required Components
+
+Every command file must include these seven essential sections:
+
+<Steps>
+  <Step title="Command Title">
+    Start with an H1 heading that clearly identifies the command:
+    
+    ```markdown
+    # My Custom Command
+    ```
+  </Step>
+
+  <Step title="Short Description">
+    A concise one-line summary of the command's functionality:
+    
+    ```markdown
+    This command provides advanced code analysis and optimization recommendations.
+    ```
+  </Step>
+
+  <Step title="Usage Section">
+    Show the exact command syntax with parameters:
+    
+    ```markdown
+    ## Usage
+    
+    ```bash
+    /my-command [action] [target] [options]
+    ```
+    ```
+  </Step>
+
+  <Step title="Description Section">
+    Detailed explanation of capabilities:
+    
+    ```markdown
+    ## Description
+    
+    Performs comprehensive code analysis including:
+    
+    - Static code analysis and complexity metrics
+    - Performance bottleneck identification
+    - Security vulnerability scanning
+    - Optimization opportunity detection
+    - Refactoring recommendations
+    ```
+  </Step>
+
+  <Step title="Example Scenarios">
+    Real-world use cases demonstrating the command:
+    
+    ```markdown
+    ## Examples
+    
+    ```bash
+    # Analyze entire project
+    /my-command analyze project --depth=comprehensive
+    
+    # Quick optimization scan
+    /my-command optimize src/api --fast
+    ```
+    ```
+  </Step>
+
+  <Step title="Safety Considerations">
+    Warnings, prerequisites, and validation steps:
+    
+    ```markdown
+    ## Safety
+    
+    - Always commit changes before running optimization
+    - Review recommendations before applying
+    - Test in development environment first
+    - Ensure backup exists for production code
+    ```
+  </Step>
+
+  <Step title="Related Commands">
+    Cross-references to complementary commands:
+    
+    ```markdown
+    ## Related Commands
+    
+    - `/refactor` - Code refactoring assistance
+    - `/test` - Generate and run tests
+    - `/security-audit` - Security analysis
+    ```
+  </Step>
+</Steps>
+
+## Organizing Your Commands
+
+Commands are organized into 12 phases based on the software development lifecycle:
+
+### Phase Structure
+
+```bash
+.claude/commands/
+├── 00-initial-workflow/      # Project analysis (2 commands)
+├── 01-project-setup/         # Documentation, learning, MCP (3 commands)
+├── 02-development/           # Backup, debug, migrate, optimize (5 commands)
+├── 03-security/              # Security auditing (4 commands)
+├── 04-testing/               # Testing & troubleshooting (2 commands)
+├── 05-deployment/            # CI/CD & deployment (4 commands)
+├── 06-collaboration/         # Code review & team workflows (4 commands)
+├── 07-utilities/             # Development utilities (7 commands)
+├── 08-extras/                # Health checks & modernization (4 commands)
+├── 09-agentic-capabilities/  # MCP & agent orchestration (12 commands)
+├── 10-ai-native-development/ # AI-powered tools (10 commands)
+└── 11-enterprise-scale/      # Governance & multi-repo (8 commands)
+```
+
+### Choosing the Right Phase
+
+<CardGroup cols={2}>
+  <Card title="Development" icon="code">
+    Commands for coding, debugging, and optimization
+    
+    **Phase:** `02-development/`
+  </Card>
+  
+  <Card title="Security" icon="shield">
+    Security scanning, compliance, and hardening
+    
+    **Phase:** `03-security/`
+  </Card>
+  
+  <Card title="Collaboration" icon="users">
+    Code review, team coordination, tech debt
+    
+    **Phase:** `06-collaboration/`
+  </Card>
+  
+  <Card title="AI-Native" icon="brain">
+    AI-powered development and automation
+    
+    **Phase:** `10-ai-native-development/`
+  </Card>
+</CardGroup>
+
+## Creating Your First Command
+
+### Step 1: Create the File
+
+Place your command in the appropriate phase directory:
+
+```bash
+# Example: Create a custom code quality command
+touch .claude/commands/02-development/quality-check.md
+```
+
+<Note>
+Use kebab-case for file names (lowercase with hyphens). The filename becomes the command name: `quality-check.md` → `/quality-check`
+</Note>
+
+### Step 2: Write the Command
+
+Here's a complete example:
+
+<CodeGroup>
+```markdown quality-check.md
+# Quality Check - Comprehensive Code Quality Analysis
+
+This command performs multi-dimensional code quality analysis across your entire project.
+
+## Usage
+
+```bash
+/quality-check [scope] [--metrics] [--fix]
+```
+
+## Description
+
+Provides comprehensive code quality analysis including:
+
+- **Complexity Metrics**: Cyclomatic complexity, cognitive complexity
+- **Maintainability**: Code smells, duplication detection
+- **Best Practices**: Language-specific convention adherence
+- **Documentation**: Comment coverage and quality
+- **Test Coverage**: Unit and integration test coverage
+
+## Parameters
+
+- `scope`: project, directory, file (default: project)
+- `--metrics`: Display detailed quality metrics
+- `--fix`: Automatically fix issues where possible
+
+## Examples
+
+```bash
+# Full project analysis
+/quality-check project --metrics
+
+# Analyze specific directory with auto-fix
+/quality-check src/api --fix
+
+# Quick file check
+/quality-check src/utils/helpers.ts
+```
+
+## Quality Dimensions
+
+### Code Complexity
+
+- Cyclomatic complexity scoring (target: &lt;10)
+- Cognitive complexity analysis
+- Function length recommendations
+- Nesting depth warnings
+
+### Code Duplication
+
+- Duplicate code block detection
+- Similar pattern identification
+- Extract method opportunities
+- DRY principle violations
+
+### Best Practices
+
+- Naming convention adherence
+- Error handling patterns
+- Resource management (memory leaks)
+- Performance anti-patterns
+
+## Safety
+
+- Read-only analysis by default
+- `--fix` flag backs up files before modification
+- Review auto-fix changes before committing
+- Run tests after applying fixes
+
+## Related Commands
+
+- `/refactor` - Guided code refactoring
+- `/test` - Test generation and execution
+- `/code-review` - AI-powered code review
+- `/best-practices` - Language-specific best practices
+```
+```xml Implementation (Optional)
+<role>
+You are an expert code quality analyst with deep knowledge of software 
+engineering best practices, design patterns, and quality metrics.
+</role>
+
+<activation>
+CLAUDE.CONFIG:
+  extended_thinking: "always"
+  permission_mode: "acceptEdits"
+  allowed_tools: ["Read", "Write", "Edit", "Bash", "Grep", "Glob"]
+</activation>
+
+<instructions>
+1. Analyze code structure and complexity:
+   - Calculate cyclomatic and cognitive complexity
+   - Identify deeply nested code blocks
+   - Detect overly long functions and classes
+   - Flag excessive parameter counts
+
+2. Identify code quality issues:
+   - Detect code duplication and similar patterns
+   - Find unused variables and dead code
+   - Identify missing error handling
+   - Spot potential memory leaks
+
+3. Provide actionable recommendations:
+   - Specific refactoring suggestions with examples
+   - Priority ranking of issues (critical/high/medium/low)
+   - Estimated effort for each improvement
+   - Before/after code examples
+</instructions>
+```
+</CodeGroup>
+
+### Step 3: Validate Your Command
+
+Run the validation suite to ensure your command meets all requirements:
+
+```bash
+bun run validate
+```
+
+<Tip>
+The validator checks for:
+- Structural completeness (all required sections)
+- Security patterns (no hardcoded secrets)
+- Quality metrics (educational value, clarity)
+- Performance (file size, complexity)
+</Tip>
+
+### Step 4: Update Command Count
+
+If you're adding a new command (not replacing), update `.claude-plugin/plugin.json`:
+
+```json
+{
+  "phases": [
+    {
+      "name": "Development",
+      "path": ".claude/commands/02-development",
+      "commands": 6  // Increment from 5 to 6
+    }
+  ]
+}
+```
+
+<Warning>
+The validation system expects an exact total count. If you add a command, the total must increase from 70 to 71, and all phase counts in `plugin.json` must match the actual file counts.
+</Warning>
+
+## Advanced Command Features
+
+### Multi-Step Workflows
+
+Commands can implement sophisticated workflows with multiple phases:
+
+```markdown
+## Implementation
+
+### Phase 1: Analysis
+1. Scan project structure
+2. Identify code patterns
+3. Calculate metrics
+
+### Phase 2: Assessment
+1. Compare against benchmarks
+2. Prioritize issues
+3. Generate recommendations
+
+### Phase 3: Action
+1. Present findings
+2. Offer auto-fix options
+3. Validate results
+```
+
+### Context-Aware Execution
+
+Use shell commands to gather context:
+
+```markdown
+## Context Analysis
+
+- Current project: !`pwd | xargs basename`
+- Git status: !`git status --porcelain | head -5`
+- Project type: !`ls package.json requirements.txt Cargo.toml 2>/dev/null | head -1`
+```
+
+### Intelligent Parameters
+
+Support flexible parameter patterns:
+
+```markdown
+## Usage
+
+```bash
+# Basic usage
+/quality-check
+
+# Scoped analysis
+/quality-check src/api
+
+# With options
+/quality-check --metrics --threshold=80
+
+# Combined
+/quality-check src/utils --fix --verbose
+```
+```
+
+## Validation System
+
+ccprompts uses a multi-dimensional validation engine with four scoring dimensions:
+
+### 1. Structural Validation
+
+- Markdown format correctness
+- Required section completeness
+- Heading hierarchy consistency
+- Code block formatting
+
+**Target:** 95%+ pass rate
+
+### 2. Security Validation
+
+- Hardcoded secret detection
+- Dangerous command pattern identification
+- Safety compliance verification
+- Privilege escalation checks
+
+**Critical:** Must pass all security checks
+
+### 3. Quality Validation
+
+- Educational value scoring
+- Example completeness
+- Documentation clarity
+- Use case coverage
+
+**Target:** 80%+ quality score
+
+### 4. Performance Validation
+
+- Discovery time <100ms
+- Total validation <2s
+- File size optimization
+- Complexity management
+
+**Target:** Sub-second response time
+
+### Running Validation
+
+<CodeGroup>
+
+```bash Full Validation
+# All dimensions, all commands
+bun run validate
+```
+
+```bash Security Only
+# Security-focused validation
+bun run security-scan
+```
+
+```bash Plugin Validation
+# Validate plugin manifest
+bun run validate:plugin
+```
+
+```bash CI Pipeline
+# Full pipeline: validate + lint + link-check
+bun run ci
+```
+
+</CodeGroup>
+
+## Best Practices
+
+### Clear and Concise
+
+<CardGroup cols={2}>
+  <Card title="DO" icon="check" color="#10b981">
+    - Use clear, action-oriented language
+    - Provide specific examples
+    - Include safety warnings
+    - Cross-reference related commands
+  </Card>
+  
+  <Card title="DON'T" icon="xmark" color="#ef4444">
+    - Use vague descriptions
+    - Skip safety considerations
+    - Forget to show usage examples
+    - Ignore validation errors
+  </Card>
+</CardGroup>
+
+### Comprehensive Examples
+
+Provide multiple examples showing:
+
+1. **Basic usage** - Simplest form of the command
+2. **Advanced usage** - Complex scenarios with options
+3. **Real-world scenarios** - Actual development workflows
+4. **Edge cases** - Unusual but valid use cases
+
+### Safety First
+
+Always include:
+
+- Prerequisites (dependencies, permissions)
+- Backup recommendations
+- Validation steps
+- Rollback procedures
+- Testing guidelines
+
+### Educational Value
+
+Help users understand:
+
+- **What** the command does
+- **Why** they should use it
+- **When** to use it
+- **How** it works internally
+
+## Testing Your Command
+
+### Manual Testing
+
+<Steps>
+  <Step title="Install Locally">
+    Test the command in your Claude Code environment:
+    
+    ```bash
+    ./scripts/test-plugin-local.sh
+    ```
+  </Step>
+  
+  <Step title="Run the Command">
+    Execute your command with various parameters:
+    
+    ```bash
+    /quality-check
+    /quality-check src/api
+    /quality-check --metrics
+    ```
+  </Step>
+  
+  <Step title="Verify Output">
+    Check that:
+    - Command executes without errors
+    - Output matches expectations
+    - Safety measures work correctly
+    - Related commands are accessible
+  </Step>
+</Steps>
+
+### Automated Testing
+
+Add validation tests:
+
+```bash
+# Run full test suite
+bun run test
+
+# Run validation only
+bun run test:validate
+
+# Lint markdown
+bun run lint
+```
+
+## Publishing Your Command
+
+Once your command is tested and validated:
+
+<Steps>
+  <Step title="Commit Changes">
+    ```bash
+    git add .claude/commands/02-development/quality-check.md
+    git commit -m "feat(commands): add quality-check for phase 02"
+    ```
+  </Step>
+  
+  <Step title="Run Pre-Commit Checks">
+    ```bash
+    bun run precommit
+    ```
+  </Step>
+  
+  <Step title="Update Documentation">
+    Update relevant documentation to reference your new command.
+  </Step>
+  
+  <Step title="Submit PR">
+    Submit a pull request with:
+    - Clear description of the command
+    - Example usage scenarios
+    - Testing results
+    - Updated plugin.json (if adding new command)
+  </Step>
+</Steps>
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Create Custom Agents" href="/advanced/creating-agents" icon="robot">
+    Learn how to create specialized agents using the template wizard
+  </Card>
+  
+  <Card title="Workflow Automation" href="/advanced/workflow-automation" icon="diagram-project">
+    Build complex multi-step workflows with agent coordination
+  </Card>
+  
+  <Card title="MCP Integration" href="/advanced/mcp-integration" icon="plug">
+    Integrate MCP servers to extend command capabilities
+  </Card>
+  
+  <Card title="Command Reference" href="/commands/overview" icon="book">
+    Browse all 70+ built-in commands
+  </Card>
+</CardGroup>

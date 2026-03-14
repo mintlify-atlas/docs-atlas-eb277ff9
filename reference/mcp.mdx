@@ -1,0 +1,47 @@
+---
+title: "MCP"
+description: "Configures and tests MCP server integrations for enhanced Claude Code capabilities: Advanced MCP server configuration and setup. Custom tool chain development a"
+---
+
+# MCP
+
+Configures and tests MCP server integrations for enhanced Claude Code capabilities:
+
+## Usage
+
+```bash
+/mcp [action] [integration]
+```
+
+## Parameters
+
+<ParamField path="action" type="string">
+  setup, test, configure, troubleshoot, develop
+</ParamField>
+
+<ParamField path="integration" type="string">
+  github, database, monitoring, kubernetes, custom
+</ParamField>
+
+## Examples
+
+<CodeGroup>
+
+```bash Basic Usage
+/mcp setup github
+/mcp test database
+/mcp configure monitoring
+/mcp develop custom
+```
+
+</CodeGroup>
+
+## Use Cases
+
+- **GitHub Integration**: `/mcp setup github` - Configure GitHub MCP server for repository operations
+- **Database Integration**: `/mcp configure database` - Set up database MCP server for data operations
+- **Monitoring Setup**: `/mcp setup monitoring` - Configure monitoring and observability MCP tools
+- **Custom Development**: `/mcp develop custom` - Create project-specific MCP server tools
+- **Testing Framework**: `/mcp test custom` - Comprehensive MCP server testing and validation
+- **Troubleshooting**: `/mcp troubleshoot github` - Debug and resolve MCP integration issues
+

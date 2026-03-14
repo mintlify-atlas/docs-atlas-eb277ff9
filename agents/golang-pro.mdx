@@ -1,0 +1,376 @@
+---
+title: "Go Expert Agent"
+description: "Go programming expert specializing in goroutines, channels, and scalable concurrent systems"
+icon: "golang"
+---
+
+The Go Expert agent provides elite-level expertise in concurrent systems design, goroutine orchestration, and high-performance Go applications. This agent specializes in Go runtime internals, garbage collector optimization, and scalable service architecture.
+
+## When to Use This Agent
+
+The Go Expert agent excels at:
+
+<CardGroup cols={2}>
+  <Card title="Concurrency Patterns" icon="arrows-split-up-and-left">
+    Goroutines, channels, worker pools, and pipeline processing
+  </Card>
+  <Card title="Performance Optimization" icon="gauge-high">
+    pprof profiling, GC tuning, and escape analysis
+  </Card>
+  <Card title="Context Management" icon="clock">
+    Context propagation, cancellation, and timeout handling
+  </Card>
+  <Card title="Runtime Behavior" icon="microchip">
+    Goroutine lifecycle, scheduler efficiency, and memory management
+  </Card>
+</CardGroup>
+
+## Example Usage
+
+<CodeGroup>
+```bash Worker Pool Pattern
+user: "I need to build a worker pool system that can dynamically scale and handle backpressure in Go"
+
+agent: "I'll implement a dynamic worker pool using goroutines, buffered channels for work distribution, and context-based cancellation with backpressure handling.
+
+Here's a production-ready implementation..."
+```
+
+```bash Performance Debugging
+user: "My Go service is experiencing memory leaks and goroutine leaks under high load"
+
+agent: "I'll analyze your goroutine lifecycle management, implement proper context cancellation, and optimize memory allocation patterns to eliminate leaks.
+
+Let's start with pprof analysis..."
+```
+</CodeGroup>
+
+## Core Capabilities
+
+### 1. Concurrency Architecture Analysis
+
+Design optimal concurrent architectures:
+
+<AccordionGroup>
+  <Accordion title="Concurrency Requirements">
+    - Parallel vs. concurrent processing
+    - Synchronous vs. asynchronous operations
+    - Blocking vs. non-blocking I/O
+    - CPU-bound vs. I/O-bound workloads
+  </Accordion>
+  
+  <Accordion title="Goroutine Communication">
+    - Channel-based messaging
+    - Shared memory synchronization
+    - Select statement patterns
+    - Directional channels
+  </Accordion>
+  
+  <Accordion title="Resource Sharing">
+    - Mutex strategies
+    - RWMutex optimization
+    - Atomic operations
+    - sync.Map usage
+  </Accordion>
+  
+  <Accordion title="Performance Bottlenecks">
+    - Lock contention analysis
+    - Channel blocking detection
+    - Goroutine leak identification
+    - Memory allocation profiling
+  </Accordion>
+</AccordionGroup>
+
+### 2. Goroutine Pattern Identification
+
+Implement appropriate goroutine patterns:
+
+<Tabs>
+  <Tab title="Worker Pool">
+    ```go
+    type WorkerPool struct {
+        workers   int
+        jobs      chan Job
+        results   chan Result
+        ctx       context.Context
+        cancel    context.CancelFunc
+        wg        sync.WaitGroup
+    }
+    
+    func NewWorkerPool(workers int) *WorkerPool {
+        ctx, cancel := context.WithCancel(context.Background())
+        return &WorkerPool{
+            workers: workers,
+            jobs:    make(chan Job, workers*2),
+            results: make(chan Result, workers*2),
+            ctx:     ctx,
+            cancel:  cancel,
+        }
+    }
+    
+    func (p *WorkerPool) Start() {
+        for i := 0; i < p.workers; i++ {
+            p.wg.Add(1)
+            go p.worker()
+        }
+    }
+    
+    func (p *WorkerPool) worker() {
+        defer p.wg.Done()
+        for {
+            select {
+            case job := <-p.jobs:
+                result := job.Process()
+                p.results <- result
+            case <-p.ctx.Done():
+                return
+            }
+        }
+    }
+    ```
+  </Tab>
+  
+  <Tab title="Fan-In/Fan-Out">
+    ```go
+    // Fan-out: distribute work to multiple goroutines
+    func fanOut(input <-chan int, workers int) []<-chan int {
+        channels := make([]<-chan int, workers)
+        for i := 0; i < workers; i++ {
+            channels[i] = process(input)
+        }
+        return channels
+    }
+    
+    // Fan-in: merge multiple channels into one
+    func fanIn(channels ...<-chan int) <-chan int {
+        out := make(chan int)
+        var wg sync.WaitGroup
+        
+        for _, ch := range channels {
+            wg.Add(1)
+            go func(c <-chan int) {
+                defer wg.Done()
+                for val := range c {
+                    out <- val
+                }
+            }(ch)
+        }
+        
+        go func() {
+            wg.Wait()
+            close(out)
+        }()
+        
+        return out
+    }
+    ```
+  </Tab>
+  
+  <Tab title="Pipeline Processing">
+    ```go
+    // Stage 1: Generate numbers
+    func generate(nums ...int) <-chan int {
+        out := make(chan int)
+        go func() {
+            defer close(out)
+            for _, n := range nums {
+                out <- n
+            }
+        }()
+        return out
+    }
+    
+    // Stage 2: Square numbers
+    func square(in <-chan int) <-chan int {
+        out := make(chan int)
+        go func() {
+            defer close(out)
+            for n := range in {
+                out <- n * n
+            }
+        }()
+        return out
+    }
+    
+    // Pipeline usage
+    nums := generate(1, 2, 3, 4)
+    squared := square(nums)
+    for result := range squared {
+        fmt.Println(result)
+    }
+    ```
+  </Tab>
+</Tabs>
+
+### 3. Channel Communication Design
+
+Master channel-based communication:
+
+- **Buffered vs unbuffered** - Channel capacity strategies
+- **Select statements** - Multiplexing channels
+- **Channel closing** - Proper shutdown semantics
+- **Directional channels** - Type-safe channel usage
+- **Timeout handling** - Time-based operations
+- **Backpressure management** - Flow control patterns
+
+### 4. Performance Optimization Implementation
+
+Optimize Go applications:
+
+```go
+import (
+    "runtime"
+    "runtime/pprof"
+    _ "net/http/pprof"
+)
+
+// CPU profiling
+f, _ := os.Create("cpu.prof")
+pprof.StartCPUProfile(f)
+defer pprof.StopCPUProfile()
+
+// Memory profiling
+f, _ := os.Create("mem.prof")
+runtime.GC()
+pprof.WriteHeapProfile(f)
+f.Close()
+
+// Goroutine profiling
+f, _ := os.Create("goroutine.prof")
+pprof.Lookup("goroutine").WriteTo(f, 0)
+f.Close()
+```
+
+**Optimization techniques:**
+- Memory pool patterns with sync.Pool
+- Escape analysis understanding
+- GC tuning with GOGC and debug.SetGCPercent
+- CPU-efficient algorithms
+- Reducing allocations
+
+### 5. Context and Cancellation
+
+Design robust cancellation patterns:
+
+```go
+func doWork(ctx context.Context) error {
+    // With timeout
+    ctx, cancel := context.WithTimeout(ctx, 5*time.Second)
+    defer cancel()
+    
+    // With deadline
+    deadline := time.Now().Add(10 * time.Second)
+    ctx, cancel = context.WithDeadline(ctx, deadline)
+    defer cancel()
+    
+    // With value
+    ctx = context.WithValue(ctx, "requestID", "12345")
+    
+    select {
+    case <-ctx.Done():
+        return ctx.Err()
+    case result := <-doAsyncWork():
+        return processResult(result)
+    }
+}
+```
+
+### 6. Runtime Behavior Validation
+
+Monitor and optimize runtime:
+
+- **Goroutine lifecycle** - Preventing goroutine leaks
+- **Memory allocation** - Tracking allocations with pprof
+- **GC pressure** - Analyzing garbage collection impact
+- **Scheduler efficiency** - Understanding GOMAXPROCS
+- **Stack growth** - Monitoring stack allocations
+
+### 7. Scalability Measurement
+
+Implement comprehensive benchmarking:
+
+```go
+func BenchmarkWorkerPool(b *testing.B) {
+    pool := NewWorkerPool(runtime.NumCPU())
+    pool.Start()
+    defer pool.Stop()
+    
+    b.ResetTimer()
+    for i := 0; i < b.N; i++ {
+        pool.Submit(Job{ID: i})
+    }
+}
+
+// Run benchmarks
+// go test -bench=. -benchmem -cpuprofile=cpu.out
+```
+
+## The 7-Step Methodology
+
+<Steps>
+  <Step title="Concurrency Analysis">
+    Analyze concurrency requirements and communication patterns
+  </Step>
+  <Step title="Goroutine Patterns">
+    Identify appropriate worker pools, pipelines, and fan patterns
+  </Step>
+  <Step title="Channel Design">
+    Design buffered/unbuffered channels with proper capacity
+  </Step>
+  <Step title="Performance Optimization">
+    Apply pprof profiling, memory pools, and GC tuning
+  </Step>
+  <Step title="Context Integration">
+    Implement cancellation, deadlines, and resource cleanup
+  </Step>
+  <Step title="Runtime Validation">
+    Monitor goroutine lifecycle and memory allocation
+  </Step>
+  <Step title="Scalability Measurement">
+    Benchmark with testing.B and runtime metrics
+  </Step>
+</Steps>
+
+## Best Practices
+
+<CardGroup cols={2}>
+  <Card title="Goroutine Management" icon="arrows-spin">
+    - Always ensure goroutines can exit
+    - Use context for cancellation
+    - Avoid goroutine leaks with proper cleanup
+    - Monitor goroutine count in production
+  </Card>
+  <Card title="Channel Usage" icon="arrows-left-right">
+    - Close channels from sender side
+    - Use select with default for non-blocking ops
+    - Avoid sending to closed channels
+    - Prefer buffered channels for known capacity
+  </Card>
+  <Card title="Synchronization" icon="lock">
+    - Prefer channels over shared memory
+    - Use sync.Once for initialization
+    - Apply RWMutex for read-heavy workloads
+    - Consider atomic operations for simple cases
+  </Card>
+  <Card title="Error Handling" icon="triangle-exclamation">
+    - Return errors, don't panic
+    - Use errgroup for goroutine error handling
+    - Implement proper error wrapping
+    - Log errors with context
+  </Card>
+</CardGroup>
+
+<Warning>
+**Common Pitfall**: Goroutine leaks occur when goroutines block forever waiting on channels. Always ensure cleanup paths exist using context cancellation.
+</Warning>
+
+## Related Agents
+
+<CardGroup cols={2}>
+  <Card title="Performance Optimizer" icon="bolt" href="/agents/performance-optimizer">
+    For system-wide performance analysis
+  </Card>
+  <Card title="Systems Architect" icon="diagram-project" href="/agents/systems-architect">
+    For real-time and distributed systems design
+  </Card>
+</CardGroup>

@@ -1,80 +1,472 @@
 ---
-title: "Quickstart"
-description: "Start building awesome documentation in minutes"
+title: "Quick Start"
+description: "Get up and running with ccprompts in minutes and execute your first command"
 ---
 
-## Get started in three steps
+## Get Started in Three Steps
 
-Get your documentation site running locally and make your first customization.
+Install ccprompts, analyze your project, and start using production-ready commands in minutes.
 
-### Step 1: Set up your local environment
-
-<AccordionGroup>
-  <Accordion icon="copy" title="Clone your docs locally">
-    During the onboarding process, you created a GitHub repository with your docs content if you didn't already have one. You can find a link to this repository in your [dashboard](https://dashboard.mintlify.com).
+<Steps>
+  <Step title="Install ccprompts">
+    Install as a plugin for instant access:
     
-    To clone the repository locally so that you can make and preview changes to your docs, follow the [Cloning a repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository) guide in the GitHub docs.
-  </Accordion>
-  <Accordion icon="rectangle-terminal" title="Start the preview server">
-    1. Install the Mintlify CLI: `npm i -g mint`
-    2. Navigate to your docs directory and run: `mint dev`
-    3. Open `http://localhost:3000` to see your docs live!
+    ```bash
+    /plugin marketplace add ursisterbtw/ccprompts
+    /plugin install ccprompts@ursisterbtw
+    ```
     
-    <Tip>Your preview updates automatically as you edit files.</Tip>
-  </Accordion>
-</AccordionGroup>
-
-### Step 2: Deploy your changes
-
-<AccordionGroup>
-  <Accordion icon="github" title="Install our GitHub app">
-    Install the Mintlify GitHub app from your [dashboard](https://dashboard.mintlify.com/settings/organization/github-app).
+    Then **restart Claude Code** to activate all commands.
+  </Step>
+  
+  <Step title="Analyze Your Project">
+    Get personalized recommendations based on your codebase:
     
-    Our GitHub app automatically deploys your changes to your docs site, so you don't need to manage deployments yourself.
-</Accordion>
-<Accordion icon="palette" title="Update your site name and colors">
-    For a first change, let's update the name and colors of your docs site.
+    ```bash
+    /analyze-project
+    ```
+    
+    This will detect your project type, technology stack, and suggest relevant commands.
+  </Step>
+  
+  <Step title="Try Your First Command">
+    Based on the analysis, try a recommended command. For example:
+    
+    ```bash
+    /setup-ci github professional
+    ```
+  </Step>
+</Steps>
 
-    1. Open `docs.json` in your editor.
-    2. Change the `"name"` field to your project name.
-    3. Update the `"colors"` to match your brand.
-    4. Save and see your changes instantly at `http://localhost:3000`.
+<Tip>
+Use `/help` at any time to see all 70+ available commands organized by development phase.
+</Tip>
 
-    <Tip>Try changing the primary color to see an immediate difference!</Tip>
-  </Accordion>
-</AccordionGroup>
+## Your First Commands
 
-### Step 3: Go live
+Here are the most useful commands to get started with ccprompts:
 
-<Accordion icon="rocket" title="Publish your docs">
-  1. Commit and push your changes.
-  2. Your docs will update and be live in moments!
-</Accordion>
+### Project Analysis
 
-## Next steps
+Understand your codebase and get personalized recommendations:
 
-Now that you have your docs running, explore these key features:
+```bash
+/analyze-project
+```
 
-<CardGroup cols={2}>
-
-<Card title="Write Content" icon="pen-to-square" href="/essentials/markdown">
-  Learn MDX syntax and start writing your documentation.
-</Card>
-
-<Card title="Customize style" icon="palette" href="/essentials/settings">
-  Make your docs match your brand perfectly.
-</Card>
-
-<Card title="Add code examples" icon="square-code" href="/essentials/code">
-  Include syntax-highlighted code blocks.
-</Card>
-
-<Card title="API documentation" icon="code" href="/api-reference/introduction">
-  Auto-generate API docs from OpenAPI specs.
-</Card>
-
-</CardGroup>
+**What it does:**
+- Auto-detects project type, technology stack, and architecture
+- Identifies development maturity level and gaps
+- Suggests relevant commands based on project characteristics
+- Provides timeline estimates for improvements
+- Creates a personalized development roadmap
 
 <Note>
-  **Need help?** See our [full documentation](https://mintlify.com/docs) or join our [community](https://mintlify.com/community).
+The project analyzer is intelligent - it will recommend different commands for a legacy monolith versus a new startup project.
 </Note>
+
+### Security Audit
+
+Run a comprehensive security analysis of your codebase:
+
+<CodeGroup>
+
+```bash Quick Security Scan
+/audit-security full-codebase thorough
+```
+
+```bash Paranoid Mode (Maximum Depth)
+/audit-security full-codebase paranoid
+```
+
+```bash Compliance-Focused
+/compliance soc2 --enforce-automatically
+```
+
+</CodeGroup>
+
+**What it does:**
+- Scans for common vulnerabilities and security anti-patterns
+- Checks dependency security and license compliance
+- Analyzes authentication and authorization patterns
+- Provides actionable remediation steps
+- Generates security scorecard with priorities
+
+### CI/CD Setup
+
+Configure production-ready continuous integration:
+
+<CodeGroup>
+
+```bash GitHub Actions
+/setup-ci github professional
+```
+
+```bash GitLab CI
+/setup-ci gitlab enterprise
+```
+
+```bash Custom Pipeline
+/setup-ci custom --platform jenkins
+```
+
+</CodeGroup>
+
+**What it does:**
+- Creates CI/CD configuration files for your platform
+- Sets up automated testing, linting, and security scanning
+- Configures deployment workflows
+- Includes best practices for caching and optimization
+- Adds status badges and notifications
+
+### MCP Server Discovery
+
+Extend Claude's capabilities with Model Context Protocol servers:
+
+```bash
+/mcp-discover database --install
+```
+
+**What it does:**
+- Searches through 1000+ available MCP servers
+- Evaluates server capabilities and security
+- Automates installation and configuration
+- Integrates seamlessly with existing workflows
+- Enables database connections, API integrations, and more
+
+<Tip>
+Try `/mcp-discover development --stack typescript` to install a full development stack including ESLint, Prettier, TypeScript, and Jest servers.
+</Tip>
+
+## Working with Specialized Agents
+
+ccprompts includes 10 specialized AI agents with deep domain expertise. Here's how to use them:
+
+### Example: Rust Development
+
+Get expert Rust assistance:
+
+```bash
+# Call the rust-expert agent
+/agent rust-expert
+
+# Example task:
+"Help me implement a concurrent web scraper with proper lifetime management"
+```
+
+**Available agents:**
+- `rust-expert` - Ownership, lifetimes, systems programming
+- `python-pro` - Modern Python, async patterns, decorators
+- `golang-pro` - Goroutines, channels, concurrent systems
+- `javascript-expert` - ES6+, async/await, DOM optimization
+- `bash-shell-scripting` - Shell automation and scripting
+- `fastapi-optimizer` - FastAPI performance tuning
+- `documentation-writer` - Technical documentation
+- `performance-optimizer` - System-wide optimization
+- `systems-architect` - Architecture design patterns
+- `agent-template-wizard` - Create custom agents
+
+### Example: Performance Optimization
+
+```bash
+# Call the performance-optimizer agent
+/agent performance-optimizer
+
+# Example task:
+"Analyze and optimize database query performance in my API endpoints"
+```
+
+## Common Workflows
+
+### New Project Setup
+
+Get a new project production-ready:
+
+<Steps>
+  <Step title="Initialize Project Structure">
+    ```bash
+    /analyze-project
+    ```
+  </Step>
+  
+  <Step title="Set Up CI/CD">
+    ```bash
+    /setup-ci github professional
+    ```
+  </Step>
+  
+  <Step title="Configure Documentation">
+    ```bash
+    /document dev auto-generated
+    ```
+  </Step>
+  
+  <Step title="Add Security">
+    ```bash
+    /harden enterprise
+    ```
+  </Step>
+</Steps>
+
+### Legacy Code Modernization
+
+Modernize an existing codebase:
+
+<Steps>
+  <Step title="Analyze Current State">
+    ```bash
+    /analyze-project
+    ```
+  </Step>
+  
+  <Step title="Security Audit">
+    ```bash
+    /audit-security full-codebase paranoid
+    ```
+  </Step>
+  
+  <Step title="Add Tests">
+    ```bash
+    /test unit comprehensive
+    ```
+  </Step>
+  
+  <Step title="Modernize Stack">
+    ```bash
+    /modernize monolith
+    ```
+  </Step>
+</Steps>
+
+### Production Deployment
+
+Prepare for production deployment:
+
+<Steps>
+  <Step title="Run Health Check">
+    ```bash
+    /health-check comprehensive
+    ```
+  </Step>
+  
+  <Step title="Performance Optimization">
+    ```bash
+    /optimize production-ready
+    ```
+  </Step>
+  
+  <Step title="Setup Monitoring">
+    ```bash
+    /monitor production --alerts
+    ```
+  </Step>
+  
+  <Step title="Deploy">
+    ```bash
+    /deploy production --strategy blue-green
+    ```
+  </Step>
+</Steps>
+
+## Intelligent Command Chaining
+
+Use intelligent command chaining for complex workflows:
+
+```bash
+/intelligent-chain "prepare for production deployment"
+```
+
+**What it does:**
+- Analyzes your project context and goal
+- Determines the optimal command sequence
+- Executes commands in the right order
+- Handles dependencies between commands
+- Provides progress updates and summaries
+
+<Note>
+Intelligent chaining automatically selects the right commands based on your project type and current state.
+</Note>
+
+## Safety Features in Action
+
+ccprompts includes enterprise-grade safety for potentially dangerous operations:
+
+### Safe Command Execution
+
+Dangerous commands are automatically detected and executed safely:
+
+```bash
+# This command will be executed in an isolated container
+./scripts/safe-run.sh "rm -rf temp_files"
+```
+
+**How it works:**
+
+<Steps>
+  <Step title="Pattern Detection">
+    Regex patterns identify potentially dangerous operations
+  </Step>
+  
+  <Step title="Container Isolation">
+    Command executes in isolated Ubuntu container with resource limits
+  </Step>
+  
+  <Step title="Read-Only Mounting">
+    Project files are mounted read-only for safety
+  </Step>
+  
+  <Step title="Automatic Cleanup">
+    Container resources are automatically released after execution
+  </Step>
+</Steps>
+
+<Warning>
+To use the safety system, install Dagger (see [Installation](/installation) guide). The safety system provides 65.7% validation rate across 517+ test cases.
+</Warning>
+
+## Command Categories
+
+Explore commands by category:
+
+<CardGroup cols={2}>
+  <Card title="Initial Workflow" icon="rocket" href="/commands/initial-workflow">
+    Project analysis and intelligent command chaining
+  </Card>
+  
+  <Card title="Development" icon="code" href="/commands/development">
+    Debug, optimize, refactor, and migrate
+  </Card>
+  
+  <Card title="Security" icon="shield" href="/commands/security">
+    Security auditing, compliance, and hardening
+  </Card>
+  
+  <Card title="Testing" icon="flask" href="/commands/testing">
+    Comprehensive testing and troubleshooting
+  </Card>
+  
+  <Card title="Deployment" icon="rocket" href="/commands/deployment">
+    CI/CD, deployment automation, and monitoring
+  </Card>
+  
+  <Card title="Collaboration" icon="users" href="/commands/collaboration">
+    Code review, PR automation, and team workflows
+  </Card>
+  
+  <Card title="Agentic" icon="brain" href="/commands/agentic-capabilities">
+    MCP integration and agent orchestration
+  </Card>
+  
+  <Card title="Enterprise" icon="building" href="/commands/enterprise-scale">
+    Governance, multi-repo, and cost optimization
+  </Card>
+</CardGroup>
+
+## Tips and Best Practices
+
+<AccordionGroup>
+  <Accordion title="Start with Project Analysis">
+    Always run `/analyze-project` first to get personalized recommendations based on your specific codebase. The analyzer detects your technology stack and suggests the most relevant commands.
+  </Accordion>
+  
+  <Accordion title="Use Specialized Agents">
+    When working with a specific language or framework, invoke the specialized agent for that domain. Agents provide deeper expertise than general commands.
+  </Accordion>
+  
+  <Accordion title="Chain Related Commands">
+    Use `/intelligent-chain` for complex workflows. It automatically determines the optimal sequence of commands for your goal.
+  </Accordion>
+  
+  <Accordion title="Install Dagger for Safety">
+    Install Dagger to enable the safety system for containerized execution of dangerous commands. This provides enterprise-grade safety with automatic rollback.
+  </Accordion>
+  
+  <Accordion title="Validate Before Committing">
+    For repository installations, always run `bun run validate` before committing changes to ensure command structure integrity.
+  </Accordion>
+  
+  <Accordion title="Explore MCP Servers">
+    Use `/mcp-discover` to extend Claude's capabilities. With 1000+ available servers, you can add database connections, API integrations, and specialized tools.
+  </Accordion>
+</AccordionGroup>
+
+## Customization
+
+### Creating Custom Commands
+
+For repository installations, you can create custom commands:
+
+<Steps>
+  <Step title="Copy an Existing Command">
+    Copy a command from `.claude/commands/` to your desired phase folder
+  </Step>
+  
+  <Step title="Update Structure">
+    Update the command structure and content for your use case
+  </Step>
+  
+  <Step title="Add Safety Validation">
+    Include safety validation steps in your command
+  </Step>
+  
+  <Step title="Validate">
+    Run validation before committing:
+    ```bash
+    bun run validate
+    ```
+  </Step>
+</Steps>
+
+### Creating Custom Agents
+
+Use the agent template wizard to create specialized agents:
+
+```bash
+/agent agent-template-wizard
+```
+
+Provide your domain expertise requirements and the wizard will generate a properly structured agent with:
+- Consistent 7-step methodology
+- Color-coded categorization
+- Example use cases
+- Validation approaches
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Command Reference" icon="book-open" href="/reference/analyze-project">
+    Explore detailed documentation for all 70+ commands
+  </Card>
+  
+  <Card title="Agent Documentation" icon="robot" href="/agents/rust-expert">
+    Learn about specialized agents and their capabilities
+  </Card>
+  
+  <Card title="Advanced Usage" icon="graduation-cap" href="/development/advanced-usage">
+    Master advanced features like workflow automation and custom agents
+  </Card>
+  
+  <Card title="Contributing" icon="code-pull-request" href="/development/contributing">
+    Contribute new commands and agents to the ccprompts community
+  </Card>
+</CardGroup>
+
+## Need Help?
+
+<CardGroup cols={2}>
+  <Card title="GitHub Issues" icon="github" href="https://github.com/ursisterbtw/ccprompts/issues">
+    Report bugs, request features, or ask questions
+  </Card>
+  
+  <Card title="Discussions" icon="comments" href="https://github.com/ursisterbtw/ccprompts/discussions">
+    Join community discussions and share ideas
+  </Card>
+  
+  <Card title="Documentation" icon="book" href="https://github.com/ursisterbtw/ccprompts">
+    Full documentation in the GitHub repository
+  </Card>
+  
+  <Card title="Ask DeepWiki" icon="circle-question" href="https://deepwiki.com/ursisterbtw/ccprompts">
+    AI-powered documentation search and answers
+  </Card>
+</CardGroup>

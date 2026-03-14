@@ -1,0 +1,388 @@
+---
+title: "Phase 04: Testing"
+description: "Comprehensive test generation, automation, and troubleshooting"
+---
+
+The Testing phase provides advanced commands for generating tests, automating test execution, and systematic debugging of development issues.
+
+## Commands in This Phase
+
+<CardGroup cols={2}>
+  <Card title="/test" icon="vial" href="/commands/test">
+    Comprehensive test generation and automation with coverage analysis
+  </Card>
+  
+  <Card title="/troubleshoot" icon="stethoscope" href="/commands/troubleshoot">
+    Systematic debugging assistance and troubleshooting guidance
+  </Card>
+</CardGroup>
+
+## Overview
+
+Phase 04 commands help you build robust test suites and systematically debug issues across your development workflow.
+
+### Key Capabilities
+
+**Test Generation**
+- Automatic test creation for untested code
+- Unit, integration, and end-to-end test suites
+- Framework-specific test generation (Jest, Pytest, etc.)
+- Coverage analysis and gap identification
+- Property-based and mutation testing
+
+**Test Automation**
+- Continuous testing in CI/CD
+- Pre-commit test hooks
+- Test performance optimization
+- Regression detection
+- Test maintenance and refactoring
+
+**Systematic Debugging**
+- Urgency-based response protocols
+- Error pattern recognition
+- AI-powered analysis
+- Step-by-step debugging workflows
+- Root cause analysis
+
+**Troubleshooting Support**
+- Production issue diagnosis
+- Performance investigation
+- Environment debugging
+- Integration troubleshooting
+- Knowledge capture and sharing
+
+## Use Cases
+
+### Generate Missing Tests
+
+```bash
+/test "missing coverage" "unit"
+```
+
+Automatically create unit tests for untested code paths and improve coverage.
+
+### API Integration Testing
+
+```bash
+/test "api/users" "integration"
+```
+
+Generate comprehensive integration tests for API endpoints with mocking.
+
+### Critical Production Error
+
+```bash
+/troubleshoot error production critical
+```
+
+Immediate triage and resolution guidance for critical production issues.
+
+### Performance Investigation
+
+```bash
+/troubleshoot performance development medium
+```
+
+Systematic analysis and optimization of slow performance issues.
+
+## Example Workflows
+
+### Test-Driven Development
+
+1. **Generate Tests**: `/test "new-feature" "unit"`
+2. **Run Tests**: Execute test suite (should fail)
+3. **Implement**: Write implementation code
+4. **Validate**: Tests should pass
+5. **Refactor**: Improve code with test safety net
+
+### Bug Investigation and Fix
+
+1. **Troubleshoot**: `/troubleshoot error development high`
+2. **Reproduce**: Create failing test case
+3. **Debug**: Systematic investigation
+4. **Fix**: Implement solution
+5. **Validate**: Verify fix with tests
+6. **Document**: Update knowledge base
+
+### Pre-Release Quality Assurance
+
+1. **Unit Tests**: `/test "missing coverage" "unit"`
+2. **Integration**: `/test "api/*" "integration"`
+3. **End-to-End**: `/test "user-flows" "e2e"`
+4. **Performance**: `/test "critical-paths" "performance"`
+5. **Security**: `/test "auth-system" "security"`
+
+## Test Types
+
+### Unit Tests
+
+Individual function and class testing:
+- Function behavior validation
+- Object-oriented component testing
+- Module interface testing
+- Edge case and boundary conditions
+- Error handling verification
+
+**Frameworks**: Jest, Vitest, Pytest, Cargo Test
+
+### Integration Tests
+
+Multi-component interaction testing:
+- Component integration validation
+- API endpoint testing
+- Database integration
+- External service mocking
+- Contract testing
+
+**Frameworks**: Jest, Supertest, Pytest, Testcontainers
+
+### End-to-End Tests
+
+Complete user workflow validation:
+- User journey testing
+- Browser automation
+- Mobile app testing
+- Cross-platform compatibility
+- Real environment testing
+
+**Frameworks**: Cypress, Playwright, Selenium, Appium
+
+### Performance Tests
+
+System performance validation:
+- Load testing under expected traffic
+- Stress testing to find breaking points
+- Benchmark testing for regression detection
+- Memory profiling and optimization
+
+**Frameworks**: k6, JMeter, Locust, Artillery
+
+### Security Tests
+
+Security validation and hardening:
+- Input sanitization testing
+- Authentication validation
+- Authorization verification
+- Data protection testing
+- Vulnerability scanning
+
+**Frameworks**: OWASP ZAP, Burp Suite, SQLMap
+
+## Test Coverage Levels
+
+### Basic Coverage (70-80%)
+
+Essential test coverage:
+- Critical business logic
+- Public API surface
+- Common user paths
+- Error handling
+
+**Suitable For**: Early-stage projects, MVPs
+
+### Standard Coverage (80-90%)
+
+Comprehensive test coverage:
+- All public methods
+- Major code paths
+- Integration points
+- Edge cases
+- Error scenarios
+
+**Suitable For**: Production applications
+
+### High Coverage (90-95%)
+
+Rigorous test coverage:
+- All code paths
+- Boundary conditions
+- Complex interactions
+- Performance validation
+- Security testing
+
+**Suitable For**: Critical systems, regulated industries
+
+### Maximum Coverage (95-100%)
+
+Exhaustive test coverage:
+- Complete code coverage
+- Mutation testing
+- Property-based testing
+- Chaos engineering
+- Comprehensive security
+
+**Suitable For**: Safety-critical systems, financial applications
+
+## Troubleshooting Categories
+
+### Error Debugging
+
+**Common Issues**:
+- Syntax and logic errors
+- Runtime exceptions
+- Type errors
+- Import/dependency issues
+
+**Tools**:
+- Stack trace analysis
+- Debugger integration
+- Error logging
+- Exception monitoring
+
+### Performance Debugging
+
+**Common Issues**:
+- Slow response times
+- High memory usage
+- Database bottlenecks
+- Network latency
+
+**Tools**:
+- Profiling tools (Chrome DevTools, cProfile)
+- Performance monitoring (New Relic, Datadog)
+- Database query analysis
+- Network analysis tools
+
+### Behavior Debugging
+
+**Common Issues**:
+- Unexpected behavior
+- State management problems
+- Race conditions
+- Logic errors
+
+**Tools**:
+- State inspection
+- API testing tools
+- Log analysis
+- Replay debugging
+
+### Environment Debugging
+
+**Common Issues**:
+- Configuration problems
+- Dependency conflicts
+- Container issues
+- Environment variables
+
+**Tools**:
+- Docker debugging
+- Kubernetes diagnostics
+- Environment validation
+- Service status checks
+
+## Urgency-Based Response
+
+### Critical Issues
+
+**Response**: Immediate (within 15 minutes)
+
+- Production down or major data loss risk
+- Establish incident response team
+- Implement immediate containment
+- Detailed logging and documentation
+- Executive communication
+
+### High Priority Issues
+
+**Response**: Rapid (within 1-2 hours)
+
+- Significant user impact or service degradation
+- Quick fixes and workarounds
+- Enhanced monitoring
+- Team lead notification
+
+### Medium/Low Priority Issues
+
+**Response**: Systematic (within business day)
+
+- Focus on root cause analysis
+- Learning and documentation emphasis
+- Preventive measures implementation
+- Team knowledge sharing
+
+## Advanced Testing Features
+
+### Property-Based Testing
+
+Automatic test case generation:
+- Hypothesis generation
+- Edge case discovery
+- Input space coverage
+- Regression prevention
+
+**Frameworks**: Hypothesis (Python), fast-check (JavaScript), PropTest (Rust)
+
+### Mutation Testing
+
+Test quality validation:
+- Introduce code mutations
+- Verify tests catch changes
+- Measure test effectiveness
+- Identify weak test coverage
+
+**Frameworks**: StrykerJS, Mutmut, PIT
+
+### Visual Regression Testing
+
+UI consistency validation:
+- Screenshot comparison
+- Visual diff detection
+- Cross-browser testing
+- Responsive design validation
+
+**Frameworks**: Percy, Chromatic, BackstopJS
+
+### Contract Testing
+
+API contract validation:
+- Provider/consumer testing
+- Schema validation
+- Breaking change detection
+- API versioning support
+
+**Frameworks**: Pact, Spring Cloud Contract
+
+## Test Automation Integration
+
+### Pre-Commit Hooks
+
+Run tests before commits:
+- Unit test execution
+- Linting and formatting
+- Coverage threshold validation
+- Fast feedback loop
+
+### CI/CD Pipeline
+
+Automated testing in pipelines:
+- Multi-stage test execution
+- Parallel test running
+- Test result reporting
+- Quality gates
+
+### Continuous Testing
+
+Ongoing test execution:
+- Test on every change
+- Regression detection
+- Performance monitoring
+- Coverage tracking
+
+## Related Phases
+
+- **Phase 02: Development** - Test during development
+- **Phase 03: Security** - Security testing integration
+- **Phase 05: Deployment** - Pre-deployment testing
+- **Phase 06: Collaboration** - Share test results with team
+
+## Best Practices
+
+1. **Test Early**: Write tests alongside or before implementation code
+2. **Maintain Tests**: Keep tests clean and up-to-date with code changes
+3. **Coverage Goals**: Aim for 80%+ coverage on critical code
+4. **Fast Tests**: Keep unit tests fast (&lt;1 second each)
+5. **Isolated Tests**: Ensure tests don't depend on each other
+6. **Clear Assertions**: Make test failures easy to understand
+7. **Document Issues**: Capture troubleshooting knowledge for team
+8. **Automate**: Integrate testing into CI/CD pipeline

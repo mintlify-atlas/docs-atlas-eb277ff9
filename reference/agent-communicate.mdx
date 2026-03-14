@@ -1,0 +1,53 @@
+---
+title: "Agent Communicate - Inter-Agent Communication and Coordination Protocols"
+description: "/agent-communicate [protocol] [agents] [message-type]"
+---
+
+# Agent Communicate - Inter-Agent Communication and Coordination Protocols
+
+No description available
+
+## Usage
+
+```bash
+/agent-communicate [protocol] [agents] [message-type]
+```
+
+## Examples
+
+<CodeGroup>
+
+```bash Basic Usage
+# Direct communication between security and testing agents
+/agent-communicate direct security,testing task --priority=high
+# Broadcast status updates to all agents
+/agent-communicate broadcast all status --interval=30s
+# Publish-subscribe pattern for performance metrics
+```
+
+</CodeGroup>
+
+<Warning>
+and Validation
+
+22. **Communication Testing**
+
+    ```bash
+    # Test communication functionality
+    - Unit testing of communication protocols
+    - Integration testing of agent interactions
+    - Load testing and performance validation
+    - Chaos engineering and failure testing
+    ```
+
+23. **Rollback and Recovery**
+
+    ```bash
+    # Implement communication recovery
+    - Communication configuration backups
+    - Protocol rollback and version management
+    - Agent communication state recovery
+    - Emergency communication procedures
+    ```
+</Warning>
+

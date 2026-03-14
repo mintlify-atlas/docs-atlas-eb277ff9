@@ -1,0 +1,504 @@
+---
+title: "Bash Shell Scripting Agent"
+description: "Elite shell scripting expert specializing in automation, deployment scripts, and production-grade bash"
+icon: "terminal"
+---
+
+The Bash Shell Scripting agent provides elite-level expertise in POSIX shell, bash-specific features, and Unix philosophy. This agent specializes in system administration, deployment automation, text processing, and production-grade shell scripting.
+
+## When to Use This Agent
+
+The Bash Shell Scripting agent excels at:
+
+<CardGroup cols={2}>
+  <Card title="Deployment Automation" icon="rocket">
+    Zero-downtime deployments, rollbacks, and health checks
+  </Card>
+  <Card title="System Administration" icon="server">
+    Process management, log analysis, and monitoring scripts
+  </Card>
+  <Card title="Text Processing" icon="file-lines">
+    awk, sed, grep pipelines for data transformation
+  </Card>
+  <Card title="Production Scripts" icon="shield-check">
+    Error handling, signal trapping, and robust automation
+  </Card>
+</CardGroup>
+
+## Example Usage
+
+<CodeGroup>
+```bash Deployment Script
+user: "Build a deployment script that handles rollbacks and zero-downtime updates"
+
+agent: "I'll create a bash script with health checks, atomic deployments using symlinks, automatic rollback on failure, and parallel deployment to multiple servers using GNU parallel.
+
+Here's the production-ready script..."
+```
+
+```bash Log Processing
+user: "My log processing script takes hours to analyze large files"
+
+agent: "I'll optimize using awk for parsing, GNU parallel for multicore processing, and implement streaming processing to handle files larger than RAM efficiently.
+
+Let's optimize your script..."
+```
+</CodeGroup>
+
+## Core Capabilities
+
+### 1. Script Analysis
+
+Analyze existing shell scripts:
+
+<AccordionGroup>
+  <Accordion title="Portability Issues">
+    - Bashisms in POSIX scripts
+    - Non-portable command usage
+    - Shell version dependencies
+    - Platform-specific assumptions
+  </Accordion>
+  
+  <Accordion title="Security Vulnerabilities">
+    - Unquoted variable expansion
+    - Command injection risks
+    - Insecure temporary files
+    - Race conditions (TOCTOU)
+  </Accordion>
+  
+  <Accordion title="Performance Bottlenecks">
+    - Excessive subshell usage
+    - Inefficient pipelines
+    - External command overuse
+    - Missing parallelization opportunities
+  </Accordion>
+  
+  <Accordion title="POSIX Compliance">
+    - Bash-specific features
+    - Portable alternatives
+    - Shell compatibility testing
+  </Accordion>
+</AccordionGroup>
+
+### 2. Design Patterns
+
+Implement robust shell patterns:
+
+<Tabs>
+  <Tab title="Error Handling">
+    ```bash
+    #!/usr/bin/env bash
+    
+    # Strict mode
+    set -euo pipefail
+    IFS=$'\n\t'
+    
+    # Error handler
+    err_report() {
+        echo "Error on line $1" >&2
+        cleanup
+        exit 1
+    }
+    trap 'err_report $LINENO' ERR
+    
+    # Cleanup handler
+    cleanup() {
+        rm -f "$TEMP_FILE"
+        echo "Cleanup completed" >&2
+    }
+    trap cleanup EXIT INT TERM
+    
+    # Signal handling
+    handle_sigterm() {
+        echo "Received SIGTERM, shutting down gracefully" >&2
+        cleanup
+        exit 143
+    }
+    trap handle_sigterm TERM
+    ```
+  </Tab>
+  
+  <Tab title="Option Parsing">
+    ```bash
+    #!/usr/bin/env bash
+    
+    # Usage function
+    usage() {
+        cat <<EOF
+    Usage: $0 [OPTIONS]
+    
+    Options:
+        -h, --help          Show this help message
+        -v, --verbose       Enable verbose output
+        -f, --file FILE     Input file path
+        -n, --number NUM    Number of iterations
+    EOF
+        exit 0
+    }
+    
+    # Parse arguments
+    VERBOSE=0
+    FILE=""
+    NUMBER=10
+    
+    while [[ $# -gt 0 ]]; do
+        case $1 in
+            -h|--help)
+                usage
+                ;;
+            -v|--verbose)
+                VERBOSE=1
+                shift
+                ;;
+            -f|--file)
+                FILE="$2"
+                shift 2
+                ;;
+            -n|--number)
+                NUMBER="$2"
+                shift 2
+                ;;
+            *)
+                echo "Unknown option: $1" >&2
+                usage
+                ;;
+        esac
+    done
+    
+    # Validate required arguments
+    if [[ -z "$FILE" ]]; then
+        echo "Error: --file is required" >&2
+        exit 1
+    fi
+    ```
+  </Tab>
+  
+  <Tab title="Logging">
+    ```bash
+    #!/usr/bin/env bash
+    
+    # Logging setup
+    readonly LOG_FILE="${LOG_FILE:-/var/log/myapp.log}"
+    readonly LOG_LEVEL="${LOG_LEVEL:-INFO}"
+    
+    # Log levels
+    declare -A LOG_LEVELS=([DEBUG]=0 [INFO]=1 [WARN]=2 [ERROR]=3)
+    
+    log() {
+        local level=$1
+        shift
+        local message="$*"
+        local timestamp=$(date '+%Y-%m-%d %H:%M:%S')
+        
+        # Check log level
+        if [[ ${LOG_LEVELS[$level]} -ge ${LOG_LEVELS[$LOG_LEVEL]} ]]; then
+            echo "[$timestamp] [$level] $message" | tee -a "$LOG_FILE" >&2
+        fi
+    }
+    
+    log_debug() { log DEBUG "$@"; }
+    log_info()  { log INFO "$@"; }
+    log_warn()  { log WARN "$@"; }
+    log_error() { log ERROR "$@"; }
+    ```
+  </Tab>
+  
+  <Tab title="Parallel Processing">
+    ```bash
+    #!/usr/bin/env bash
+    
+    # Process files in parallel
+    process_file() {
+        local file=$1
+        echo "Processing $file..."
+        # Processing logic here
+    }
+    export -f process_file
+    
+    # Using GNU parallel
+    find . -name "*.txt" | parallel -j 4 process_file
+    
+    # Alternative: background jobs with wait
+    max_jobs=4
+    job_count=0
+    
+    for file in *.txt; do
+        process_file "$file" &
+        ((job_count++))
+        
+        # Wait when max jobs reached
+        if [[ $job_count -ge $max_jobs ]]; then
+            wait -n  # Wait for any job to finish
+            ((job_count--))
+        fi
+    done
+    
+    # Wait for remaining jobs
+    wait
+    ```
+  </Tab>
+</Tabs>
+
+### 3. Shell Implementation
+
+Robust scripting techniques:
+
+- **Error handling** - set -euo pipefail and trap handlers
+- **Performance optimization** - Built-in commands over external processes
+- **Security hardening** - Input validation and secure temp files
+- **Advanced features** - Arrays, associative arrays, parameter expansion
+
+### 4. Tool Integration
+
+Expert use of Unix tools:
+
+```bash
+# awk for text processing
+awk -F: '$3 >= 1000 {print $1}' /etc/passwd
+
+# sed for stream editing
+sed -E 's/([0-9]+)\.([0-9]+)\.([0-9]+)/\1.\2.\3-release/' version.txt
+
+# grep with regex
+grep -E '^ERROR|^FATAL' application.log | grep -v 'ignorable'
+
+# find with exec
+find /var/log -name "*.log" -mtime +7 -exec gzip {} \;
+
+# Process substitution
+diff <(sort file1.txt) <(sort file2.txt)
+
+# Command substitution
+timestamp=$(date +%Y%m%d_%H%M%S)
+backup_file="backup_${timestamp}.tar.gz"
+```
+
+### 5. Portability Considerations
+
+Balance features and compatibility:
+
+```bash
+# Check for bash version
+if [[ ${BASH_VERSINFO[0]} -lt 4 ]]; then
+    echo "Bash 4.0+ required" >&2
+    exit 1
+fi
+
+# POSIX-compatible alternative
+if ! command -v bash >/dev/null 2>&1; then
+    echo "Bash not found" >&2
+    exit 1
+fi
+
+# Portable command check
+has_command() {
+    command -v "$1" >/dev/null 2>&1
+}
+
+if ! has_command jq; then
+    echo "jq is required but not installed" >&2
+    exit 1
+fi
+```
+
+### 6. Testing Strategy
+
+Implement comprehensive testing:
+
+```bash
+# Unit testing with bats
+# test_script.bats
+
+#!/usr/bin/env bats
+
+setup() {
+    load 'test_helper/bats-support/load'
+    load 'test_helper/bats-assert/load'
+    export TEMP_DIR=$(mktemp -d)
+}
+
+teardown() {
+    rm -rf "$TEMP_DIR"
+}
+
+@test "function returns success on valid input" {
+    run my_function "valid_input"
+    assert_success
+    assert_output "expected_output"
+}
+
+@test "function fails on invalid input" {
+    run my_function "invalid_input"
+    assert_failure
+}
+```
+
+### 7. Performance Profiling
+
+Profile and optimize scripts:
+
+```bash
+# Timing with time builtin
+time ./script.sh
+
+# Detailed timing
+BASH_XTRACEFD=3 bash -x script.sh 3>&2 2>&1 | \
+    ts -i %.s | tee trace.log
+
+# strace for system calls
+strace -c ./script.sh
+
+# Profile with PS4
+export PS4='+ $(date "+%s.%N") ${BASH_SOURCE}:${LINENO}: '
+set -x
+# ... code to profile
+set +x
+```
+
+## The 7-Step Methodology
+
+<Steps>
+  <Step title="Script Analysis">
+    Analyze portability, security, performance, and POSIX compliance
+  </Step>
+  <Step title="Design Patterns">
+    Implement error handling, option parsing, and logging
+  </Step>
+  <Step title="Shell Implementation">
+    Apply robust scripting with set -euo pipefail and trap handlers
+  </Step>
+  <Step title="Tool Integration">
+    Use awk, sed, grep, and find following Unix philosophy
+  </Step>
+  <Step title="Portability">
+    Balance bash features with POSIX compatibility
+  </Step>
+  <Step title="Testing Strategy">
+    Implement unit tests with bats and shellcheck validation
+  </Step>
+  <Step title="Performance Profiling">
+    Use time, strace, and bash profiling to optimize
+  </Step>
+</Steps>
+
+## Best Practices
+
+<CardGroup cols={2}>
+  <Card title="Quoting" icon="quote-left">
+    - Always quote variable expansions
+    - Use arrays for lists, not strings
+    - Double-quote command substitutions
+    - Understand word splitting rules
+  </Card>
+  <Card title="Error Handling" icon="triangle-exclamation">
+    - Use set -euo pipefail
+    - Implement trap handlers
+    - Check command exit codes
+    - Provide meaningful error messages
+  </Card>
+  <Card title="Security" icon="shield">
+    - Validate all input
+    - Use mktemp for temporary files
+    - Avoid eval with user input
+    - Set proper file permissions
+  </Card>
+  <Card title="Performance" icon="gauge-high">
+    - Use built-in commands
+    - Minimize subshells
+    - Implement parallel processing
+    - Stream process large files
+  </Card>
+</CardGroup>
+
+<Warning>
+**Security Warning**: Always quote variable expansions to prevent word splitting and glob expansion. Use `"$var"` not `$var`.
+</Warning>
+
+## Production Deployment Script Example
+
+```bash
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Configuration
+readonly APP_NAME="myapp"
+readonly DEPLOY_DIR="/var/www/${APP_NAME}"
+readonly RELEASES_DIR="${DEPLOY_DIR}/releases"
+readonly CURRENT_LINK="${DEPLOY_DIR}/current"
+readonly KEEP_RELEASES=5
+
+# Health check
+health_check() {
+    local url=$1
+    local max_attempts=30
+    local attempt=0
+    
+    while [[ $attempt -lt $max_attempts ]]; do
+        if curl -sf "$url" >/dev/null; then
+            return 0
+        fi
+        ((attempt++))
+        sleep 2
+    done
+    return 1
+}
+
+# Deploy new release
+deploy() {
+    local version=$1
+    local release_dir="${RELEASES_DIR}/${version}"
+    
+    echo "Deploying version $version..."
+    
+    # Extract release
+    mkdir -p "$release_dir"
+    tar -xzf "release-${version}.tar.gz" -C "$release_dir"
+    
+    # Atomic symlink switch
+    ln -sfn "$release_dir" "${CURRENT_LINK}.tmp"
+    mv -T "${CURRENT_LINK}.tmp" "$CURRENT_LINK"
+    
+    # Health check
+    if ! health_check "http://localhost:8080/health"; then
+        echo "Health check failed, rolling back..."
+        rollback
+        return 1
+    fi
+    
+    # Cleanup old releases
+    cleanup_old_releases
+    
+    echo "Deployment successful"
+}
+
+# Rollback to previous release
+rollback() {
+    local previous=$(ls -t "$RELEASES_DIR" | sed -n 2p)
+    if [[ -z "$previous" ]]; then
+        echo "No previous release found" >&2
+        return 1
+    fi
+    
+    echo "Rolling back to $previous..."
+    ln -sfn "${RELEASES_DIR}/${previous}" "$CURRENT_LINK"
+}
+
+# Cleanup old releases
+cleanup_old_releases() {
+    cd "$RELEASES_DIR"
+    ls -t | tail -n +$((KEEP_RELEASES + 1)) | xargs rm -rf
+}
+
+deploy "$1"
+```
+
+## Related Agents
+
+<CardGroup cols={2}>
+  <Card title="Systems Architect" icon="diagram-project" href="/agents/systems-architect">
+    For deployment architecture and system design
+  </Card>
+  <Card title="Performance Optimizer" icon="bolt" href="/agents/performance-optimizer">
+    For script performance optimization
+  </Card>
+</CardGroup>

@@ -1,0 +1,53 @@
+---
+title: "Context Persist - Context Persistence and Retrieval Across Sessions"
+description: "/context-persist [action] [scope] [session-id] [parameters]"
+---
+
+# Context Persist - Context Persistence and Retrieval Across Sessions
+
+No description available
+
+## Usage
+
+```bash
+/context-persist [action] [scope] [session-id] [parameters]
+```
+
+## Examples
+
+<CodeGroup>
+
+```bash Basic Usage
+# Save project context
+/context-persist save project dev-session-2024-01
+# Load conversation with merge
+/context-persist load conversation --merge-strategy=intelligent
+# Archive old sessions
+```
+
+</CodeGroup>
+
+<Warning>
+and Validation
+
+22. **Context Security and Privacy**
+
+    ```bash
+    # Ensure context security and privacy
+    - Encrypt sensitive context data
+    - Implement access control and authentication
+    - Redact and protect sensitive information
+    - Maintain audit trails and compliance
+    ```
+
+23. **Context Testing and Validation**
+
+    ```bash
+    # Test context persistence functionality
+    - Test context serialization and deserialization
+    - Validate context retrieval and merging
+    - Test context integrity and consistency
+    - Verify security and privacy measures
+    ```
+</Warning>
+

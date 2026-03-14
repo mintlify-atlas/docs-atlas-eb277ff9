@@ -1,0 +1,51 @@
+---
+title: "Tech-Debt"
+description: "Comprehensive technical debt management and resolution system: 1. Automated technical debt detection and quantification 2. ROI-based prioritization and impact a"
+---
+
+# Tech-Debt
+
+Comprehensive technical debt management and resolution system: 1. Automated technical debt detection and quantification 2. ROI-based prioritization and impact analysis 3. Strategic debt reduction planning and execution 4. Continuous monitoring and trend analysis 5. Team education and prevention strategies 6. Integration with development workflows and planning
+
+## Usage
+
+```bash
+/tech-debt [action] [scope] [priority]
+```
+
+## Parameters
+
+<ParamField path="action" type="string">
+  assess, prioritize, plan, track, resolve, report
+</ParamField>
+
+<ParamField path="scope" type="string">
+  file, module, service, full-codebase, architecture
+</ParamField>
+
+<ParamField path="priority" type="string">
+  critical, high, medium, low, all
+</ParamField>
+
+## Examples
+
+<CodeGroup>
+
+```bash Basic Usage
+/tech-debt assess full-codebase all
+/tech-debt prioritize service high
+/tech-debt plan module critical
+/tech-debt track full-codebase all
+/tech-debt resolve file critical
+```
+
+</CodeGroup>
+
+## Related Commands
+
+- `/code-review` - Identify debt during review process
+- `/sprint-planning` - Integrate debt work into sprint planning
+- `/audit-security` - Focus on security-related technical debt
+- `/optimize` - Performance debt identification and resolution
+- `/health-check` - Overall system health including debt assessment
+

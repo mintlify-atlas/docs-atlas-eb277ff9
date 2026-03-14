@@ -1,0 +1,47 @@
+---
+icon: "rocket"
+title: "Deploy"
+description: "Implements sophisticated CI/CD pipelines and infrastructure automation: Multi-stage pipeline creation with quality gates. Infrastructure as Code with Terraform "
+---
+
+# Deploy
+
+Implements sophisticated CI/CD pipelines and infrastructure automation:
+
+## Usage
+
+```bash
+/deploy [environment] [strategy]
+```
+
+## Parameters
+
+<ParamField path="environment" type="string">
+  dev, staging, prod, multi-cloud, hybrid
+</ParamField>
+
+<ParamField path="strategy" type="string">
+  basic, blue-green, canary, enterprise, zero-downtime
+</ParamField>
+
+## Examples
+
+<CodeGroup>
+
+```bash Basic Usage
+/deploy prod blue-green
+/deploy multi-cloud enterprise
+/deploy staging basic
+/deploy hybrid zero-downtime
+```
+
+</CodeGroup>
+
+## Use Cases
+
+- **Production Deployment**: `/deploy prod blue-green` - Production-ready blue-green deployment
+- **Multi-Cloud Strategy**: `/deploy multi-cloud enterprise` - Enterprise multi-cloud deployment
+- **Development Pipeline**: `/deploy dev basic` - Simple development environment setup
+- **Canary Releases**: `/deploy prod canary` - Gradual rollout with monitoring
+- **Zero-Downtime Updates**: `/deploy prod zero-downtime` - Production updates without downtime
+

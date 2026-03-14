@@ -1,97 +1,244 @@
 ---
-title: "Introduction"
-description: "Welcome to the new home for your documentation"
+title: "ccprompts"
+description: "70+ production-ready Claude Code commands with specialized AI agents and enterprise-grade safety"
 ---
 
-## Setting up
+<div className="hero-section" style={{
+  background: 'linear-gradient(135deg, #020627 0%, #11161e 100%)',
+  borderRadius: '12px',
+  padding: '48px 32px',
+  marginBottom: '48px',
+  border: '1px solid rgba(96,99,146,0.3)'
+}}>
+  <h1 style={{
+    fontSize: '48px',
+    fontWeight: '700',
+    color: '#ffffff',
+    marginBottom: '16px',
+    fontFamily: 'Inter'
+  }}>
+    Enterprise-Grade Claude Code Commands
+  </h1>
+  <p style={{
+    fontSize: '20px',
+    color: '#cfd0d2',
+    marginBottom: '32px',
+    maxWidth: '720px'
+  }}>
+    A comprehensive plugin featuring 70+ slash commands across 12 development phases, 10 specialized AI agents, and Dagger-based safety system for production workflows.
+  </p>
+  <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
+    <a
+      href="/installation"
+      style={{
+        background: '#238636',
+        color: '#ffffff',
+        padding: '12px 24px',
+        borderRadius: '6px',
+        textDecoration: 'none',
+        fontWeight: '600',
+        display: 'inline-block'
+      }}
+    >
+      Get Started
+    </a>
+    <a
+      href="https://github.com/ursisterbtw/ccprompts"
+      style={{
+        background: 'transparent',
+        color: '#ffffff',
+        padding: '12px 24px',
+        borderRadius: '6px',
+        textDecoration: 'none',
+        fontWeight: '600',
+        display: 'inline-block',
+        border: '1px solid rgba(255,255,255,0.2)'
+      }}
+    >
+      View on GitHub
+    </a>
+  </div>
+</div>
 
-Get your documentation site up and running in minutes.
+## Key Features
 
-<Card
-  title="Start here"
-  icon="rocket"
-  href="/quickstart"
-  horizontal
->
-  Follow our three step quickstart guide.
-</Card>
-
-## Make it yours
-
-Design a docs site that looks great and empowers your users.
-
-<Columns cols={2}>
-  <Card
-    title="Edit locally"
-    icon="pen-to-square"
-    href="/development"
-  >
-    Edit your docs locally and preview them in real time.
+<CardGroup cols={2}>
+  <Card title="70+ Production Commands" icon="terminal">
+    Slash commands organized across 12 development phases from initial workflow to enterprise-scale operations
   </Card>
-  <Card
-    title="Customize your site"
-    icon="palette"
-    href="/essentials/settings"
-  >
-    Customize the design and colors of your site to match your brand.
+  <Card title="10 Specialized Agents" icon="robot">
+    Domain experts for Rust, Python, Go, JavaScript, FastAPI, and more with deep technical knowledge
   </Card>
-    <Card
-    title="Set up navigation"
-    icon="map"
-    href="/essentials/navigation"
-  >
-    Organize your docs to help users find what they need and succeed with your product.
+  <Card title="Dagger Safety System" icon="shield">
+    Container isolation for dangerous commands with automatic rollback and comprehensive audit logging
   </Card>
-  <Card
-    title="API documentation"
-    icon="terminal"
-    href="/api-reference/introduction"
-  >
-    Auto-generate API documentation from OpenAPI specifications.
+  <Card title="Multi-Dimensional Validation" icon="check-double">
+    Validate structure, security, quality, and performance with scoring across all dimensions
   </Card>
-</Columns>
+  <Card title="MCP Integration" icon="plug">
+    Model Context Protocol support for enhanced AI workflows and context management
+  </Card>
+  <Card title="Enterprise Governance" icon="building">
+    Multi-repo management, compliance auditing, and cost optimization at scale
+  </Card>
+</CardGroup>
 
-## Create beautiful pages
+## Quick Start
 
-Everything you need to create world-class documentation.
+<Steps>
+  <Step title="Install as Plugin">
+    Install ccprompts directly in Claude Code for instant access to all commands:
+    
+    ```bash
+    /plugin marketplace add ursisterbtw/ccprompts
+    /plugin install ccprompts@ursisterbtw
+    ```
+  </Step>
+  
+  <Step title="Analyze Your Project">
+    Let ccprompts analyze your codebase and recommend relevant commands:
+    
+    ```bash
+    /analyze-project
+    ```
+  </Step>
+  
+  <Step title="Explore Commands">
+    Browse the [Command Reference](/reference/analyze-project) to discover 70+ available commands organized by development phase
+  </Step>
+</Steps>
 
-<Columns cols={2}>
-  <Card
-    title="Write with MDX"
-    icon="pen-fancy"
-    href="/essentials/markdown"
-  >
-    Use MDX to style your docs pages.
-  </Card>
-  <Card
-    title="Code samples"
-    icon="code"
-    href="/essentials/code"
-  >
-    Add sample code to demonstrate how to use your product.
-  </Card>
-  <Card
-    title="Images"
-    icon="image"
-    href="/essentials/images"
-  >
-    Display images and other media.
-  </Card>
-  <Card
-    title="Reusable snippets"
-    icon="recycle"
-    href="/essentials/reusable-snippets"
-  >
-    Write once and reuse across your docs.
-  </Card>
-</Columns>
+## Command Phases
 
-## Need inspiration?
+Explore commands organized by development workflow:
 
-<Card
-  title="See complete examples"
-  icon="stars"
-  href="https://mintlify.com/customers"
->
-  Browse our showcase of exceptional documentation sites.
-</Card>
+<CardGroup cols={3}>
+  <Card title="Initial Workflow" icon="rocket" href="/commands/initial-workflow">
+    Project analysis and intelligent workflow chaining
+  </Card>
+  <Card title="Project Setup" icon="folder-open" href="/commands/project-setup">
+    Documentation, learning, and MCP configuration
+  </Card>
+  <Card title="Development" icon="code" href="/commands/development">
+    Backup, debug, migrate, optimize, and refactor
+  </Card>
+  <Card title="Security" icon="shield" href="/commands/security">
+    Security auditing, compliance, and hardening
+  </Card>
+  <Card title="Testing" icon="flask" href="/commands/testing">
+    Comprehensive testing and troubleshooting
+  </Card>
+  <Card title="Deployment" icon="rocket" href="/commands/deployment">
+    CI/CD setup, deployment, and monitoring
+  </Card>
+  <Card title="Collaboration" icon="users" href="/commands/collaboration">
+    Code review, PR review, and team workflows
+  </Card>
+  <Card title="Utilities" icon="wrench" href="/commands/utilities">
+    Best practices, boilerplate, and productivity tools
+  </Card>
+  <Card title="Agentic Capabilities" icon="brain" href="/commands/agentic-capabilities">
+    Agent orchestration and MCP workflows
+  </Card>
+  <Card title="AI-Native Development" icon="sparkles" href="/commands/ai-native-development">
+    AI pair programming and intelligent refactoring
+  </Card>
+  <Card title="Enterprise Scale" icon="building" href="/commands/enterprise-scale">
+    Governance, compliance, and multi-repo management
+  </Card>
+  <Card title="Extras" icon="puzzle-piece" href="/commands/extras">
+    Health checks, modernization, and diagnostics
+  </Card>
+</CardGroup>
+
+## Specialized Agents
+
+Access domain-specific expertise with 10 specialized AI agents:
+
+<CardGroup cols={2}>
+  <Card title="Rust Expert" icon="rust" href="/agents/rust-expert">
+    Ownership, lifetimes, and systems programming
+  </Card>
+  <Card title="Python Pro" icon="python" href="/agents/python-pro">
+    Modern Python, decorators, and async patterns
+  </Card>
+  <Card title="Go Expert" icon="golang" href="/agents/golang-pro">
+    Goroutines, channels, and concurrent systems
+  </Card>
+  <Card title="JavaScript Expert" icon="js" href="/agents/javascript-expert">
+    ES6+, async/await, and DOM optimization
+  </Card>
+  <Card title="FastAPI Optimizer" icon="gauge" href="/agents/fastapi-optimizer">
+    Async patterns and performance tuning
+  </Card>
+  <Card title="Documentation Writer" icon="book" href="/agents/documentation-writer">
+    Technical writing and API documentation
+  </Card>
+  <Card title="Performance Optimizer" icon="bolt" href="/agents/performance-optimizer">
+    System-wide performance analysis
+  </Card>
+  <Card title="Systems Architect" icon="diagram-project" href="/agents/systems-architect">
+    Architecture patterns and scalability
+  </Card>
+</CardGroup>
+
+## Safety First
+
+ccprompts includes a comprehensive safety system powered by Dagger containers:
+
+<CardGroup cols={3}>
+  <Card title="Pattern Detection" icon="search">
+    Automatically identifies dangerous commands via regex patterns
+  </Card>
+  <Card title="Container Isolation" icon="box">
+    Executes risky operations in isolated Ubuntu containers with resource limits
+  </Card>
+  <Card title="Rollback Validation" icon="rotate-left">
+    Verifies safety before allowing changes to persist
+  </Card>
+</CardGroup>
+
+<Note>
+The safety system provides 65.7% validation pass rate across 517+ test cases with comprehensive audit logging.
+</Note>
+
+## Why ccprompts?
+
+<AccordionGroup>
+  <Accordion title="Comprehensive Command Library">
+    70+ production-ready commands covering every phase of software development from initial analysis to enterprise-scale operations. Commands are organized by workflow phase for easy discovery.
+  </Accordion>
+  
+  <Accordion title="Specialized AI Agents">
+    10 domain-specific agents with deep expertise in popular languages and frameworks. Each agent follows a 7-step methodology with color-coded categorization and consistent structure.
+  </Accordion>
+  
+  <Accordion title="Enterprise-Grade Safety">
+    Dagger-based container isolation ensures dangerous commands execute safely with automatic cleanup, rollback validation, and comprehensive audit trails.
+  </Accordion>
+  
+  <Accordion title="Multi-Dimensional Validation">
+    Every command is validated across four dimensions: structural integrity, security compliance, quality metrics, and performance benchmarks with numeric scoring.
+  </Accordion>
+  
+  <Accordion title="Team-Wide Consistency">
+    Install as a plugin for automatic team-wide distribution. Shared plugin configuration ensures every team member has access to the same workflows.
+  </Accordion>
+</AccordionGroup>
+
+## Get Started
+
+<CardGroup cols={2}>
+  <Card title="Installation Guide" icon="download" href="/installation">
+    Install ccprompts as a plugin or clone the repository
+  </Card>
+  <Card title="Quick Start" icon="bolt" href="/quickstart">
+    Get up and running in minutes with your first command
+  </Card>
+  <Card title="Command Reference" icon="book-open" href="/reference/analyze-project">
+    Browse all 70+ commands with detailed documentation
+  </Card>
+  <Card title="Contributing" icon="code-pull-request" href="/development/contributing">
+    Learn how to create custom commands and agents
+  </Card>
+</CardGroup>
